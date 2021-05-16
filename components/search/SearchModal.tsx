@@ -50,7 +50,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
   const advancedMenu = useDisclosure();
 
   useEffect(() => {
-    setSelectVals(writers.map((writer) => slugify(writer.name)));
+    setSelectVals(writers?.map((writer) => slugify(writer.name)));
     return () => {};
   }, [writers]);
 

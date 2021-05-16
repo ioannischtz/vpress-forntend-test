@@ -44,7 +44,7 @@ const Home: React.FC<HomePageProps> = ({
   locale,
 }) => {
   const { asPath, isReady, pathname } = useRouter();
-  const imageUrl = getStrapiMedia(homepage.photo_post.image);
+  const imageUrl = getStrapiMedia(homepage.photo_post?.image);
 
   useStoreBreadcrumbs(locale === 'en' ? '/' : '/en', isReady, asPath);
 
