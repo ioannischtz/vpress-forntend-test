@@ -260,7 +260,7 @@ const AuthorCard: React.FC<AuthorCardProps> = ({ writer, preload = false }) => {
               bg: 'semantic.blue.light',
             }}
           >
-            {locale === 'en' ? 'View Stories' : 'Δες τις ιστορίες'}
+            {locale === 'en' ? 'View Articles' : 'Δες τα Άρθρα'}
           </ButtonLink>
         </Box>
       </CardBody>

@@ -101,10 +101,15 @@ const ImageHeading: React.FC<ImageHeadingProps & BoxProps> = ({
     //     </Link>
     //   </Box>
     // </Flex>
-    <Flex justifyContent="center" alignItems="flex-start" {...props}>
+    <Flex justifyContent="space-between" alignItems="flex-start" {...props}>
       <Link as={NextLink} href={to}>
         <a>
-          <Box
+          <Flex
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between" 
+            flexWrap="wrap"
+            textAlign="center"
             as="header"
             background="blackAlpha.700"
             color="whiteAlpha.900"
@@ -122,12 +127,13 @@ const ImageHeading: React.FC<ImageHeadingProps & BoxProps> = ({
               textDecoration: 'underline',
             }}
             boxShadow="0 2px 2px -1px rgba(0,0,0,0.25),0 1px 10px -2px rgba(0,0,0,0.25)"
-            textAlign="start"
           >
             <Heading
               fontWeight={700}
               fontSize={['2vh', '2vh', '3vh', '3vh', '3vh']}
               pr={['0ch', '0ch', '1ch', '1ch', '1ch']}
+              textAlign="end"
+              alignSelf="flex-end"
             >
               {title}
             </Heading>
@@ -142,7 +148,7 @@ const ImageHeading: React.FC<ImageHeadingProps & BoxProps> = ({
             >
               {credits}
             </Text>
-          </Box>
+          </Flex>
         </a>
       </Link>
     </Flex>

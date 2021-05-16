@@ -1,12 +1,4 @@
 import { Box, Flex } from '@chakra-ui/layout';
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  RedditShareButton,
-  RedditIcon,
-  TwitterShareButton,
-  TwitterIcon,
-} from 'next-share';
 import { useRouter } from 'next/router';
 import React from 'react';
 import AuthorCard from '../components/Card/AuthorCard';
@@ -24,6 +16,7 @@ import { NextSeo } from 'next-seo';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { GetStaticProps } from 'next';
+import ShareButtons from '../components/ShareButtons';
 
 export interface TheTeamProps {
   categories: CategoriesResponse[];
@@ -73,70 +66,11 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
   let shareBtns: React.ReactNode;
   if (isMounted)
     shareBtns = (
-      <Flex direction="row" alignSelf="flex-end">
-        <Box
-          color="whiteAlpha.500"
-          fontSize={['sm', '2xl', 'xl', 'xl', 'xl']}
-          fontWeight="normal"
-        >
-          Share:{' '}
-        </Box>
-        <Box
-          px="8px"
-          _hover={{
-            cursor: 'pointer',
-            transform: 'scale(1.1, 1.1)',
-            textDecoration: 'underline',
-          }}
-        >
-          <FacebookShareButton
-            url={router.basePath + router.asPath}
-            quote={
-              'next-share is a social share buttons for your next React apps.'
-            }
-            hashtag={'#nextshare'}
-          >
-            <FacebookIcon size={32} round />
-          </FacebookShareButton>
-        </Box>
-        <Box
-          px="8px"
-          _hover={{
-            cursor: 'pointer',
-            transform: 'scale(1.1, 1.1)',
-            textDecoration: 'underline',
-          }}
-        >
-          <RedditShareButton
-            url={'https://github.com/next-share'}
-            title={
-              'next-share is a social share buttons for your next React apps.'
-            }
-            windowWidth={660}
-            windowHeight={460}
-          >
-            <RedditIcon size={32} round />
-          </RedditShareButton>
-        </Box>
-        <Box
-          pr="16px"
-          pl="8px"
-          _hover={{
-            cursor: 'pointer',
-            transform: 'scale(1.1, 1.1)',
-            textDecoration: 'underline',
-          }}
-        >
-          <TwitterShareButton
-            url={'https://github.com/next-share'}
-            title={
-              'next-share is a social share buttons for your next React apps.'
-            }
-          >
-            <TwitterIcon size={32} round />
-          </TwitterShareButton>
-        </Box>
-      </Flex>
+      <ShareButtons
+        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+        description={theTeam.TeamSEO.metaDescription}
+        pt={['16px', '16px', '0', '0', '0']}
+      />
     );
   return (
     <>
