@@ -1,0 +1,246 @@
+/* for firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--chakra-colors-neutral-amaranth-light)
+    var(--chakra-colors-neutral-onyx-light);
+}
+
+/* for non-firefox */
+::-webkit-scrollbar {
+  overflow: overlay;
+  width: 8px;
+  /* shouldnt hardcode width, pls find way to make it dynamic, thin wasn't working for me...*/
+}
+
+::-webkit-scrollbar-track {
+  display: initial;
+  background-color: var(--chakra-colors-neutral-onyx-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--chakra-colors-neutral-amaranth-light);
+  border-radius: 5px;
+}
+
+#__next {
+  overflow: auto;
+}
+
+.myContent .myContent-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  z-index: 999;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.myContent:hover .myContent-overlay {
+  opacity: 1;
+}
+
+.myContent-details {
+  position: absolute;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  z-index: 1999;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.myContent:hover .myContent-details {
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  z-index: 9999;
+}
+
+.myContent-details h3 {
+  color: #fff;
+  z-index: 9999;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+}
+
+.myContent-details p {
+  color: #fff;
+  z-index: 9999;
+  font-size: 0.8em;
+}
+
+.myFadeIn-bottom {
+  top: 80%;
+}
+
+/* #nprogress .bar {
+  background: #069def !important;
+} */
+
+/* #nprogress .peg {
+  box-shadow: 0 0 10px #e05269, 0 0 5px #e05269;
+} */
+
+/* #nprogress .spinner-icon {
+  border-top-color: #069def !important;
+  border-left-color: #069def !important;
+} */
+
+/* Fallback Loader */
+
+.fallback-loader,
+.fallback-loader:after,
+.fallback-loader:before {
+  box-sizing: border-box;
+}
+
+.fallback-loader-body {
+  margin: 0;
+  padding-top: 50px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background: #263238;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.fallback-loader-body.pop {
+  overflow: hidden;
+}
+
+.fallback-loader-section {
+  min-width: 200px;
+  width: 33.33%;
+  height: 200px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.3s linear;
+}
+.fallback-loader-section:nth-child(2n + 1) {
+  background: rgba(0, 0, 0, 0.1);
+}
+.fallback-loader-section:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.fallback-loader {
+  font-size: 48px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #ff3d00;
+  letter-spacing: 2px;
+  position: relative;
+}
+.fallback-loader::after {
+  content: 'Loading';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-animation: animationLoader 3s ease-in infinite;
+  animation: animationLoader 3s ease-in infinite;
+}
+
+.loader-114 {
+  color: #fff;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 48px;
+  letter-spacing: 4px;
+}
+.loader-114::before {
+  content: '';
+  position: absolute;
+  right: 70px;
+  bottom: 10px;
+  height: 28px;
+  width: 5.15px;
+  background: currentColor;
+}
+.loader-114::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  left: 125px;
+  top: 2px;
+  border-radius: 50%;
+  background: red;
+  -webkit-animation: animloader114 1s ease-in infinite;
+  animation: animloader114 1s ease-in infinite;
+}
+
+@-webkit-keyframes animloader114 {
+  0% {
+    transform: translateY(8px) scaleY(1) scaleX(1.25);
+  }
+  25%,
+  75% {
+    transform: translateY(-5px) scaleY(1.2) scaleX(1);
+  }
+  50% {
+    transform: translateY(-10px) scaleY(1) scaleX(1);
+  }
+  100% {
+    transform: translateY(8px) scaleY(0.8) scaleX(0.8);
+  }
+}
+@keyframes animloader114 {
+  0% {
+    transform: translateY(8px) scaleY(1) scaleX(1.25);
+  }
+  25%,
+  75% {
+    transform: translateY(-5px) scaleY(1.2) scaleX(1);
+  }
+  50% {
+    transform: translateY(-10px) scaleY(1) scaleX(1);
+  }
+  100% {
+    transform: translateY(8px) scaleY(0.8) scaleX(0.8);
+  }
+}
+
+@-webkit-keyframes animationLoader {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes animationLoader {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
