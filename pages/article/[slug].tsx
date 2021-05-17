@@ -1,4 +1,3 @@
-import { Box, Flex } from '@chakra-ui/layout';
 import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error';
 import React, { useEffect, useState } from 'react';
@@ -64,7 +63,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       categories,
       writers,
     },
-    revalidate: 1*30*60,
+    revalidate: 1*5*60,
   };
 }
 

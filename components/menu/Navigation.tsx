@@ -17,7 +17,20 @@ const Navigation: React.FC<NavigationProps> = ({ categories }) => {
       align="flex-start"
       justify={['center', 'center', 'flex-end', 'flex-end', 'flex-end']}
       hidden={false}
-    >
+    > 
+      <NavLink
+        asPath={asPath}
+        to={'/'}
+        key='homepage'
+        isLast={false}
+        fontWeight="normal"
+        fontSize={['xl', 'xl', 'lg', 'lg']}
+        color="whiteAlpha.800"
+        hoverC="semantic.red.light"
+        icon={''}
+      >
+        {locale==='en' ? 'HomePage' : 'Αρχική Σελίδα'}
+      </NavLink>
       {categories.map((category) => {
         return (
           <NavLink
