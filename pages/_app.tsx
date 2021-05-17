@@ -69,7 +69,8 @@ function MyApp({ Component, pageProps }) {
       {
         hrefLang: altLang,
         // href: `/${altLang}` + router.asPath,
-        href: `${process.env.NEXT_PUBLIC_HOST_URL}/${altLang}${router.asPath}`,
+        // href: `${process.env.NEXT_PUBLIC_HOST_URL}/${altLang}${router.asPath}`,
+        href: `/${altLang}${router.asPath}`,
       },
     ],
   };
