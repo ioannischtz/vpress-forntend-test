@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: { categories, writers },
-    revalidate: 1*60*60,
+    revalidate: 1*30*60,
   };
 }
 

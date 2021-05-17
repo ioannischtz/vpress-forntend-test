@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   return {
     props: { categories, homepage, writers, locale },
-    revalidate: 1*60*60,
+    revalidate: 1*30*60,
   };
 }
 
