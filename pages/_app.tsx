@@ -43,6 +43,7 @@ function MyApp({ Component, pageProps }) {
   let global;
   isGR ? (global = global_GR) : (global = global_EN);
   const altLang = isGR ? 'en' : 'el-GR';
+  const altLocale = isGR ? 'x-default' : 'el-gr';
 
   const SEO = {
     title: global.siteName,
@@ -67,7 +68,7 @@ function MyApp({ Component, pageProps }) {
     },
     languageAlternates: [
       {
-        hrefLang: altLang,
+        hrefLang: altLocale,
         // href: `/${altLang}` + router.asPath,
         href: `${process.env.NEXT_PUBLIC_HOST_URL}/${altLang}${router.asPath}`,
         // href: `/${altLang}${router.asPath}`,
