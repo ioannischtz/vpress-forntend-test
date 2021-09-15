@@ -55,10 +55,10 @@ const Home: React.FC<HomePageProps> = ({
       title: homepage.HomepageSEO.metaTitle,
       description: homepage.HomepageSEO.metaDescription,
       image: {
-        url: homepage.HomepageSEO.shareImage,
-        width: homepage.HomepageSEO.shareImage.width,
-        height: homepage.HomepageSEO.shareImage.height,
-        alt: homepage.HomepageSEO.shareImage.alternativeText,
+        url: homepage.HomepageSEO?.shareImage,
+        width: homepage.HomepageSEO.shareImage?.width,
+        height: homepage.HomepageSEO.shareImage?.height,
+        alt: homepage.HomepageSEO.shareImage?.alternativeText,
       },
     },
   };
@@ -81,11 +81,11 @@ const Home: React.FC<HomePageProps> = ({
             objectFit="cover"
             objectPosition="center"
             quality={
-              homepage.photo_post.image.width < 200
+              homepage.photo_post.image?.width < 200
                 ? 90
-                : homepage.photo_post.image.width < 350
+                : homepage.photo_post.image?.width < 350
                 ? 75
-                : homepage.photo_post.image.width < 500
+                : homepage.photo_post.image?.width < 500
                 ? 65
                 : 55
             }
@@ -93,9 +93,9 @@ const Home: React.FC<HomePageProps> = ({
           />
         </Box>
         <ImageHeading
-          to={'/photo-post/' + homepage.photo_post.slug}
-          title={homepage.photo_post.title}
-          date={homepage.photo_post.updated_at.toString()}
+          to={'/photo-post/' + homepage.photo_post?.slug}
+          title={homepage.photo_post?.title}
+          date={homepage.photo_post?.updated_at.toString()}
           credits={filterWriter(writers, homepage.photo_post.writer)?.name}
           locale={locale}
           position="relative"
