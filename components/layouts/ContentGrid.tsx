@@ -29,6 +29,10 @@ const ContentGrid: React.FC<ContentGridProps> = ({
   ...props
 }) => {
   const [breadcrumbs, setBreadcrumbs] = useState<string[]>([]);
+  
+  // !!!!! disable breadcrumbs
+  renderBreadCrumbs = false;
+  
   useEffect(() => {
     const bcrumbs_EN_session = sessionStorage.getItem('breadcrumbs_EN');
     const bcrumbs_GR_session = sessionStorage.getItem('breadcrumbs_GR');
