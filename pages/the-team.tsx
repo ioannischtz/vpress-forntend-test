@@ -55,10 +55,10 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
       title: theTeam.TeamSEO.metaTitle,
       description: theTeam.TeamSEO.metaDescription,
       image: {
-        url: theTeam.TeamSEO.shareImage,
-        width: theTeam.TeamSEO.shareImage.width,
-        height: theTeam.TeamSEO.shareImage.height,
-        alt: theTeam.TeamSEO.shareImage.alternativeText,
+        url: theTeam.TeamSEO?.shareImage,
+        width: theTeam.TeamSEO.shareImage?.width,
+        height: theTeam.TeamSEO.shareImage?.height,
+        alt: theTeam.TeamSEO.shareImage?.alternativeText,
       },
     },
   };
