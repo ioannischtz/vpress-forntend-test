@@ -161,8 +161,8 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
               <PhotoPostCard
                 key={photoPost.id}
                 photoPost={photoPost}
-                writer_name={article.writer.name}
-                isPortrait={photoPost.image.width < photoPost.image.height}
+                writer_name={article.writer?.name}
+                isPortrait={photoPost.image?.width < photoPost.image?.height}
                 preload={i===0}
                 flex="auto"
                 m="0 18px 18px 0"
