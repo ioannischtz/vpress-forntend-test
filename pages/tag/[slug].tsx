@@ -39,12 +39,14 @@ export const getStaticPaths: GetStaticPaths = async({ locales }) => {
   for (const locale of locales) {
     tags = await fetchAPI(`/tags?_locale=${locale}`);
     for (let i = 0; i < tags.length; i++) {
+      if(tags[i].slug){
       paths.push({
         params: {
-          slug: tags[i]?.slug,
+          slug: tags[i].slug,
         },
         locale,
       });
+      }
     }
   }}
 
