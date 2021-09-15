@@ -41,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async({ locales }) => {
     for (let i = 0; i < tags.length; i++) {
       paths.push({
         params: {
-          slug: tags[i].slug,
+          slug: tags[i]?.slug,
         },
         locale,
       });
