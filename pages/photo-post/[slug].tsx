@@ -154,10 +154,10 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   }, [router.query.slug]);
 
   let SEO = {};
-
+// title: photo_Post.title,
   if (isMounted) {
     SEO = {
-      title: photo_Post.title,
+      
       description: photo_Post.description,
       openGraph: {
         title: photo_Post.title,
