@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       articles,
       writers,
     },
-    revalidate: 1*30*60,
+    revalidate: 1*5*60,
   };
 }
 
