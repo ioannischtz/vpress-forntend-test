@@ -156,9 +156,9 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
     articles.length < 7;
 
   const skeletonArr = [1, 2, 3];
-
+// title: writer.name,
   const SEO = {
-    title: writer.name,
+    
     description: router.locale === 'en' ? description_EN : description_GR,
     openGraph: {
       title: writer.name,
