@@ -297,7 +297,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pl={['24px', '24px', '72px', '80px', '80px']}
                 pr={['24px', '24px', '48px', '64px', '64px']}
               >
-                <Breadcrumb color="whiteAlpha.600" p="12px">
+<!--                 <Breadcrumb color="whiteAlpha.600" p="12px">
                   <BreadcrumbItem
                     key={router.locale === 'en' ? 'Home' : 'Αρχική'}
                   >
@@ -339,7 +339,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                       <a>{router.asPath.split('/').pop()}</a>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                </Breadcrumb>
+                </Breadcrumb> -->
                 <Box>
                   <Heading>{photo_Post.title}</Heading>
                 </Box>
