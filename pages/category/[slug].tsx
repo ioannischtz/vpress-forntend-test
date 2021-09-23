@@ -155,9 +155,9 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
     articles.length < 7;
 
   const skeletonArr = [1, 2, 3];
-
+//   title: category.name,
   const SEO = {
-    title: category.name,
+  
     description: router.locale === 'en' ? description_EN : description_GR,
     openGraph: {
       title: category.name,
