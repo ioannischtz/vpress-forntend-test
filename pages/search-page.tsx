@@ -46,8 +46,9 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
   // );
 
   // SEO
+  // title: locale === 'en' ? 'Search Photo-posts' : 'Αναζήτηση Φωτογραφιών',
   const SEO = {
-    title: locale === 'en' ? 'Search Photo-posts' : 'Αναζήτηση Φωτογραφιών',
+    
     description:
       locale === 'en'
         ? 'Search Photo-posts Page with queries and filters'
