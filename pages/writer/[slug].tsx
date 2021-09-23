@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps = async({ params, locale }) => {
       categories: categories,
       articles: articles,
     },
-    revalidate: 1*30*60,
+    revalidate: 1*5*60,
   };
 }
 
