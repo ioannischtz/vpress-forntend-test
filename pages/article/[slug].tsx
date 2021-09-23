@@ -119,9 +119,9 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       </>
     );
   }
-
+// title: article.title,
   const SEO = {
-    title: article.title,
+    
     description: article.description,
     openGraph: {
       title: article.title,
