@@ -84,7 +84,7 @@ export const getStaticProps:GetStaticProps = async ({ params, locale }) => {
 
   return {
     props: { photo_Post: photoPosts[0], categories, writers: writers },
-    revalidate: 1*30*60,
+    revalidate: 1*5*60,
   };
 }
 
