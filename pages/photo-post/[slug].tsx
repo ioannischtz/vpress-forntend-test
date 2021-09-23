@@ -198,6 +198,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     'calc(85vw - 48px)',
   ];
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  const renderBreadcrumbs = false;
   return (
     <>
       <NextSeo {...SEO} />
@@ -297,7 +298,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pl={['24px', '24px', '72px', '80px', '80px']}
                 pr={['24px', '24px', '48px', '64px', '64px']}
               >
-                 false && (<Breadcrumb color="whiteAlpha.600" p="12px">
+                 (renderBreadcrumbs) && (<Breadcrumb color="whiteAlpha.600" p="12px">
                   <BreadcrumbItem
                     key={router.locale === 'en' ? 'Home' : 'Αρχική'}
                   >
