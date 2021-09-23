@@ -47,9 +47,9 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
     router.isReady,
     router.asPath
   );
-
+// title: theTeam.TeamPageHero.title,
   const SEO = {
-    title: theTeam.TeamPageHero.title,
+    
     description: theTeam.TeamSEO.metaDescription,
     openGraph: {
       title: theTeam.TeamSEO.metaTitle,
