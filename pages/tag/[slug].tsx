@@ -138,8 +138,9 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
   }
 
   // const skeletonArr = [1, 2, 3];
+  // title: tag.name,
   const SEO = {
-    title: tag.name,
+    
     description: router.locale === 'en' ? description_EN : description_GR,
     openGraph: {
       title: tag.name,
