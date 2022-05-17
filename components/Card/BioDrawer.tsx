@@ -1,50 +1,49 @@
-import { Box, Text, Flex, Heading, Circle } from '@chakra-ui/layout';
-import { IconButton } from '@chakra-ui/button';
+import { Box, Text, Flex, Heading, Circle } from "@chakra-ui/layout"
+import { IconButton } from "@chakra-ui/button"
 import {
   Drawer,
   DrawerBody,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay,
-} from '@chakra-ui/modal';
-import React from 'react';
-import Image from 'next/image';
+  DrawerOverlay
+} from "@chakra-ui/modal"
+import React from "react"
+import Image from "next/image"
 
-import { BiX } from 'react-icons/bi';
-import { Writer } from '../../custom_typings/models';
-import { useRouter } from 'next/router';
+import { BiX } from "react-icons/bi"
+import { Writer } from "../../custom_typings/models"
+import { useRouter } from "next/router"
 
 interface BioDrawerProps {
-  writer: Writer;
-  imageUrl: string;
-  isOpen: boolean;
+  writer: Writer
+  imageUrl: string
+  isOpen: boolean
   size:
-    | 'xs'
-    | 'sm'
-    | 'md'
-    | 'lg'
-    | 'xl'
-    | '2xl'
-    | '3xl'
-    | '4xl'
-    | '5xl'
-    | '6xl'
-    | 'full';
-  onClose: () => void;
-  onToggle: () => void;
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "6xl"
+    | "full"
+  onClose: () => void
+  onToggle: () => void
 }
-export type Ref = HTMLButtonElement;
+export type Ref = HTMLButtonElement
 
 const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
   ({ writer, imageUrl, isOpen, size, onClose, onToggle }, ref) => {
-    const { locale } = useRouter();
+    const { locale } = useRouter()
     return (
       <Drawer
         onClose={onClose}
         isOpen={isOpen}
         size={size}
         // placement="bottom"
-        isCentered={true}
       >
         <DrawerOverlay>
           <DrawerContent bgColor="neutral.raisin_black.medium">
@@ -58,7 +57,7 @@ const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
                   <Box h="25vh" w="100%" position="relative">
                     <Image
                       src={imageUrl}
-                      alt={'Picture of team member ' + writer.name}
+                      alt={"Picture of team member " + writer.name}
                       layout="fill"
                       objectFit="cover"
                       objectPosition="center"
@@ -94,7 +93,7 @@ const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
                 </Box>
                 <Box>
                   <Text color="whiteAlpha.600">
-                    {locale === 'en' ? '@ Contact Info: ' : 'Επικοινωνία: '}{' '}
+                    {locale === "en" ? "@ Contact Info: " : "Επικοινωνία: "}{" "}
                     {writer.email}
                   </Text>
                 </Box>
@@ -109,10 +108,10 @@ const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
                       ref={ref}
                       aria-label="Close Bio"
                       variant="unstyled"
-                      size={(2 * 3).toString() + 'vh'}
-                      _hover={{ color: 'gray.300' }}
-                      _focus={{ outline: 'none', color: 'gray.300' }}
-                      icon={<BiX size={(2 * 3).toString() + 'vh'} />}
+                      size={(2 * 3).toString() + "vh"}
+                      _hover={{ color: "gray.300" }}
+                      _focus={{ outline: "none", color: "gray.300" }}
+                      icon={<BiX size={(2 * 3).toString() + "vh"} />}
                       onClick={onToggle}
                     />
                   </Box>
@@ -122,8 +121,8 @@ const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
-    );
+    )
   }
-);
+)
 
-export default BioDrawer;
+export default BioDrawer

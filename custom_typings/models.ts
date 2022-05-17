@@ -219,6 +219,7 @@ export interface PhotoPost {
   published_at: Date;
   created_at: Date;
   updated_at: Date;
+  date: Date;
   image: Image;
 }
 
@@ -245,6 +246,7 @@ export interface Article {
   published_at: Date;
   created_at: Date;
   updated_at: Date;
+  date: Date;
   cover_image: CoverImage;
 }
 
@@ -339,6 +341,7 @@ export interface ArticlesResponse {
   published_at: Date;
   created_at: Date;
   updated_at: Date;
+  date: Date;
   cover_image: CoverImage;
   photo_posts: PhotoPost[];
   localizations: Localization[];
@@ -357,6 +360,7 @@ export interface PhotoPostsResponse {
   published_at: Date;
   created_at: Date;
   updated_at: Date;
+  date: Date;
   image: Image;
   tags: Tag[];
   localizations: Localization[];

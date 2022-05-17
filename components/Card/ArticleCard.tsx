@@ -193,7 +193,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Text>
                         {/* @ts-ignore */}
                         {new Intl.DateTimeFormat(locale, { options }).format(
-                          new Date(article.published_at)
+                          new Date(article.date ? article.date : article.published_at )
                         )}
                       </Text>
                     </Box>

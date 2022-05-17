@@ -208,7 +208,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     <Text>
                       {/* @ts-ignore */}
                       {new Intl.DateTimeFormat(locale, options).format(
-                        new Date(photoPost.published_at)
+                        new Date(photoPost.date ? photoPost.date : photoPost.published_at)
                       )}
                     </Text>
                   </Box>

@@ -1,21 +1,22 @@
-import { Flex, Heading, Box, SimpleGrid } from '@chakra-ui/layout';
-import { FlexboxProps } from '@chakra-ui/styled-system';
+import { Flex, Heading, Box, SimpleGrid } from "@chakra-ui/layout"
+import { FlexboxProps } from "@chakra-ui/styled-system"
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
-} from '@chakra-ui/breadcrumb';
-import React, { useEffect, useState } from 'react';
-import NextLink from 'next/link';
+  BreadcrumbLink
+} from "@chakra-ui/breadcrumb"
+import React, { useEffect, useState } from "react"
+import NextLink from "next/link"
 
 interface ContentGridProps {
-  heading: string;
-  footer: React.ReactNode;
-  useSimpleGrid?: boolean;
-  renderBreadCrumbs: boolean;
-  locale?: string;
-  asPath: string;
-  props?: FlexboxProps;
+  children: React.ReactNode
+  heading: string
+  footer: React.ReactNode
+  useSimpleGrid?: boolean
+  renderBreadCrumbs: boolean
+  locale?: string
+  asPath: string
+  props?: FlexboxProps
 }
 
 const ContentGrid: React.FC<ContentGridProps> = ({
@@ -28,40 +29,40 @@ const ContentGrid: React.FC<ContentGridProps> = ({
   children,
   ...props
 }) => {
-  const [breadcrumbs, setBreadcrumbs] = useState<string[]>([]);
-  
+  const [breadcrumbs, setBreadcrumbs] = useState<string[]>([])
+
   // !!!!! disable breadcrumbs
-  renderBreadCrumbs = false;
-  
+  renderBreadCrumbs = false
+
   useEffect(() => {
-    const bcrumbs_EN_session = sessionStorage.getItem('breadcrumbs_EN');
-    const bcrumbs_GR_session = sessionStorage.getItem('breadcrumbs_GR');
-    if (locale === 'en' && bcrumbs_EN_session !== null) {
-      const bcrumbs_EN = JSON.parse(bcrumbs_EN_session);
-      setBreadcrumbs(bcrumbs_EN);
+    const bcrumbs_EN_session = sessionStorage.getItem("breadcrumbs_EN")
+    const bcrumbs_GR_session = sessionStorage.getItem("breadcrumbs_GR")
+    if (locale === "en" && bcrumbs_EN_session !== null) {
+      const bcrumbs_EN = JSON.parse(bcrumbs_EN_session)
+      setBreadcrumbs(bcrumbs_EN)
     }
-    if (locale === 'el-GR' && bcrumbs_GR_session !== null) {
-      const bcrumbs_GR = JSON.parse(bcrumbs_GR_session);
-      setBreadcrumbs(bcrumbs_GR);
+    if (locale === "el-GR" && bcrumbs_GR_session !== null) {
+      const bcrumbs_GR = JSON.parse(bcrumbs_GR_session)
+      setBreadcrumbs(bcrumbs_GR)
     }
-  }, [locale]);
+  }, [locale])
 
   return (
     <Flex
       direction="column"
       h={[
-        'calc(85vh - 48px)',
-        'calc(85vh - 48px)',
-        'calc(100vh - 48px)',
-        'calc(100vh - 48px)',
-        'calc(100vh - 48px)',
+        "calc(85vh - 48px)",
+        "calc(85vh - 48px)",
+        "calc(100vh - 48px)",
+        "calc(100vh - 48px)",
+        "calc(100vh - 48px)"
       ]}
       w={[
-        'calc(100vw - 48px)',
-        'calc(100vw - 48px)',
-        'calc(75vw - 48px)',
-        'calc(85vw - 48px)',
-        'calc(85vw - 48px)',
+        "calc(100vw - 48px)",
+        "calc(100vw - 48px)",
+        "calc(75vw - 48px)",
+        "calc(85vw - 48px)",
+        "calc(85vw - 48px)"
       ]}
       alignItems="center"
       px="48px"
@@ -77,11 +78,11 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         //   'calc(0.2 * (100vh - 24px))',
         // ]}
         w={[
-          'calc(100vw - 48px)',
-          'calc(100vw - 48px)',
-          'calc(75vw - 48px)',
-          'calc(85vw - 48px)',
-          'calc(85vw - 48px)',
+          "calc(100vw - 48px)",
+          "calc(100vw - 48px)",
+          "calc(75vw - 48px)",
+          "calc(85vw - 48px)",
+          "calc(85vw - 48px)"
         ]}
         direction="column"
         alignItems="center"
@@ -91,45 +92,45 @@ const ContentGrid: React.FC<ContentGridProps> = ({
       >
         <Heading
           textAlign="center"
-          fontSize={['2xl', '4xl', '4xl', '4xl', '4xl']}
+          fontSize={["2xl", "4xl", "4xl", "4xl", "4xl"]}
           color="whiteAlpha.700"
         >
           {heading}
         </Heading>
         {renderBreadCrumbs && breadcrumbs.length > 0 && (
           <Breadcrumb color="whiteAlpha.600" p="12px">
-            <BreadcrumbItem key={locale === 'en' ? 'Home' : 'Αρχική'}>
+            <BreadcrumbItem key={locale === "en" ? "Home" : "Αρχική"}>
               <BreadcrumbLink
                 as={NextLink}
-                href={locale === 'en' ? '/en' : '/'}
+                href={locale === "en" ? "/en" : "/"}
               >
-                <a>{locale === 'en' ? 'Home' : 'Αρχική'}</a>
+                <a>{locale === "en" ? "Home" : "Αρχική"}</a>
               </BreadcrumbLink>
             </BreadcrumbItem>
             {breadcrumbs.map((bc) => {
               return (
-                bc !== '/' &&
-                bc !== '/en' &&
-                !(bc.includes('search') && asPath.includes('search')) &&
-                bc.split('/').pop() !== asPath.split('/').pop() && (
-                  <BreadcrumbItem key={bc.split('/').pop()}>
+                bc !== "/" &&
+                bc !== "/en" &&
+                !(bc.includes("search") && asPath.includes("search")) &&
+                bc.split("/").pop() !== asPath.split("/").pop() && (
+                  <BreadcrumbItem key={bc.split("/").pop()}>
                     <BreadcrumbLink as={NextLink} href={bc}>
-                      <a>{bc.split('/').pop()}</a>
+                      <a>{bc.split("/").pop()}</a>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                 )
-              );
+              )
             })}
             <BreadcrumbItem
               isCurrentPage={true}
               color="semantic.red.light"
-              key={asPath.split('/').pop()}
+              key={asPath.split("/").pop()}
             >
               <BreadcrumbLink as={NextLink} href={asPath} shallow={true}>
                 <a>
-                  {asPath.includes('search')
-                    ? 'search-page'
-                    : asPath.split('/').pop()}
+                  {asPath.includes("search")
+                    ? "search-page"
+                    : asPath.split("/").pop()}
                 </a>
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -140,11 +141,11 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         h="400vh"
         // overflowY="auto"
         w={[
-          'calc(100vw - 48px)',
-          'calc(100vw - 48px)',
-          'calc(75vw - 48px)',
-          'calc(85vw - 48px)',
-          'calc(85vw - 48px)',
+          "calc(100vw - 48px)",
+          "calc(100vw - 48px)",
+          "calc(75vw - 48px)",
+          "calc(85vw - 48px)",
+          "calc(85vw - 48px)"
         ]}
         overflowX="hidden"
         bgColor="neutral.raisin_black.dark"
@@ -154,8 +155,8 @@ const ContentGrid: React.FC<ContentGridProps> = ({
             overflowY="auto"
             overflowX="hidden"
             px="48px"
-            pt={['12px', '12px', '24px', '48px', '48px']}
-            pb={['72px', '96px', '48px', '48px', '48px']}
+            pt={["12px", "12px", "24px", "48px", "48px"]}
+            pb={["72px", "96px", "48px", "48px", "48px"]}
             columns={[1, 2, 2, 3, 3]}
             justifyItems="center"
             alignItems="center"
@@ -163,11 +164,11 @@ const ContentGrid: React.FC<ContentGridProps> = ({
             rowGap="36px"
             // resize="none"
             w={[
-              'calc(100vw - 48px)',
-              'calc(100vw - 48px)',
-              'calc(75vw - 48px)',
-              'calc(85vw - 48px)',
-              'calc(85vw - 48px)',
+              "calc(100vw - 48px)",
+              "calc(100vw - 48px)",
+              "calc(75vw - 48px)",
+              "calc(85vw - 48px)",
+              "calc(85vw - 48px)"
             ]}
           >
             {children}
@@ -175,11 +176,11 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         ) : (
           <Flex
             w={[
-              'calc(100vw - 64px)',
-              'calc(100vw - 64px)',
-              'calc(75vw - 64px)',
-              'calc(85vw - 64px)',
-              'calc(85vw - 64px)',
+              "calc(100vw - 64px)",
+              "calc(100vw - 64px)",
+              "calc(75vw - 64px)",
+              "calc(85vw - 64px)",
+              "calc(85vw - 64px)"
             ]}
             overflowY="auto"
             overflowX="hidden"
@@ -189,9 +190,9 @@ const ContentGrid: React.FC<ContentGridProps> = ({
             justifyContent="center"
             ml="12px"
             // mx="48px"
-            px={['24px', '64px', '80px', '88px', '96px']}
-            pt={['12px', '12px', '24px', '48px', '48px']}
-            pb={['72px', '96px', '48px', '48px', '48px']}
+            px={["24px", "64px", "80px", "88px", "96px"]}
+            pt={["12px", "12px", "24px", "48px", "48px"]}
+            pb={["72px", "96px", "48px", "48px", "48px"]}
           >
             {children}
           </Flex>
@@ -206,11 +207,11 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         //   'calc(0.15 * (100vh - 48px))',
         // ]}
         w={[
-          'calc(100vw - 48px)',
-          'calc(100vw - 48px)',
-          'calc(75vw - 48px)',
-          'calc(85vw - 48px)',
-          'calc(85vw - 48px)',
+          "calc(100vw - 48px)",
+          "calc(100vw - 48px)",
+          "calc(75vw - 48px)",
+          "calc(85vw - 48px)",
+          "calc(85vw - 48px)"
         ]}
         alignItems="center"
         justifyContent="center"
@@ -221,7 +222,7 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         {footer}
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default ContentGrid;
+export default ContentGrid

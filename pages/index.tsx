@@ -95,7 +95,7 @@ const Home: React.FC<HomePageProps> = ({
         <ImageHeading
           to={'/photo-post/' + homepage.photo_post?.slug}
           title={homepage.photo_post?.title}
-          date={homepage.photo_post?.updated_at.toString()}
+          date={homepage.photo_post?.date ? homepage.photo_post.date.toString() : homepage.photo_post.updated_at.toString()}
           credits={filterWriter(writers, homepage.photo_post.writer)?.name}
           locale={locale}
           position="relative"
