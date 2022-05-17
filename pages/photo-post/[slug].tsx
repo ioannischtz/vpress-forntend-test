@@ -379,10 +379,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>
                           {/* @ts-ignore*/}
-                          {new Intl.DateTimeFormat(
-                            router.locale,
-                            options
-                          ).format(new Date(photo_Post.published_at))}
+                          {new Intl.DateTimeFormat(router.locale,options)
+                            .format(new Date(photo_Post.published_at))}
                         </Text>
                       </Box>
                     </Flex>
