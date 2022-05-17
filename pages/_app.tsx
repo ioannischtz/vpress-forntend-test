@@ -1,49 +1,49 @@
-import '@fontsource/ibm-plex-sans/300.css';
-import '@fontsource/ibm-plex-sans/600.css';
-import '@fontsource/ibm-plex-sans/700.css';
-import '@fontsource/libre-baskerville/400.css';
-import '@fontsource/libre-baskerville/700.css';
-import '@fontsource/ibm-plex-mono/300.css';
-import '@fontsource/cormorant-garamond/700.css';
-import '../styles/globalStyles.css';
-import 'nprogress/nprogress.css';
-import 'flatpickr/dist/themes/dark.css';
+import "@fontsource/ibm-plex-sans/300.css"
+import "@fontsource/ibm-plex-sans/600.css"
+import "@fontsource/ibm-plex-sans/700.css"
+import "@fontsource/libre-baskerville/400.css"
+import "@fontsource/libre-baskerville/700.css"
+import "@fontsource/ibm-plex-mono/300.css"
+import "@fontsource/cormorant-garamond/700.css"
+import "../styles/globalStyles.css"
+import "nprogress/nprogress.css"
+import "flatpickr/dist/themes/dark.css"
 
-import { ChakraProvider } from '@chakra-ui/react';
-import { createContext, useEffect } from 'react';
-import Head from 'next/head';
-import NProgress from 'nprogress';
-import theme from '../styles/theme';
+import { ChakraProvider } from "@chakra-ui/react"
+import { createContext, useEffect } from "react"
+import Head from "next/head"
+import NProgress from "nprogress"
+import theme from "../styles/theme"
 
-import global_GR from '../data/global-manifest_GR.json';
-import global_EN from '../data/global-manifest_EN.json';
+import global_GR from "../data/global-manifest_GR.json"
+import global_EN from "../data/global-manifest_EN.json"
 
-import { I18nContextProvider } from '../contexts/I18nContext';
-import { Router, useRouter } from 'next/router';
-import redirectLocale from '../lib/redirectLocale';
-import React from 'react';
-import { useCookies } from 'react-cookie';
-import { DefaultSeo } from 'next-seo';
+import { I18nContextProvider } from "../contexts/I18nContext"
+import { Router, useRouter } from "next/router"
+import redirectLocale from "../lib/redirectLocale"
+import React from "react"
+import { useCookies } from "react-cookie"
+import { DefaultSeo } from "next-seo"
 
-Router.events.on('routeChangeStart', (url) => {
+Router.events.on("routeChangeStart", (url) => {
   // console.log(`Loading: ${url}`);
-  NProgress.start();
-});
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+  NProgress.start()
+})
+Router.events.on("routeChangeComplete", () => NProgress.done())
+Router.events.on("routeChangeError", () => NProgress.done())
 
 // Store Strapi Global object in context
-export const GlobalContext = createContext({});
+export const GlobalContext = createContext({})
 
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-  const [cookie, setCookie] = useCookies(['NEXT_LOCALE']);
-  const isGR = router.locale === router.defaultLocale;
+  const router = useRouter()
+  const [cookie, setCookie] = useCookies(["NEXT_LOCALE"])
+  const isGR = router.locale === router.defaultLocale
 
-  let global;
-  isGR ? (global = global_GR) : (global = global_EN);
-  const altLang = isGR ? 'en' : 'el-GR';
-  const altLocale = isGR ? 'x-default' : 'el-gr';
+  let global
+  isGR ? (global = global_GR) : (global = global_EN)
+  const altLang = isGR ? "en" : "el-GR"
+  const altLocale = isGR ? "x-default" : "el-gr"
 
   const SEO = {
     title: global.siteName,
@@ -59,32 +59,32 @@ function MyApp({ Component, pageProps }) {
         url: global.defaultSeo.shareImage,
         width: global.defaultSeo.shareImage.width,
         height: global.defaultSeo.shareImage.height,
-        alt: global.defaultSeo.shareImage.alternativeText,
+        alt: global.defaultSeo.shareImage.alternativeText
       },
-      site_name: global.siteName,
+      site_name: global.siteName
     },
     robotsProps: {
-      notranslate: true,
+      notranslate: true
     },
     languageAlternates: [
       {
         hrefLang: altLocale,
         // href: `/${altLang}` + router.asPath,
-        href: `${process.env.NEXT_PUBLIC_HOST_URL}/${altLang}${router.asPath}`,
+        href: `${process.env.NEXT_PUBLIC_HOST_URL}/${altLang}${router.asPath}`
         // href: `/${altLang}${router.asPath}`,
-      },
-    ],
-  };
+      }
+    ]
+  }
 
   useEffect(() => {
-    if (cookie.NEXT_LOCALE === 'el-GR') {
-      redirectLocale('el-GR', '');
-    } else if (cookie.NEXT_LOCALE === 'en') {
-      redirectLocale('en', '');
+    if (cookie.NEXT_LOCALE === "el-GR") {
+      redirectLocale("el-GR", "")
+    } else if (cookie.NEXT_LOCALE === "en") {
+      redirectLocale("en", "")
     } else {
-      setCookie('NEXT_LOCALE', router.locale, { path: '/' });
+      setCookie("NEXT_LOCALE", router.locale, { path: "/" })
     }
-  }, []);
+  }, [])
 
   return (
     <ChakraProvider theme={theme}>
@@ -126,7 +126,7 @@ function MyApp({ Component, pageProps }) {
         </GlobalContext.Provider>
       </I18nContextProvider>
     </ChakraProvider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
