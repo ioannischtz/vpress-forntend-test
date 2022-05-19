@@ -246,9 +246,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             </ModalBody>
             <ModalFooter>
               {/* @ts-ignore: Unreachable code error */}
-              {new Intl.DateTimeFormat(router.locale, options).format(
-                new Date(photo_Post.updated_at)
-              )}
+              {new Intl.DateTimeFormat(router.locale,options)
+                            .format(new Date(photo_Post.date ? photo_Post.date : photo_Post.published_at))}
             </ModalFooter>
           </ModalContent>
         </Modal>
