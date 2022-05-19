@@ -93,7 +93,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
   return (
     <Card
       w={isPortrait ? widthsOuter : widthsLandscape}
-      h={heightsOuter}
+      // h={heightsOuter}
       pb="16px"
       {...props}
     >
@@ -101,8 +101,8 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
         <NextLink href={'/article/' + article.slug}>
           <LinkOverlay>
             <CardHeader
-              w={widthsLandscapeInner}
-              h={heightsHeader}
+              // w={widthsLandscapeInner}
+              // h={heightsHeader}
               direction="column"
               alignItems="center"
               justifyContent="center"
@@ -124,7 +124,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   src={imageUrl}
                   alt={article.description}
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                   objectPosition="center"
                   quality={article.cover_image.width < 200 ? 90 : 40}
                   priority={preload}
@@ -140,8 +140,8 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
             </CardHeader>
 
             <CardBody
-              w={widthsLandscapeInner}
-              h={heightsBody}
+              // w={widthsLandscapeInner}
+              // h={heightsBody}
               direction="column"
               justifyContent={[
                 'space-between',
@@ -158,7 +158,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   as="h3"
                   color="whiteAlpha.800"
                   fontFamily="heading"
-                  fontWeight="normal"
+                  fontWeight='400'
                   fontSize={['sm', '2xl', 'md', 'md', 'lg']}
                 >
                   {article.title}
@@ -173,7 +173,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
               alignItems="flex-start"
               direction="column"
               color="whiteAlpha.800"
-              fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+              fontSize={['sm', 'md', 'sm', 'md', 'md']}
               pb="16px"
             >
               {renderDesktop && (
@@ -183,7 +183,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Heading
                         as="h4"
                         fontWeight="bold"
-                        fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                        fontSize={['sm', 'md', 'sm', 'md', 'md']}
                         pr="2.75ch"
                       >
                         {locale === 'en' ? 'Date: ' : 'Η/νία'}
@@ -204,7 +204,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Heading
                         as="h4"
                         fontWeight="bold"
-                        fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                        fontSize={['sm', 'md', 'sm', 'md', 'md']}
                         pr="1ch"
                       >
                         Credits:{' '}

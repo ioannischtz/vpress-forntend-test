@@ -46,6 +46,8 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   }
   const imageUrl = getStrapiMedia(photoPost.image);
 
+  const aspectRatio = photoPost.image.width / photoPost.image.height;
+
   const widthsOuter = [
     'calc(75vw - 48px)',
     'calc(40vw - 48px)',
@@ -60,6 +62,16 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
     'calc(0.45 * (100vh - 48px))',
     'calc(0.45 * (100vh - 48px))',
   ];
+
+  let w_ar = [
+    `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
+    `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
+    `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
+    `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
+    `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
+  ];
+  
+
   const widthsInner = [
     'calc(75vw - 50px)',
     'calc(40vw - 50px)',
@@ -107,7 +119,8 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   return (
     <Card
       w={isPortrait ? widthsOuter : widthsLandscape}
-      h={heightsOuter}
+      // w = {w_ar}
+      // h={heightsOuter}
       pb="16px"
       {...props}
     >
@@ -122,8 +135,9 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
       >
         <LinkBox _hover={{ cursor: 'pointer' }}>
           <CardHeader
-            w={widthsLandscapeInner}
-            h={heightsHeader}
+            // w={widthsLandscapeInner}
+            // w = {w_ar}
+            // h={heightsHeader}
             direction="column"
             alignItems="center"
             justifyContent="center"
@@ -143,9 +157,9 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                 src={imageUrl}
                 alt={photoPost.description}
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
                 objectPosition="center"
-                quality={photoPost.image.width < 200 ? 90 : 40}
+                quality={photoPost.image.width < 200 ? 90 : 50}
                 priority={preload}
               />
             </Box>
@@ -154,8 +168,8 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
           <NextLink href={'/photo-post/' + photoPost.slug}>
             <LinkOverlay>
               <CardBody
-                w={widthsLandscapeInner}
-                h={heightsBody}
+                // w={widthsLandscapeInner}
+                // h={heightsBody}
                 direction="column"
                 justifyContent={[
                   'space-between',
@@ -172,7 +186,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     as="h3"
                     color="whiteAlpha.800"
                     fontFamily="heading"
-                    fontWeight="normal"
+                    fontWeight='400'
                     fontSize={['sm', '2xl', 'lg', 'lg', '2xl']}
                   >
                     {photoPost.title}
@@ -188,7 +202,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             alignItems="flex-start"
             direction="column"
             color="whiteAlpha.800"
-            fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+            fontSize={['sm', 'md', 'sm', 'md', 'md']}
             pb="16px"
           >
             {renderDesktop && (
@@ -198,7 +212,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     <Heading
                       as="h4"
                       fontWeight="bold"
-                      fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                      fontSize={['sm', 'md', 'sm', 'md', 'md']}
                       pr="2.75ch"
                     >
                       {locale === 'en' ? 'Date: ' : 'Η/νία'}
@@ -219,7 +233,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     <Heading
                       as="h4"
                       fontWeight="bold"
-                      fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                      fontSize={['sm', 'md', 'sm', 'md', 'md']}
                       pr="1ch"
                     >
                       Credits:{' '}
