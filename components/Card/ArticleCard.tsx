@@ -93,7 +93,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
   return (
     <Card
       w={isPortrait ? widthsOuter : widthsLandscape}
-      h={heightsOuter}
+      // h={heightsOuter}
       pb="16px"
       {...props}
     >
@@ -101,8 +101,8 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
         <NextLink href={'/article/' + article.slug}>
           <LinkOverlay>
             <CardHeader
-              w={widthsLandscapeInner}
-              h={heightsHeader}
+              // w={widthsLandscapeInner}
+              // h={heightsHeader}
               direction="column"
               alignItems="center"
               justifyContent="center"
@@ -140,8 +140,8 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
             </CardHeader>
 
             <CardBody
-              w={widthsLandscapeInner}
-              h={heightsBody}
+              // w={widthsLandscapeInner}
+              // h={heightsBody}
               direction="column"
               justifyContent={[
                 'space-between',
@@ -173,7 +173,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
               alignItems="flex-start"
               direction="column"
               color="whiteAlpha.800"
-              fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+              fontSize={['sm', 'md', 'sm', 'md', 'md']}
               pb="16px"
             >
               {renderDesktop && (
