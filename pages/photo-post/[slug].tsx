@@ -110,16 +110,19 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   })
   const screenType = useScreenType()
   let dividerComp
+  let modalImgW
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
       dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+      modalImgW = '65%'
       break
     case "isSmallTablet":
     case "isMobile":
       dividerComp = (
         <Divider orientation="horizontal" size="sm" variant="white" />
       )
+      modalImgW = '80%'
   }
 
   useEffect(() => {
@@ -208,14 +211,14 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+        <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent maxW={modalImgW}>
             <ModalHeader>{photo_Post.title}</ModalHeader>
             <ModalBody>
               <Box
                 w="100%"
-                h="60vh"
+                // h="60vh"
                 overflow="clip"
                 position="relative"
                 borderRadius="4px"
