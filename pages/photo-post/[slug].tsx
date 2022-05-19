@@ -199,6 +199,10 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     "calc(85vw - 48px)"
   ]
   const options = { month: "long", day: "numeric", year: "numeric" }
+
+  const aspectRatio = photo_Post.image.width / photo_Post.image.height;
+
+
   const renderBreadcrumbs = false
   return (
     <>
@@ -213,9 +217,10 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
       >
         <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
-          <ModalContent maxW={modalImgW}>
+          <ModalContent maxW={modalImgW} justifyContent="center"
+                alignItems="center">
             <ModalHeader>{photo_Post.title}</ModalHeader>
-            <ModalBody>
+            <ModalBody >
               <Box
                 w="100%"
                 // h="60vh"
@@ -241,6 +246,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                       ? 60
                       : 50
                   }
+                  // priority={true}
                 />
               </Box>
             </ModalBody>
@@ -254,25 +260,26 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}>
           <Box
             w="100%"
-            h="50%"
+            h={ aspectRatio > 1 ? "50%" : "80%"}
             overflow="clip"
             position="relative"
             borderRadius="4px"
+            backgroundColor= { aspectRatio > 1 ? "whiteAlpha.50" : "whiteAlpha.100"}
           >
             <Image
               src={imageUrl}
               alt={photo_Post.description}
               layout="fill"
-              objectFit="cover"
+              objectFit={ aspectRatio > 1 ? "cover" : "contain"}
               objectPosition="center"
               quality={
                 photo_Post.image.width < 200
                   ? 90
                   : photo_Post.image.width < 350
                   ? 75
-                  : photo_Post.image.width < 500
-                  ? 65
-                  : 60
+                  : photo_Post.image.width < 700
+                  ? 70
+                  : 65
               }
               priority={true}
             />
