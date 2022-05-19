@@ -186,7 +186,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     as="h3"
                     color="whiteAlpha.800"
                     fontFamily="heading"
-                    fontWeight="normal"
+                    fontWeight='400'
                     fontSize={['sm', '2xl', 'lg', 'lg', '2xl']}
                   >
                     {photoPost.title}
@@ -212,7 +212,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     <Heading
                       as="h4"
                       fontWeight="bold"
-                      fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                      fontSize={['sm', 'md', 'sm', 'md', 'md']}
                       pr="2.75ch"
                     >
                       {locale === 'en' ? 'Date: ' : 'Η/νία'}
@@ -233,7 +233,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     <Heading
                       as="h4"
                       fontWeight="bold"
-                      fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                      fontSize={['sm', 'md', 'sm', 'md', 'md']}
                       pr="1ch"
                     >
                       Credits:{' '}

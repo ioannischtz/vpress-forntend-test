@@ -124,7 +124,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   src={imageUrl}
                   alt={article.description}
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                   objectPosition="center"
                   quality={article.cover_image.width < 200 ? 90 : 40}
                   priority={preload}
@@ -158,7 +158,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   as="h3"
                   color="whiteAlpha.800"
                   fontFamily="heading"
-                  fontWeight="normal"
+                  fontWeight='400'
                   fontSize={['sm', '2xl', 'md', 'md', 'lg']}
                 >
                   {article.title}
@@ -183,7 +183,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Heading
                         as="h4"
                         fontWeight="bold"
-                        fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                        fontSize={['sm', 'md', 'sm', 'md', 'md']}
                         pr="2.75ch"
                       >
                         {locale === 'en' ? 'Date: ' : 'Η/νία'}
@@ -204,7 +204,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Heading
                         as="h4"
                         fontWeight="bold"
-                        fontSize={['xs', 'sm', 'xs', 'sm', 'sm']}
+                        fontSize={['sm', 'md', 'sm', 'md', 'md']}
                         pr="1ch"
                       >
                         Credits:{' '}
