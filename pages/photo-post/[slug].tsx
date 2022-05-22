@@ -115,7 +115,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     case "isDesktop":
     case "isTablet":
       dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
-      modalImgW = '65%'
+      modalImgW = photo_Post.image.height > photo_Post.image.width ? '40%' : '60%'
       break
     case "isSmallTablet":
     case "isMobile":
@@ -260,17 +260,17 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}>
           <Box
             w="100%"
-            h={ aspectRatio > 1 ? "50%" : "80%"}
+            h={ aspectRatio > 1 ? "50%" : "50%"}
             overflow="clip"
             position="relative"
             borderRadius="4px"
-            backgroundColor= { aspectRatio > 1 ? "whiteAlpha.50" : "whiteAlpha.100"}
+            backgroundColor= { aspectRatio > 1 ? "whiteAlpha.100" : "whiteAlpha.100"}
           >
             <Image
               src={imageUrl}
               alt={photo_Post.description}
               layout="fill"
-              objectFit={ aspectRatio > 1 ? "cover" : "contain"}
+              objectFit={ aspectRatio > 1 ? "contain" : "contain"}
               objectPosition="center"
               quality={
                 photo_Post.image.width < 200
