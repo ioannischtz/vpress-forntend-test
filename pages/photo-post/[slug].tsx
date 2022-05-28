@@ -382,7 +382,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                           fontSize={["xs", "sm", "xs", "sm", "sm"]}
                           pr="2.75ch"
                         >
-                          {router.locale === "en" ? "Date: " : "Η/νία"}
+                          {router.locale === "en" ? "Date: " : "Ημ/νία"}
                         </Heading>
                       </Box>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>

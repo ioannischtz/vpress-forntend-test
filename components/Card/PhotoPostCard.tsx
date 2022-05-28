@@ -215,7 +215,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                       fontSize={['sm', 'md', 'sm', 'md', 'md']}
                       pr="2.75ch"
                     >
-                      {locale === 'en' ? 'Date: ' : 'Η/μνία'}
+                      {locale === 'en' ? 'Date: ' : 'Ημ/νία'}
                     </Heading>
                   </Box>
                   <Box>
