@@ -35,15 +35,15 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   const screenType = useScreenType();
   const { locale } = useRouter();
   let renderDesktop = true;
-  switch (screenType) {
-    case 'isDesktop':
-    case 'isTablet':
-      renderDesktop = true;
-      break;
-    case 'isSmallTablet':
-    case 'isMobile':
-      renderDesktop = false;
-  }
+  // switch (screenType) {
+  //   case 'isDesktop':
+  //   case 'isTablet':
+  //     renderDesktop = true;
+  //     break;
+  //   case 'isSmallTablet':
+  //   case 'isMobile':
+  //     renderDesktop = false;
+  // }
   const imageUrl = getStrapiMedia(photoPost.image);
 
   const aspectRatio = photoPost.image.width / photoPost.image.height;

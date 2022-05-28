@@ -32,15 +32,15 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
 }) => {
   const screenType = useScreenType();
   let renderDesktop = true;
-  switch (screenType) {
-    case 'isDesktop':
-    case 'isTablet':
-      renderDesktop = true;
-      break;
-    case 'isSmallTablet':
-    case 'isMobile':
-      renderDesktop = false;
-  }
+  // switch (screenType) {
+  //   case 'isDesktop':
+  //   case 'isTablet':
+  //     renderDesktop = true;
+  //     break;
+  //   case 'isSmallTablet':
+  //   case 'isMobile':
+  //     renderDesktop = false;
+  // }
   const imageUrl = getStrapiMedia(article.cover_image);
 
   const { locale } = useRouter();
