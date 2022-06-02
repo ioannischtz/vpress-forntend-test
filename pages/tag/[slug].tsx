@@ -18,7 +18,7 @@ import filterWriter from "../../lib/filterWriter"
 
 // import useSWR from 'swr';
 import useMounted from "../../hooks/useMounted"
-import { useStoreBreadcrumbs } from "../../hooks/useStoreBreadcrumbs"
+
 import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
@@ -95,16 +95,6 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
       />
     )
   }
-  useStoreBreadcrumbs(
-    router.locale === "en"
-      ? router.pathname.replace("/en", "").replace("/[slug]", "") +
-          `/${tag?.slug_2nd_locale}`
-      : "/en" +
-          router.pathname.replace("/[slug]", "") +
-          `/${tag?.slug_2nd_locale}`,
-    router.isReady,
-    router.asPath
-  )
 
   useEffect(() => {
     if (router.isReady) setSlug2(tag?.slug_2nd_locale)

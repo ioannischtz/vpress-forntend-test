@@ -12,7 +12,7 @@ import {
   WritersResponse,
 } from '../../custom_typings/models';
 import useMounted from '../../hooks/useMounted';
-import { useStoreBreadcrumbs } from '../../hooks/useStoreBreadcrumbs';
+
 import { NextSeo } from 'next-seo';
 import FallbackPage from '../../components/FallbackPage';
 import ShareButtons from '../../components/ShareButtons';
@@ -88,16 +88,6 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
     );
   }
 
-  useStoreBreadcrumbs(
-    router.locale === 'en'
-      ? router.pathname.replace('/en', '').replace('/[slug]', '') +
-          `/${article?.slug_2nd_locale}`
-      : '/en' +
-          router.pathname.replace('/[slug]', '') +
-          `/${article?.slug_2nd_locale}`,
-    router.isReady,
-    router.asPath
-  );
 
   useEffect(() => {
     if (router.isReady) setSlug2(article?.slug_2nd_locale);
@@ -149,7 +139,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
         isOnSearchPage={false}
       >
         <ContentGrid
-          useSimpleGrid={false}
+          useSimpleGrid={true}
           heading={article.title}
           footer={shareBtns}
           locale={router.locale}

@@ -11,14 +11,12 @@ import {
   Article,
   WritersResponse,
   CategoriesResponse,
-  ArticlesResponse
 } from "../../custom_typings/models"
 import useMounted from "../../hooks/useMounted"
 import { Skeleton } from "@chakra-ui/skeleton"
 import { Button } from "@chakra-ui/button"
 import { KeyLoader } from "swr"
 import useSWRInfinite from "swr/infinite"
-import { useStoreBreadcrumbs } from "../../hooks/useStoreBreadcrumbs"
 import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
@@ -104,16 +102,6 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
       />
     )
   }
-  useStoreBreadcrumbs(
-    router.locale === "en"
-      ? router.pathname.replace("/en", "").replace("/[slug]", "") +
-          `/${writer?.slug_2nd_locale}`
-      : "/en" +
-          router.pathname.replace("/[slug]", "") +
-          `/${writer?.slug_2nd_locale}`,
-    router.isReady,
-    router.asPath
-  )
 
   useEffect(() => {
     if (router.isReady) setSlug2(writer?.slug_2nd_locale)

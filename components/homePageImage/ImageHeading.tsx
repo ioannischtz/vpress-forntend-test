@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Heading, Text, BoxProps, Flex, Link } from '@chakra-ui/layout';
+import { Heading, Text, BoxProps, Flex, Link } from '@chakra-ui/layout';
 import NextLink from 'next/link';
 
 interface ImageHeadingProps {

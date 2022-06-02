@@ -10,7 +10,7 @@ import {
   WritersResponse,
 } from '../custom_typings/models';
 import useMounted from '../hooks/useMounted';
-import { useStoreBreadcrumbs } from '../hooks/useStoreBreadcrumbs';
+
 import { fetchAPI } from '../lib/api';
 import { NextSeo } from 'next-seo';
 
@@ -42,11 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
   const router = useRouter();
   const isMounted = useMounted();
-  useStoreBreadcrumbs(
-    router.locale === 'en' ? '/the-team' : '/en/the-team',
-    router.isReady,
-    router.asPath
-  );
+  
 // title: theTeam.TeamPageHero.title,
   const SEO = {
     

@@ -1,13 +1,7 @@
 import { Flex, Heading, Box, SimpleGrid } from "@chakra-ui/layout"
 import { FlexboxProps } from "@chakra-ui/styled-system"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink
-} from "@chakra-ui/breadcrumb"
-import React, { useEffect, useState } from "react"
-import NextLink from "next/link"
 
+import React from "react"
 interface ContentGridProps {
   children: React.ReactNode
   heading: string
@@ -29,23 +23,6 @@ const ContentGrid: React.FC<ContentGridProps> = ({
   children,
   ...props
 }) => {
-  const [breadcrumbs, setBreadcrumbs] = useState<string[]>([])
-
-  // !!!!! disable breadcrumbs
-  renderBreadCrumbs = false
-
-  useEffect(() => {
-    const bcrumbs_EN_session = sessionStorage.getItem("breadcrumbs_EN")
-    const bcrumbs_GR_session = sessionStorage.getItem("breadcrumbs_GR")
-    if (locale === "en" && bcrumbs_EN_session !== null) {
-      const bcrumbs_EN = JSON.parse(bcrumbs_EN_session)
-      setBreadcrumbs(bcrumbs_EN)
-    }
-    if (locale === "el-GR" && bcrumbs_GR_session !== null) {
-      const bcrumbs_GR = JSON.parse(bcrumbs_GR_session)
-      setBreadcrumbs(bcrumbs_GR)
-    }
-  }, [locale])
 
   return (
     <Flex
@@ -97,45 +74,6 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         >
           {heading}
         </Heading>
-        {renderBreadCrumbs && breadcrumbs.length > 0 && (
-          <Breadcrumb color="whiteAlpha.600" p="12px">
-            <BreadcrumbItem key={locale === "en" ? "Home" : "Αρχική"}>
-              <BreadcrumbLink
-                as={NextLink}
-                href={locale === "en" ? "/en" : "/"}
-              >
-                <a>{locale === "en" ? "Home" : "Αρχική"}</a>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            {breadcrumbs.map((bc) => {
-              return (
-                bc !== "/" &&
-                bc !== "/en" &&
-                !(bc.includes("search") && asPath.includes("search")) &&
-                bc.split("/").pop() !== asPath.split("/").pop() && (
-                  <BreadcrumbItem key={bc.split("/").pop()}>
-                    <BreadcrumbLink as={NextLink} href={bc}>
-                      <a>{bc.split("/").pop()}</a>
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                )
-              )
-            })}
-            <BreadcrumbItem
-              isCurrentPage={true}
-              color="semantic.red.light"
-              key={asPath.split("/").pop()}
-            >
-              <BreadcrumbLink as={NextLink} href={asPath} shallow={true}>
-                <a>
-                  {asPath.includes("search")
-                    ? "search-page"
-                    : asPath.split("/").pop()}
-                </a>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </Breadcrumb>
-        )}
       </Flex>
       <Box
         h="400vh"
