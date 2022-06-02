@@ -13,8 +13,8 @@ import useMounted from '../hooks/useMounted';
 import { useStoreBreadcrumbs } from '../hooks/useStoreBreadcrumbs';
 import { fetchAPI } from '../lib/api';
 import { NextSeo } from 'next-seo';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
+
+
 import { GetStaticProps } from 'next';
 import ShareButtons from '../components/ShareButtons';
 
@@ -96,9 +96,7 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
                 fontWeight="normal"
                 m="4px"
               >
-                <ReactMarkdown remarkPlugins={[gfm]}>
                   {theTeam.Footer_Message}
-                </ReactMarkdown>
               </Box>
               {shareBtns}
             </Flex>

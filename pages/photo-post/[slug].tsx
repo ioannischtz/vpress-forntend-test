@@ -10,11 +10,7 @@ import { Tag } from "@chakra-ui/tag"
 import { useBreakpointValue } from "@chakra-ui/media-query"
 import { useDisclosure } from "@chakra-ui/hooks"
 import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/layout"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink
-} from "@chakra-ui/breadcrumb"
+
 import {
   Modal,
   ModalBody,
@@ -33,9 +29,8 @@ import Layout from "../../components/layouts/Layout"
 import Image from "next/image"
 import { getStrapiMedia } from "../../lib/media"
 import { useScreenType } from "../../hooks/useScreenType"
-import ReactMarkdown from "react-markdown"
-import gfm from "remark-gfm"
-import { useStoreBreadcrumbs } from "../../hooks/useStoreBreadcrumbs"
+
+
 import { NextSeo } from "next-seo"
 import useMounted from "../../hooks/useMounted"
 import FallbackPage from "../../components/FallbackPage"
@@ -99,7 +94,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
 
   const [slug2, setSlug2] = useState(photo_Post?.slug_2nd_locale)
   const { isOpen, onToggle, onClose } = useDisclosure()
-  const [breadcrumbs, setBreadcrumbs] = useState<string[]>([])
+
   const tagSize = useBreakpointValue({
     base: "sm",
     sm: "lg",
@@ -124,32 +119,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
       )
       modalImgW = '80%'
   }
-
-  useEffect(() => {
-    if (router.isReady) {
-      const bcrumbs_EN_session = sessionStorage.getItem("breadcrumbs_EN")
-      const bcrumbs_GR_session = sessionStorage.getItem("breadcrumbs_GR")
-      if (router.locale === "en" && bcrumbs_EN_session !== null) {
-        const bcrumbs_EN = JSON.parse(bcrumbs_EN_session)
-        setBreadcrumbs(bcrumbs_EN)
-      }
-      if (router.locale === "el-GR" && bcrumbs_GR_session !== null) {
-        const bcrumbs_GR = JSON.parse(bcrumbs_GR_session)
-        setBreadcrumbs(bcrumbs_GR)
-      }
-    }
-  }, [router.locale, router.isReady])
-
-  useStoreBreadcrumbs(
-    router.locale === "en"
-      ? router.pathname.replace("/en", "").replace("/[slug]", "") +
-          `/${photo_Post?.slug_2nd_locale}`
-      : "/en" +
-          router.pathname.replace("/[slug]", "") +
-          `/${photo_Post?.slug_2nd_locale}`,
-    router.isReady,
-    router.asPath
-  )
 
   useEffect(() => {
     if (router.isReady) setSlug2(photo_Post?.slug_2nd_locale)
@@ -202,8 +171,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
 
   const aspectRatio = photo_Post.image.width / photo_Post.image.height;
 
-
-  const renderBreadcrumbs = false
   return (
     <>
       <NextSeo {...SEO} />
@@ -305,51 +272,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pl={["24px", "24px", "72px", "80px", "80px"]}
                 pr={["24px", "24px", "48px", "64px", "64px"]}
               >
-                {renderBreadcrumbs && (
-                  <Breadcrumb color="whiteAlpha.600" p="12px">
-                    <BreadcrumbItem
-                      key={router.locale === "en" ? "Home" : "Αρχική"}
-                    >
-                      <BreadcrumbLink
-                        as={NextLink}
-                        href={router.locale === "en" ? "/en" : "/"}
-                      >
-                        <a>{router.locale === "en" ? "Home" : "Αρχική"}</a>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    {breadcrumbs.map((bc) => {
-                      return (
-                        bc !== "/" &&
-                        bc !== "/en" &&
-                        !(
-                          bc.includes("search") &&
-                          router.asPath.includes("search")
-                        ) &&
-                        bc.split("/").pop() !==
-                          router.asPath.split("/").pop() && (
-                          <BreadcrumbItem key={bc.split("/").pop()}>
-                            <BreadcrumbLink as={NextLink} href={bc}>
-                              <a>{bc.split("/").pop()}</a>
-                            </BreadcrumbLink>
-                          </BreadcrumbItem>
-                        )
-                      )
-                    })}
-                    <BreadcrumbItem
-                      isCurrentPage={true}
-                      color="semantic.red.light"
-                      key={router.asPath.split("/").pop()}
-                    >
-                      <BreadcrumbLink
-                        as={NextLink}
-                        href={router.asPath}
-                        shallow={true}
-                      >
-                        <a>{router.asPath.split("/").pop()}</a>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                  </Breadcrumb>
-                )}
+                
                 <Box>
                   <Heading>{photo_Post.title}</Heading>
                 </Box>
@@ -357,9 +280,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                   fontSize={["sm", "2xl", "md", "md", "lg"]}
                   py={["24px", "24px", "24px", "24px", "36px"]}
                 >
-                  <ReactMarkdown remarkPlugins={[gfm]}>
                     {photo_Post.content}
-                  </ReactMarkdown>
                 </Box>
                 <Flex
                   direction={["column", "column", "row", "row", "row"]}
