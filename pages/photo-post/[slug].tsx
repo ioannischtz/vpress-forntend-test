@@ -26,8 +26,11 @@ import {
   WritersResponse
 } from "../../custom_typings/models"
 import Layout from "../../components/layouts/Layout"
+import ContentGrid from "../../components/layouts/ContentGrid"
 import Image from "next/image"
 import { getStrapiMedia } from "../../lib/media"
+import { vhTOpx } from "../../lib/vhTOpx"
+import { getViewportHeightPX } from "../../lib/getViewportHeightPX"
 import { useScreenType } from "../../hooks/useScreenType"
 
 
@@ -104,13 +107,31 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     "2xl": "lg"
   })
   const screenType = useScreenType()
+
+  const aspectRatio = photo_Post.image.width / photo_Post.image.height;
+
   let dividerComp
   let modalImgW
+  let imgContainerH = ["400px","320px","480px","480px","480px"]
+  let imgContainerW = ["400px","320px","480px","480px","480px"]
+  // let imgContainerH, imgContainerW
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
-      dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+      // dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+      dividerComp = (
+        <Divider orientation="horizontal" size="sm" variant="white" />
+      )
       modalImgW = photo_Post.image.height > photo_Post.image.width ? '40%' : '60%'
+      // imgContainerH = getViewportHeightPX() > 600 ? 'calc(50vh - 24px)' : 'calc(80vh - 24px)'
+      // imgContainerW = getViewportHeightPX() > 600 ? `${(vhTOpx(50) - 24) * aspectRatio}px` : `${(vhTOpx(80) - 24) * aspectRatio}px`
+      // let vhPX = getViewportHeightPX()
+      // imgContainerH = vhPX > 600 ? `${50*vhPX - 24}px` : `${80*vhPX - 24}px`
+      // imgContainerW = 'calc(42.25vw - 24px)' 
+      // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
+      // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
+      // imgContainerH = '50%'
+      // imgContainerW = `${50 * aspectRatio}%`
       break
     case "isSmallTablet":
     case "isMobile":
@@ -118,6 +139,10 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Divider orientation="horizontal" size="sm" variant="white" />
       )
       modalImgW = '80%'
+      // imgContainerH = '80%'
+      // imgContainerW = `${80 * aspectRatio}%`
+      // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
+      // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
   }
 
   useEffect(() => {
@@ -169,8 +194,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   ]
   const options = { month: "long", day: "numeric", year: "numeric" }
 
-  const aspectRatio = photo_Post.image.width / photo_Post.image.height;
-
   return (
     <>
       <NextSeo {...SEO} />
@@ -200,8 +223,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                   alt={photo_Post.description}
                   // layout="fill"
                   layout="intrinsic"
-                  width={photo_Post.image.width}
-                  height={photo_Post.image.height}
+                  width={0.85 * photo_Post.image.width}
+                  height={0.85 * photo_Post.image.height}
                   objectFit="cover"
                   objectPosition="center"
                   quality={
@@ -224,18 +247,34 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             </ModalFooter>
           </ModalContent>
         </Modal>
-        <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}>
+        <ContentGrid 
+          useSimpleGrid={false}
+          heading=""
+          footer={<></>}
+          asPath={router.asPath}
+          locale={router.locale}
+          renderBreadCrumbs={false}
+        >
+        <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}  alignItems="center" 
+          backgroundColor="neutral.raisin_black.dark" overflowY="auto"
+          overflowX="hidden">
           <Box
-            w="100%"
-            h={ aspectRatio > 1 ? "50%" : "50%"}
+            height = {imgContainerH}
+            width = {imgContainerW}
+            // h = "720px"
+            // w = "1080px"
             overflow="clip"
             position="relative"
-            borderRadius="4px"
+            borderTopLeftRadius = '8px'
+            borderTopRightRadius = '8px'
             backgroundColor= { aspectRatio > 1 ? "whiteAlpha.100" : "whiteAlpha.100"}
+            
           >
             <Image
               src={imageUrl}
-              alt={photo_Post.description}
+              alt={photo_Post.description}   
+              // height={480}   
+              // width={480}      
               layout="fill"
               objectFit={ aspectRatio > 1 ? "contain" : "contain"}
               objectPosition="center"
@@ -252,18 +291,17 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             />
           </Box>
           <Box
-            w="100%"
-            h="50%"
+            w = {imgContainerW}
             py={["24px", "24px", "24px", "24px", "36px"]}
             backgroundColor="whiteAlpha.50"
-            overflow="hidden"
           >
             <Flex
-              direction={["column", "column", "row", "row", "row"]}
-              w="100%"
-              h="100%"
-              overflowY="auto"
-              overflowX="hidden"
+              direction="column"
+              w = {imgContainerW}
+              // w="100%"
+              // h="100%"
+              // overflowY="auto"
+              // overflowX="hidden"
             >
               <Flex
                 direction="column"
@@ -276,22 +314,10 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 <Box>
                   <Heading>{photo_Post.title}</Heading>
                 </Box>
-                <Box
-                  fontSize={["sm", "2xl", "md", "md", "lg"]}
-                  py={["24px", "24px", "24px", "24px", "36px"]}
-                >
-                    {photo_Post.content}
-                </Box>
                 <Flex
-                  direction={["column", "column", "row", "row", "row"]}
-                  justifyContent="space-between"
-                  alignItems={[
-                    "center",
-                    "center",
-                    "flex-end",
-                    "flex-end",
-                    "flex-end"
-                  ]}
+                  direction="column"
+                  // justifyContent="space-between"
+                  alignItems="center"
                   py="12px"
                 >
                   <Box w="100%">
@@ -314,7 +340,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                         </Text>
                       </Box>
                     </Flex>
-
                     <Flex direction="row">
                       <Box>
                         <Heading
@@ -332,13 +357,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                       </Box>
                     </Flex>
                   </Box>
-
                   <ShareButtons
                     url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
                     description={photo_Post.description}
                     pt={["16px", "16px", "0", "0", "0"]}
                   />
-
                   <Box
                     pt={["12px", "12px", "0", "0", "0"]}
                     pb={["24px", "24", "0", "0", "0"]}
@@ -407,6 +430,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             </Flex>
           </Box>
         </Flex>
+        </ContentGrid>
       </Layout>
     </>
   )
