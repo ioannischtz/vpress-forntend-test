@@ -106,7 +106,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   })
   const screenType = useScreenType()
 
-  const aspectRatio = photo_Post.image.width / photo_Post.image.height;
+ 
 
   let dividerComp
   let modalImgW
@@ -192,6 +192,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   ]
   const options = { month: "long", day: "numeric", year: "numeric" }
 
+  const aspectRatio = photo_Post.image.width / photo_Post.image.height;
   return (
     <>
       <NextSeo {...SEO} />
