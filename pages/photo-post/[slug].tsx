@@ -29,8 +29,6 @@ import Layout from "../../components/layouts/Layout"
 import ContentGrid from "../../components/layouts/ContentGrid"
 import Image from "next/image"
 import { getStrapiMedia } from "../../lib/media"
-import { vhTOpx } from "../../lib/vhTOpx"
-import { getViewportHeightPX } from "../../lib/getViewportHeightPX"
 import { useScreenType } from "../../hooks/useScreenType"
 
 
