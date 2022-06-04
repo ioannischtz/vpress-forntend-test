@@ -180,7 +180,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
           footer={shareBtns}
           asPath={router.asPath}
           locale={router.locale}
-          renderBreadCrumbs={true}
+          renderBreadCrumbs={false}
         >
           {!articles ? (
             skeletonArr.map((i) => {
@@ -256,20 +256,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
               ) : null}
             </>
           )}
-          {/* {category.articles.map((article) => {
-          return (
-            <ArticleCard
-              article={article}
-              writer_name={filterWriter(writers, article.writer).name}
-              key={article.id}
-              isPortrait={
-                article.cover_image.width < article.cover_image.height
-              }
-              flex="auto"
-              m="0 18px 18px 0"
-            />
-          );
-        })} */}
         </ContentGrid>
       </Layout>
     </>

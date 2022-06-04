@@ -76,7 +76,7 @@ const Layout: React.FC<LayoutProps> = ({
         </Link>
       )
       layH = 'auto'
-      layW = 'auto'
+      layW = "calc(15vw)"
       break
     case "isSmallTablet":
     case "isMobile":

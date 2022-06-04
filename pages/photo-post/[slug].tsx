@@ -112,8 +112,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
 
   let dividerComp
   let modalImgW
-  let imgContainerH = ["400px","320px","480px","480px","480px"]
-  let imgContainerW = ["400px","320px","480px","480px","480px"]
+  let imgContainerH = ["400px","320px","500px","500px","500px"]
+  let imgContainerW = ["400px","320px","500px","500px","500px"]
   // let imgContainerH, imgContainerW
   switch (screenType) {
     case "isDesktop":
@@ -261,14 +261,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           <Box
             height = {imgContainerH}
             width = {imgContainerW}
-            // h = "720px"
-            // w = "1080px"
             overflow="clip"
             position="relative"
             borderTopLeftRadius = '8px'
             borderTopRightRadius = '8px'
-            backgroundColor= { aspectRatio > 1 ? "whiteAlpha.100" : "whiteAlpha.100"}
-            
+            backgroundColor= "whiteAlpha.100" 
           >
             <Image
               src={imageUrl}
@@ -292,46 +289,41 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           </Box>
           <Box
             w = {imgContainerW}
-            py={["24px", "24px", "24px", "24px", "36px"]}
+            py="24px"
             backgroundColor="whiteAlpha.50"
           >
             <Flex
               direction="column"
               w = {imgContainerW}
-              // w="100%"
-              // h="100%"
-              // overflowY="auto"
-              // overflowX="hidden"
             >
               <Flex
                 direction="column"
-                textAlign={["start", "start", "end", "end", "end"]}
-                w={["100%", "100%", "60%", "60%", "60%"]}
-                pl={["24px", "24px", "72px", "80px", "80px"]}
-                pr={["24px", "24px", "48px", "64px", "64px"]}
+                textAlign="start"
+                w="100%"
+                pl="24px"
+                pr="24px"
               >
-                
-                <Box>
-                  <Heading>{photo_Post.title}</Heading>
-                </Box>
+                <Heading size='lg'>{photo_Post.title}</Heading>
                 <Flex
                   direction="column"
-                  // justifyContent="space-between"
                   alignItems="center"
-                  py="12px"
-                >
-                  <Box w="100%">
-                    <Flex direction="row">
-                      <Box>
-                        <Heading
-                          as="h4"
-                          fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="2.75ch"
-                        >
-                          {router.locale === "en" ? "Date: " : "Ημ/νία"}
-                        </Heading>
-                      </Box>
+                  py="16px"
+                > 
+                  <Flex
+                    w = "100%"
+                    direction="row"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <Flex direction="row">
+                      <Heading
+                        as="h4"
+                        fontWeight="bold"
+                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
+                        pr="2.75ch"
+                      >
+                        {router.locale === "en" ? "Date: " : "Ημ/νία"}
+                      </Heading>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>
                           {/* @ts-ignore*/}
@@ -339,33 +331,26 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                             .format(new Date(photo_Post.date ? photo_Post.date : photo_Post.published_at))}
                         </Text>
                       </Box>
-                    </Flex>
-                    <Flex direction="row">
-                      <Box>
-                        <Heading
-                          as="h4"
-                          fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="1ch"
-                        >
-                          Credits:{" "}
-                        </Heading>
-                      </Box>
+                      </Flex>
+                      <Flex direction="row">
+                      <Heading
+                        as="h4"
+                        fontWeight="bold"
+                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
+                        pr="1ch"
+                      >
+                        Credits:{" "}
+                      </Heading>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>{photo_Post.writer?.name}</Text>
                         {/* <Text>{article.author.name_GR}</Text> */}
                       </Box>
-                    </Flex>
-                  </Box>
-                  <ShareButtons
-                    url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-                    description={photo_Post.description}
-                    pt={["16px", "16px", "0", "0", "0"]}
-                  />
-                  <Box
-                    pt={["12px", "12px", "0", "0", "0"]}
-                    pb={["24px", "24", "0", "0", "0"]}
-                  >
+                      </Flex>
+                    </Box>
+                    <Box
+                      pt={["12px", "12px", "0", "0", "0"]}
+                      pb={["24px", "24", "0", "0", "0"]}
+                    >
                     <Button
                       size={tagSize}
                       rightIcon={<FaEye />}
@@ -385,17 +370,18 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     >
                       {router.locale === "el-GR" ? "Εικόνα" : "Image"}
                     </Button>
-                  </Box>
+                    </Box>
+                  </Flex>
                 </Flex>
               </Flex>
               {dividerComp}
               <Flex
                 direction="column"
                 textAlign="start"
-                w={["100%", "100%", "40%", "40%", "40%"]}
-                py={["24px", "24px", "0", "0", "0"]}
-                pr={["24px", "24px", "72px", "80px", "80px"]}
-                pl={["24px", "24px", "48px", "64px", "64px"]}
+                w="100%"
+                py="24px"
+                pr="24px"
+                pl="24px"
               >
                 <Heading fontWeight="normal">
                   <Flex direction="row">
@@ -426,6 +412,12 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     )
                   })}
                 </Text>
+                <ShareButtons
+                    url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+                    description={photo_Post.description}
+                    pt="36px"
+                    alignSelf="flex-start"
+                  />
               </Flex>
             </Flex>
           </Box>

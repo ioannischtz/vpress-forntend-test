@@ -139,12 +139,12 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
         isOnSearchPage={false}
       >
         <ContentGrid
-          useSimpleGrid={true}
+          useSimpleGrid={false}
           heading={article.title}
           footer={shareBtns}
           locale={router.locale}
           asPath={router.asPath}
-          renderBreadCrumbs={true}
+          renderBreadCrumbs={false}
         >
           {article.photo_posts?.map((photoPost,i) => {
             return (
