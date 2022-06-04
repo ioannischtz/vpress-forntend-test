@@ -11,7 +11,7 @@ import {
   WritersResponse,
 } from '../custom_typings/models';
 import filterWriter from '../lib/filterWriter';
-import { useStoreBreadcrumbs } from '../hooks/useStoreBreadcrumbs';
+
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
@@ -43,10 +43,9 @@ const Home: React.FC<HomePageProps> = ({
   writers,
   locale,
 }) => {
-  const { asPath, isReady, pathname } = useRouter();
+  const { pathname } = useRouter();
   const imageUrl = getStrapiMedia(homepage.photo_post?.image);
 
-  useStoreBreadcrumbs(locale === 'en' ? '/' : '/en', isReady, asPath);
 
   const SEO = {
     title: homepage.HomepageHero.title,

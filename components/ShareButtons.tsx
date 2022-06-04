@@ -22,7 +22,7 @@ const ShareButtons: React.FC<ShareButtonsProps & FlexProps> = ({
   return (
     <Flex
       direction="row"
-      alignSelf={['center', 'center', 'flex-end', 'flex-end', 'flex-end']}
+      alignSelf='center'
       {...props}
     >
       <Box

@@ -10,11 +10,7 @@ import { Tag } from "@chakra-ui/tag"
 import { useBreakpointValue } from "@chakra-ui/media-query"
 import { useDisclosure } from "@chakra-ui/hooks"
 import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/layout"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink
-} from "@chakra-ui/breadcrumb"
+
 import {
   Modal,
   ModalBody,
@@ -30,12 +26,12 @@ import {
   WritersResponse
 } from "../../custom_typings/models"
 import Layout from "../../components/layouts/Layout"
+import ContentGrid from "../../components/layouts/ContentGrid"
 import Image from "next/image"
 import { getStrapiMedia } from "../../lib/media"
 import { useScreenType } from "../../hooks/useScreenType"
-import ReactMarkdown from "react-markdown"
-import gfm from "remark-gfm"
-import { useStoreBreadcrumbs } from "../../hooks/useStoreBreadcrumbs"
+
+
 import { NextSeo } from "next-seo"
 import useMounted from "../../hooks/useMounted"
 import FallbackPage from "../../components/FallbackPage"
@@ -99,7 +95,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
 
   const [slug2, setSlug2] = useState(photo_Post?.slug_2nd_locale)
   const { isOpen, onToggle, onClose } = useDisclosure()
-  const [breadcrumbs, setBreadcrumbs] = useState<string[]>([])
+
   const tagSize = useBreakpointValue({
     base: "sm",
     sm: "lg",
@@ -109,13 +105,31 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     "2xl": "lg"
   })
   const screenType = useScreenType()
+
+ 
+
   let dividerComp
   let modalImgW
+  let imgContainerH = ["400px","320px","500px","500px","500px"]
+  let imgContainerW = ["400px","320px","500px","500px","500px"]
+  // let imgContainerH, imgContainerW
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
-      dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+      // dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+      dividerComp = (
+        <Divider orientation="horizontal" size="sm" variant="white" />
+      )
       modalImgW = photo_Post.image.height > photo_Post.image.width ? '40%' : '60%'
+      // imgContainerH = getViewportHeightPX() > 600 ? 'calc(50vh - 24px)' : 'calc(80vh - 24px)'
+      // imgContainerW = getViewportHeightPX() > 600 ? `${(vhTOpx(50) - 24) * aspectRatio}px` : `${(vhTOpx(80) - 24) * aspectRatio}px`
+      // let vhPX = getViewportHeightPX()
+      // imgContainerH = vhPX > 600 ? `${50*vhPX - 24}px` : `${80*vhPX - 24}px`
+      // imgContainerW = 'calc(42.25vw - 24px)' 
+      // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
+      // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
+      // imgContainerH = '50%'
+      // imgContainerW = `${50 * aspectRatio}%`
       break
     case "isSmallTablet":
     case "isMobile":
@@ -123,33 +137,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Divider orientation="horizontal" size="sm" variant="white" />
       )
       modalImgW = '80%'
+      // imgContainerH = '80%'
+      // imgContainerW = `${80 * aspectRatio}%`
+      // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
+      // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
   }
-
-  useEffect(() => {
-    if (router.isReady) {
-      const bcrumbs_EN_session = sessionStorage.getItem("breadcrumbs_EN")
-      const bcrumbs_GR_session = sessionStorage.getItem("breadcrumbs_GR")
-      if (router.locale === "en" && bcrumbs_EN_session !== null) {
-        const bcrumbs_EN = JSON.parse(bcrumbs_EN_session)
-        setBreadcrumbs(bcrumbs_EN)
-      }
-      if (router.locale === "el-GR" && bcrumbs_GR_session !== null) {
-        const bcrumbs_GR = JSON.parse(bcrumbs_GR_session)
-        setBreadcrumbs(bcrumbs_GR)
-      }
-    }
-  }, [router.locale, router.isReady])
-
-  useStoreBreadcrumbs(
-    router.locale === "en"
-      ? router.pathname.replace("/en", "").replace("/[slug]", "") +
-          `/${photo_Post?.slug_2nd_locale}`
-      : "/en" +
-          router.pathname.replace("/[slug]", "") +
-          `/${photo_Post?.slug_2nd_locale}`,
-    router.isReady,
-    router.asPath
-  )
 
   useEffect(() => {
     if (router.isReady) setSlug2(photo_Post?.slug_2nd_locale)
@@ -201,9 +193,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   const options = { month: "long", day: "numeric", year: "numeric" }
 
   const aspectRatio = photo_Post.image.width / photo_Post.image.height;
-
-
-  const renderBreadcrumbs = false
   return (
     <>
       <NextSeo {...SEO} />
@@ -233,8 +222,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                   alt={photo_Post.description}
                   // layout="fill"
                   layout="intrinsic"
-                  width={photo_Post.image.width}
-                  height={photo_Post.image.height}
+                  width={0.85 * photo_Post.image.width}
+                  height={0.85 * photo_Post.image.height}
                   objectFit="cover"
                   objectPosition="center"
                   quality={
@@ -257,18 +246,31 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             </ModalFooter>
           </ModalContent>
         </Modal>
-        <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}>
+        <ContentGrid 
+          useSimpleGrid={false}
+          heading=""
+          footer={<></>}
+          asPath={router.asPath}
+          locale={router.locale}
+          renderBreadCrumbs={false}
+        >
+        <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}  alignItems="center" 
+          backgroundColor="neutral.raisin_black.dark" overflowY="auto"
+          overflowX="hidden">
           <Box
-            w="100%"
-            h={ aspectRatio > 1 ? "50%" : "50%"}
+            height = {imgContainerH}
+            width = {imgContainerW}
             overflow="clip"
             position="relative"
-            borderRadius="4px"
-            backgroundColor= { aspectRatio > 1 ? "whiteAlpha.100" : "whiteAlpha.100"}
+            borderTopLeftRadius = '8px'
+            borderTopRightRadius = '8px'
+            backgroundColor= "whiteAlpha.100" 
           >
             <Image
               src={imageUrl}
-              alt={photo_Post.description}
+              alt={photo_Post.description}   
+              // height={480}   
+              // width={480}      
               layout="fill"
               objectFit={ aspectRatio > 1 ? "contain" : "contain"}
               objectPosition="center"
@@ -285,106 +287,42 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             />
           </Box>
           <Box
-            w="100%"
-            h="50%"
-            py={["24px", "24px", "24px", "24px", "36px"]}
+            w = {imgContainerW}
+            py="24px"
             backgroundColor="whiteAlpha.50"
-            overflow="hidden"
           >
             <Flex
-              direction={["column", "column", "row", "row", "row"]}
-              w="100%"
-              h="100%"
-              overflowY="auto"
-              overflowX="hidden"
+              direction="column"
+              w = {imgContainerW}
             >
               <Flex
                 direction="column"
-                textAlign={["start", "start", "end", "end", "end"]}
-                w={["100%", "100%", "60%", "60%", "60%"]}
-                pl={["24px", "24px", "72px", "80px", "80px"]}
-                pr={["24px", "24px", "48px", "64px", "64px"]}
+                textAlign="start"
+                w="100%"
+                pl="24px"
+                pr="24px"
               >
-                {renderBreadcrumbs && (
-                  <Breadcrumb color="whiteAlpha.600" p="12px">
-                    <BreadcrumbItem
-                      key={router.locale === "en" ? "Home" : "Αρχική"}
-                    >
-                      <BreadcrumbLink
-                        as={NextLink}
-                        href={router.locale === "en" ? "/en" : "/"}
-                      >
-                        <a>{router.locale === "en" ? "Home" : "Αρχική"}</a>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    {breadcrumbs.map((bc) => {
-                      return (
-                        bc !== "/" &&
-                        bc !== "/en" &&
-                        !(
-                          bc.includes("search") &&
-                          router.asPath.includes("search")
-                        ) &&
-                        bc.split("/").pop() !==
-                          router.asPath.split("/").pop() && (
-                          <BreadcrumbItem key={bc.split("/").pop()}>
-                            <BreadcrumbLink as={NextLink} href={bc}>
-                              <a>{bc.split("/").pop()}</a>
-                            </BreadcrumbLink>
-                          </BreadcrumbItem>
-                        )
-                      )
-                    })}
-                    <BreadcrumbItem
-                      isCurrentPage={true}
-                      color="semantic.red.light"
-                      key={router.asPath.split("/").pop()}
-                    >
-                      <BreadcrumbLink
-                        as={NextLink}
-                        href={router.asPath}
-                        shallow={true}
-                      >
-                        <a>{router.asPath.split("/").pop()}</a>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                  </Breadcrumb>
-                )}
-                <Box>
-                  <Heading>{photo_Post.title}</Heading>
-                </Box>
-                <Box
-                  fontSize={["sm", "2xl", "md", "md", "lg"]}
-                  py={["24px", "24px", "24px", "24px", "36px"]}
-                >
-                  <ReactMarkdown remarkPlugins={[gfm]}>
-                    {photo_Post.content}
-                  </ReactMarkdown>
-                </Box>
+                <Heading size='lg'>{photo_Post.title}</Heading>
                 <Flex
-                  direction={["column", "column", "row", "row", "row"]}
-                  justifyContent="space-between"
-                  alignItems={[
-                    "center",
-                    "center",
-                    "flex-end",
-                    "flex-end",
-                    "flex-end"
-                  ]}
-                  py="12px"
-                >
-                  <Box w="100%">
-                    <Flex direction="row">
-                      <Box>
-                        <Heading
-                          as="h4"
-                          fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="2.75ch"
-                        >
-                          {router.locale === "en" ? "Date: " : "Ημ/νία"}
-                        </Heading>
-                      </Box>
+                  direction="column"
+                  alignItems="center"
+                  py="16px"
+                > 
+                  <Flex
+                    w = "100%"
+                    direction="row"
+                    justifyContent="space-between"
+                  >
+                    <Box>
+                      <Flex direction="row">
+                      <Heading
+                        as="h4"
+                        fontWeight="bold"
+                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
+                        pr="2.75ch"
+                      >
+                        {router.locale === "en" ? "Date: " : "Ημ/νία"}
+                      </Heading>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>
                           {/* @ts-ignore*/}
@@ -392,36 +330,26 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                             .format(new Date(photo_Post.date ? photo_Post.date : photo_Post.published_at))}
                         </Text>
                       </Box>
-                    </Flex>
-
-                    <Flex direction="row">
-                      <Box>
-                        <Heading
-                          as="h4"
-                          fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="1ch"
-                        >
-                          Credits:{" "}
-                        </Heading>
-                      </Box>
+                      </Flex>
+                      <Flex direction="row">
+                      <Heading
+                        as="h4"
+                        fontWeight="bold"
+                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
+                        pr="1ch"
+                      >
+                        Credits:{" "}
+                      </Heading>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>{photo_Post.writer?.name}</Text>
                         {/* <Text>{article.author.name_GR}</Text> */}
                       </Box>
-                    </Flex>
-                  </Box>
-
-                  <ShareButtons
-                    url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-                    description={photo_Post.description}
-                    pt={["16px", "16px", "0", "0", "0"]}
-                  />
-
-                  <Box
-                    pt={["12px", "12px", "0", "0", "0"]}
-                    pb={["24px", "24", "0", "0", "0"]}
-                  >
+                      </Flex>
+                    </Box>
+                    <Box
+                      pt={["12px", "12px", "0", "0", "0"]}
+                      pb={["24px", "24", "0", "0", "0"]}
+                    >
                     <Button
                       size={tagSize}
                       rightIcon={<FaEye />}
@@ -441,17 +369,18 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     >
                       {router.locale === "el-GR" ? "Εικόνα" : "Image"}
                     </Button>
-                  </Box>
+                    </Box>
+                  </Flex>
                 </Flex>
               </Flex>
               {dividerComp}
               <Flex
                 direction="column"
                 textAlign="start"
-                w={["100%", "100%", "40%", "40%", "40%"]}
-                py={["24px", "24px", "0", "0", "0"]}
-                pr={["24px", "24px", "72px", "80px", "80px"]}
-                pl={["24px", "24px", "48px", "64px", "64px"]}
+                w="100%"
+                py="24px"
+                pr="24px"
+                pl="24px"
               >
                 <Heading fontWeight="normal">
                   <Flex direction="row">
@@ -482,10 +411,17 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     )
                   })}
                 </Text>
+                <ShareButtons
+                    url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+                    description={photo_Post.description}
+                    pt="36px"
+                    alignSelf="flex-start"
+                  />
               </Flex>
             </Flex>
           </Box>
         </Flex>
+        </ContentGrid>
       </Layout>
     </>
   )

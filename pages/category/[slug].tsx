@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/layout"
+import { Box } from "@chakra-ui/layout"
 import { Button } from "@chakra-ui/button"
 import Head from "next/head"
 import { useRouter } from "next/router"
@@ -16,7 +16,7 @@ import {
 import useMounted from "../../hooks/useMounted"
 import { KeyLoader } from "swr"
 import useSWRInfinite from "swr/infinite"
-import { useStoreBreadcrumbs } from "../../hooks/useStoreBreadcrumbs"
+
 import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
@@ -104,17 +104,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
     )
   }
 
-  useStoreBreadcrumbs(
-    router.locale === "en"
-      ? router.pathname.replace("/en", "").replace("/[slug]", "") +
-          `/${category?.slug_2nd_locale}`
-      : "/en" +
-          router.pathname.replace("/[slug]", "") +
-          `/${category?.slug_2nd_locale}`,
-    router.isReady,
-    router.asPath
-  )
-
   useEffect(() => {
     if (router.isReady) setSlug2(category?.slug_2nd_locale)
   }, [router.query.slug])
@@ -191,7 +180,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
           footer={shareBtns}
           asPath={router.asPath}
           locale={router.locale}
-          renderBreadCrumbs={true}
+          renderBreadCrumbs={false}
         >
           {!articles ? (
             skeletonArr.map((i) => {
@@ -267,20 +256,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
               ) : null}
             </>
           )}
-          {/* {category.articles.map((article) => {
-          return (
-            <ArticleCard
-              article={article}
-              writer_name={filterWriter(writers, article.writer).name}
-              key={article.id}
-              isPortrait={
-                article.cover_image.width < article.cover_image.height
-              }
-              flex="auto"
-              m="0 18px 18px 0"
-            />
-          );
-        })} */}
         </ContentGrid>
       </Layout>
     </>

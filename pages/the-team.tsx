@@ -10,11 +10,11 @@ import {
   WritersResponse,
 } from '../custom_typings/models';
 import useMounted from '../hooks/useMounted';
-import { useStoreBreadcrumbs } from '../hooks/useStoreBreadcrumbs';
+
 import { fetchAPI } from '../lib/api';
 import { NextSeo } from 'next-seo';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
+
+
 import { GetStaticProps } from 'next';
 import ShareButtons from '../components/ShareButtons';
 
@@ -42,11 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
   const router = useRouter();
   const isMounted = useMounted();
-  useStoreBreadcrumbs(
-    router.locale === 'en' ? '/the-team' : '/en/the-team',
-    router.isReady,
-    router.asPath
-  );
+  
 // title: theTeam.TeamPageHero.title,
   const SEO = {
     
@@ -96,9 +92,7 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
                 fontWeight="normal"
                 m="4px"
               >
-                <ReactMarkdown remarkPlugins={[gfm]}>
                   {theTeam.Footer_Message}
-                </ReactMarkdown>
               </Box>
               {shareBtns}
             </Flex>

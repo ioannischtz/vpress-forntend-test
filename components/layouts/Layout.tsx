@@ -45,6 +45,8 @@ const Layout: React.FC<LayoutProps> = ({
     mobileNavBtnRef.current?.focus()
   }, [mobileNav.isOpen])
 
+  let layH
+  let layW
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
@@ -73,6 +75,8 @@ const Layout: React.FC<LayoutProps> = ({
           </a>
         </Link>
       )
+      layH = 'auto'
+      layW = "calc(15vw)"
       break
     case "isSmallTablet":
     case "isMobile":
@@ -89,6 +93,8 @@ const Layout: React.FC<LayoutProps> = ({
         />
       )
       fixLogo = <></>
+      layH = "calc(15vh)"
+      layW = "calc(100vw - 48px)"
   }
 
   return (
@@ -142,20 +148,23 @@ const Layout: React.FC<LayoutProps> = ({
         </Flex>
         <Flex
           as="section"
-          h={[
-            "calc(15vh)",
-            "calc(15vh)",
-            "calc(100vh - 48px)",
-            "calc(100vh - 48px)",
-            "calc(100vh - 48px)"
-          ]}
-          w={[
-            "calc(100vw - 48px)",
-            "calc(100vw - 48px)",
-            "calc(25vw)",
-            "calc(15vw)",
-            "calc(15vw)"
-          ]}
+          // h={[
+          //   "calc(15vh)",
+          //   "calc(15vh)",
+          //   "calc(100vh - 48px)",
+          //   "calc(100vh - 48px)",
+          //   "calc(100vh - 48px)"
+          // ]}
+          // w={[
+          //   "calc(100vw - 48px)",
+          //   "calc(100vw - 48px)",
+          //   "calc(25vw)",
+          //   "calc(15vw)",
+          //   "calc(15vw)"
+          // ]}
+          h = {layH}
+          w = {layW}
+          
           direction={["row", "row", "column", "column", "column"]}
           justify={[
             "space-between",

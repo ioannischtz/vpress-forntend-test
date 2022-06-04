@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PhotoPostCard from '../components/Card/PhotoPostCard';
 import ContentGrid from '../components/layouts/ContentGrid';
 import Layout from '../components/layouts/Layout';
-import { useStoreBreadcrumbs } from '../hooks/useStoreBreadcrumbs';
+
 import { fetchAPI } from '../lib/api';
 import { GetStaticProps } from 'next';
 import { CategoriesResponse, PhotoPostsResponse, WritersResponse } from '../custom_typings/models';
@@ -76,12 +76,6 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
     isEmpty ||
       (initialData && endIndex >= initialData.length - 1) ||
       initialData.length < 15
-  );
-
-  useStoreBreadcrumbs(
-    locale === 'en' ? '/search-page' : '/en/search-page',
-    isReady,
-    asPath
   );
 
   useEffect(() => {
