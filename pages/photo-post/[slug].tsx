@@ -29,7 +29,7 @@ import Layout from "../../components/layouts/Layout"
 // import ContentGrid from "../../components/layouts/ContentGrid"
 import Image from "next/image"
 import { getStrapiMedia } from "../../lib/media"
-import { vhTOpx } from "../../lib/vhTOpx"
+import { vhTOpx, vwTOpx } from "../../lib/vhTOpx"
 import { useScreenType } from "../../hooks/useScreenType"
 
 
@@ -114,6 +114,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   // let imgContainerW = ["480px","480px","520px","520px","520px"]
   
   // let imgContainerH, imgContainerW
+  let imgWlandscape, imgWportrait, imgHlandscape, imgHportrait
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
@@ -143,6 +144,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
       // imgContainerW = `${80 * aspectRatio}%`
       // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
       // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
+      
   }
 
   useEffect(() => {
@@ -153,6 +155,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   // title: photo_Post.title,
   let modalImgW
   let modalImgH
+  let aspectRatio
   if (isMounted) {
     SEO = {
       description: photo_Post.description,
@@ -169,6 +172,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     }
     modalImgW = vhTOpx(80) * photo_Post.image?.width / photo_Post.image?.height;
     modalImgH = vhTOpx(80)
+    aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
+    imgWlandscape = screenType === "isMobile" ? vwTOpx(85) - 48 : 520
+    imgHlandscape = screenType === "isMobile" ? vhTOpx(40) - 48 : imgWlandscape / aspectRatio 
+    imgWportrait = screenType === "isMobile" ? vwTOpx(85) - 48 : 300
+    imgHportrait = screenType === "isMobile" ? vhTOpx(65) - 48 : imgWportrait / aspectRatio 
   }
 
   // If the page is not yet generated, this will be displayed
@@ -198,11 +206,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   ]
   const options = { month: "long", day: "numeric", year: "numeric" }
 
-  const aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
-  let imgWlandscape = 520
-  let imgHlandscape =  imgWlandscape / aspectRatio 
-  let imgWportrait = 300
-  let imgHportrait = imgWportrait / aspectRatio 
+  // const aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
+  // // let imgWlandscape = 520
+  // imgHlandscape =  imgWlandscape / aspectRatio 
+  // // let imgWportrait = 300
+  // imgHportrait = imgWportrait / aspectRatio 
 
   return (
     <>
@@ -263,8 +271,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         </Modal>
         <Flex direction="column" color="whiteAlpha.800" alignItems="center" 
           w={widthsOuter} backgroundColor= "whiteAlpha.100"
-          // overflowX="hidden" overflowY="auto"
+          // h=
+          // overflowX="hidden" 
+          // overflowY={["auto","visible","visible","visible","visible"]}
           // overflow="hidden"
+          overflow={["auto","unset","unset","unset","unset"]}
           >
           <Box
             h={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
@@ -298,10 +309,14 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           </Box>
           <Box
             w="100%"
-            // h="auto"
-            h={ aspectRatio > 1 ? `calc(100vh - ${imgHlandscape}px -48px)` : `calc(100vh - ${imgHportrait}px) -48px`}
-            minH={ aspectRatio > 1 ? `calc(100vh - ${imgHlandscape}px -48px)` : `calc(100vh - ${imgHportrait}px) -48px`}
-            py={["24px", "24px", "24px", "24px", "36px"]}
+            h="auto"
+            // h={ aspectRatio > 1 ?
+            //    `calc(100vh - ${imgHlandscape}px -48px)` 
+            //    : `calc(100vh - ${imgHportrait}px) -48px`}
+            // minH={ aspectRatio > 1 ?
+            //    `calc(100vh - ${imgHlandscape}px -48px)` 
+            //    : `calc(100vh - ${imgHportrait}px) -48px`}
+            // py={["24px", "24px", "24px", "24px", "36px"]}
             // backgroundColor="whiteAlpha.50"
             // overflow="hidden"
           >
