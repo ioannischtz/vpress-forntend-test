@@ -223,19 +223,23 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
+        <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered >
           <ModalOverlay />
           <ModalContent 
-            maxW={["98vw","50vw","50vw","50vw","50vw"]} 
+            maxW={["90vw","50vw","50vw","50vw","50vw"]} 
             maxH={["75vh","90vh","90vh","90vh","90vh"]} 
             justifyContent="center"
             alignItems="center"
+            overflowX="hidden" 
           >
             <ModalHeader>{photo_Post.title}</ModalHeader>
             <ModalBody >
               <Box
-                w="48vw"
-                h="60vh"
+                w={["88vw","48vw","48vw","48vw","48vw"]} 
+                h={aspectRatio > 1 ?
+                    ["45vh","60vh","60vh","60vh","60vh"]
+                  : ["45vh","60vh","60vh","60vh","60vh"]
+                } 
                 // overflow="clip"
                 position="relative"
                 borderRadius="4px"
