@@ -316,7 +316,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             // minH={ aspectRatio > 1 ?
             //    `calc(100vh - ${imgHlandscape}px -48px)` 
             //    : `calc(100vh - ${imgHportrait}px) -48px`}
-            // py={["24px", "24px", "24px", "24px", "36px"]}
+            py={["24px", "24px", "24px", "24px", "36px"]}
             // backgroundColor="whiteAlpha.50"
             // overflow="hidden"
           >
