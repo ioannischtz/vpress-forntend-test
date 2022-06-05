@@ -201,7 +201,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   const aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
   let imgWlandscape = 520
   let imgHlandscape =  imgWlandscape / aspectRatio 
-  let imgWportrait = 400
+  let imgWportrait = 300
   let imgHportrait = imgWportrait / aspectRatio 
 
   return (
