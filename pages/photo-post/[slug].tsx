@@ -226,8 +226,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
           <ModalContent 
-            maxW="50vw" 
-            maxH="90vh" 
+            maxW={["98vw","50vw","50vw","50vw","50vw"]} 
+            maxH={["75vh","90vh","90vh","90vh","90vh"]} 
             justifyContent="center"
             alignItems="center"
           >
