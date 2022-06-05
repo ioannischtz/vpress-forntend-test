@@ -29,15 +29,15 @@ const ContentGrid: React.FC<ContentGridProps> = ({
       direction="column"
       h={[
         "calc(85vh - 48px)",
-        "calc(85vh - 48px)",
+        "calc(100vh - 48px)",
         "calc(100vh - 48px)",
         "calc(100vh - 48px)",
         "calc(100vh - 48px)"
       ]}
       w={[
         "calc(100vw - 48px)",
-        "calc(100vw - 48px)",
-        "calc(75vw - 48px)",
+        "calc(85vw - 48px)",
+        "calc(85vw - 48px)",
         "calc(85vw - 48px)",
         "calc(85vw - 48px)"
       ]}
@@ -56,8 +56,8 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         // ]}
         w={[
           "calc(100vw - 48px)",
-          "calc(100vw - 48px)",
-          "calc(75vw - 48px)",
+          "calc(85vw - 48px)",
+          "calc(85vw - 48px)",
           "calc(85vw - 48px)",
           "calc(85vw - 48px)"
         ]}
@@ -80,8 +80,8 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         // overflowY="auto"
         w={[
           "calc(100vw - 48px)",
-          "calc(100vw - 48px)",
-          "calc(75vw - 48px)",
+          "calc(85vw - 48px)",
+          "calc(85vw - 48px)",
           "calc(85vw - 48px)",
           "calc(85vw - 48px)"
         ]}
@@ -115,8 +115,8 @@ const ContentGrid: React.FC<ContentGridProps> = ({
           <Flex
             w={[
               "calc(100vw - 64px)",
-              "calc(100vw - 64px)",
-              "calc(75vw - 64px)",
+              "calc(85vw - 64px)",
+              "calc(85vw - 64px)",
               "calc(85vw - 64px)",
               "calc(85vw - 64px)"
             ]}
@@ -146,8 +146,8 @@ const ContentGrid: React.FC<ContentGridProps> = ({
         // ]}
         w={[
           "calc(100vw - 48px)",
-          "calc(100vw - 48px)",
-          "calc(75vw - 48px)",
+          "calc(85vw - 48px)",
+          "calc(85vw - 48px)",
           "calc(85vw - 48px)",
           "calc(85vw - 48px)"
         ]}

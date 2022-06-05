@@ -187,7 +187,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     color="whiteAlpha.800"
                     fontFamily="heading"
                     fontWeight='400'
-                    fontSize={['sm', '2xl', 'lg', 'lg', '2xl']}
+                    fontSize="18px"
                   >
                     {photoPost.title}
                   </Heading>

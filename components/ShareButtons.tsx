@@ -27,13 +27,13 @@ const ShareButtons: React.FC<ShareButtonsProps & FlexProps> = ({
     >
       <Box
         color="whiteAlpha.500"
-        fontSize={['sm', '2xl', 'xl', 'xl', 'xl']}
+        fontSize={["sm", "md", "sm", "md", "md"]}
         fontWeight="normal"
       >
         Share:{' '}
       </Box>
       <Box
-        px="8px"
+        px="6px"
         _hover={{
           cursor: 'pointer',
           transform: 'scale(1.1, 1.1)',
@@ -45,11 +45,11 @@ const ShareButtons: React.FC<ShareButtonsProps & FlexProps> = ({
           quote={description}
           hashtag={'#nextshare'}
         >
-          <FacebookIcon size={32} round />
+          <FacebookIcon size={24} round />
         </FacebookShareButton>
       </Box>
       <Box
-        px="8px"
+        px="6px"
         _hover={{
           cursor: 'pointer',
           transform: 'scale(1.1, 1.1)',
@@ -62,12 +62,12 @@ const ShareButtons: React.FC<ShareButtonsProps & FlexProps> = ({
           windowWidth={660}
           windowHeight={460}
         >
-          <RedditIcon size={32} round />
+          <RedditIcon size={24} round />
         </RedditShareButton>
       </Box>
       <Box
         pr="16px"
-        pl="8px"
+        pl="6px"
         _hover={{
           cursor: 'pointer',
           transform: 'scale(1.1, 1.1)',
@@ -75,7 +75,7 @@ const ShareButtons: React.FC<ShareButtonsProps & FlexProps> = ({
         }}
       >
         <TwitterShareButton url={url} title={description}>
-          <TwitterIcon size={32} round />
+          <TwitterIcon size={24} round />
         </TwitterShareButton>
       </Box>
     </Flex>

@@ -13,9 +13,9 @@ const Navigation: React.FC<NavigationProps> = ({ categories }) => {
   return (
     <VStack
       direction="column"
-      spacing={12}
+      spacing={6}
       align="flex-start"
-      justify={['center', 'center', 'flex-end', 'flex-end', 'flex-end']}
+      justify={['center', 'flex-end', 'flex-end', 'flex-end', 'flex-end']}
       hidden={false}
     > 
       <NavLink

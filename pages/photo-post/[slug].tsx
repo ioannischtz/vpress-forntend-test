@@ -26,9 +26,10 @@ import {
   WritersResponse
 } from "../../custom_typings/models"
 import Layout from "../../components/layouts/Layout"
-import ContentGrid from "../../components/layouts/ContentGrid"
+// import ContentGrid from "../../components/layouts/ContentGrid"
 import Image from "next/image"
 import { getStrapiMedia } from "../../lib/media"
+import { vhTOpx } from "../../lib/vhTOpx"
 import { useScreenType } from "../../hooks/useScreenType"
 
 
@@ -109,18 +110,19 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
  
 
   let dividerComp
-  let modalImgW
-  let imgContainerH = ["400px","320px","500px","500px","500px"]
-  let imgContainerW = ["400px","320px","500px","500px","500px"]
+  // let imgContainerH = ["480px","480px","520px","520px","520px"]
+  // let imgContainerW = ["480px","480px","520px","520px","520px"]
+  
   // let imgContainerH, imgContainerW
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
-      // dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
-      dividerComp = (
-        <Divider orientation="horizontal" size="sm" variant="white" />
-      )
-      modalImgW = photo_Post.image.height > photo_Post.image.width ? '40%' : '60%'
+    case "isSmallTablet":
+      dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+      // dividerComp = (
+      //   <Divider orientation="horizontal" size="sm" variant="white" />
+      // )
+      // modalImgW = photo_Post.image.height > photo_Post.image.width ? '40%' : '60%'
       // imgContainerH = getViewportHeightPX() > 600 ? 'calc(50vh - 24px)' : 'calc(80vh - 24px)'
       // imgContainerW = getViewportHeightPX() > 600 ? `${(vhTOpx(50) - 24) * aspectRatio}px` : `${(vhTOpx(80) - 24) * aspectRatio}px`
       // let vhPX = getViewportHeightPX()
@@ -131,12 +133,12 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
       // imgContainerH = '50%'
       // imgContainerW = `${50 * aspectRatio}%`
       break
-    case "isSmallTablet":
+    
     case "isMobile":
       dividerComp = (
         <Divider orientation="horizontal" size="sm" variant="white" />
       )
-      modalImgW = '80%'
+      // modalImgW = '80%'
       // imgContainerH = '80%'
       // imgContainerW = `${80 * aspectRatio}%`
       // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
@@ -149,6 +151,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
 
   let SEO = {}
   // title: photo_Post.title,
+  let modalImgW
+  let modalImgH
   if (isMounted) {
     SEO = {
       description: photo_Post.description,
@@ -163,6 +167,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         }
       }
     }
+    modalImgW = vhTOpx(80) * photo_Post.image?.width / photo_Post.image?.height;
+    modalImgH = vhTOpx(80)
   }
 
   // If the page is not yet generated, this will be displayed
@@ -185,14 +191,19 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   const imageUrl = getStrapiMedia(photo_Post.image)
   const widthsOuter = [
     "calc(100vw - 48px)",
-    "calc(100vw - 48px)",
-    "calc(75vw - 48px)",
+    "calc(85vw - 48px)",
+    "calc(85vw - 48px)",
     "calc(85vw - 48px)",
     "calc(85vw - 48px)"
   ]
   const options = { month: "long", day: "numeric", year: "numeric" }
 
-  const aspectRatio = photo_Post.image.width / photo_Post.image.height;
+  const aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
+  let imgWlandscape = 520
+  let imgHlandscape =  imgWlandscape / aspectRatio 
+  let imgWportrait = 400
+  let imgHportrait = aspectRatio * imgWportrait
+
   return (
     <>
       <NextSeo {...SEO} />
@@ -206,25 +217,29 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
       >
         <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
-          <ModalContent maxW={modalImgW} justifyContent="center"
-                alignItems="center">
+          <ModalContent 
+            maxW="50vw" 
+            maxH="90vh" 
+            justifyContent="center"
+            alignItems="center"
+          >
             <ModalHeader>{photo_Post.title}</ModalHeader>
             <ModalBody >
               <Box
-                w="100%"
-                // h="60vh"
-                overflow="clip"
+                w="48vw"
+                h="60vh"
+                // overflow="clip"
                 position="relative"
                 borderRadius="4px"
               >
                 <Image
                   src={imageUrl}
                   alt={photo_Post.description}
-                  // layout="fill"
-                  layout="intrinsic"
-                  width={0.85 * photo_Post.image.width}
-                  height={0.85 * photo_Post.image.height}
-                  objectFit="cover"
+                  layout="fill"
+                  // layout="responsive"
+                  // width={photo_Post?.image?.width}
+                  // height={photo_Post?.image?.height}
+                  objectFit="contain"
                   objectPosition="center"
                   quality={
                     photo_Post.image.width < 200
@@ -246,33 +261,28 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             </ModalFooter>
           </ModalContent>
         </Modal>
-        <ContentGrid 
-          useSimpleGrid={false}
-          heading=""
-          footer={<></>}
-          asPath={router.asPath}
-          locale={router.locale}
-          renderBreadCrumbs={false}
-        >
-        <Flex direction="column" color="whiteAlpha.800" w={widthsOuter}  alignItems="center" 
-          backgroundColor="neutral.raisin_black.dark" overflowY="auto"
-          overflowX="hidden">
+        <Flex direction="column" color="whiteAlpha.800" alignItems="center" 
+          w={widthsOuter} backgroundColor= "whiteAlpha.100"
+          // overflowX="hidden" overflowY="auto"
+          // overflow="hidden"
+          >
           <Box
-            height = {imgContainerH}
-            width = {imgContainerW}
+            h={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
+            minH={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
+            w={ aspectRatio > 1 ? `${imgWlandscape}px` : `${imgWportrait}px`}
+            minW={ aspectRatio > 1 ? `${imgWlandscape}px` : `${imgWportrait}px`}
+            
             overflow="clip"
             position="relative"
-            borderTopLeftRadius = '8px'
-            borderTopRightRadius = '8px'
-            backgroundColor= "whiteAlpha.100" 
+            borderRadius="4px"
+            // backgroundColor= "whiteAlpha.100" 
+            // style={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}
           >
             <Image
               src={imageUrl}
-              alt={photo_Post.description}   
-              // height={480}   
-              // width={480}      
+              alt={photo_Post.description}
               layout="fill"
-              objectFit={ aspectRatio > 1 ? "contain" : "contain"}
+              objectFit="contain"
               objectPosition="center"
               quality={
                 photo_Post.image.width < 200
@@ -287,42 +297,54 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             />
           </Box>
           <Box
-            w = {imgContainerW}
-            py="24px"
-            backgroundColor="whiteAlpha.50"
+            w="100%"
+            // h="auto"
+            h={ aspectRatio > 1 ? `calc(100vh - ${imgHlandscape}px -48px)` : `calc(100vh - ${imgHportrait}px) -48px`}
+            minH={ aspectRatio > 1 ? `calc(100vh - ${imgHlandscape}px -48px)` : `calc(100vh - ${imgHportrait}px) -48px`}
+            py={["24px", "24px", "24px", "24px", "36px"]}
+            // backgroundColor="whiteAlpha.50"
+            // overflow="hidden"
           >
             <Flex
-              direction="column"
-              w = {imgContainerW}
+              direction={["column", "row", "row", "row", "row"]}
+              w="100%"
+              h="100%"
+              // overflowY="auto"
+              // overflowX="hidden"
             >
               <Flex
                 direction="column"
-                textAlign="start"
-                w="100%"
-                pl="24px"
-                pr="24px"
+                textAlign={["start", "end", "end", "end", "end"]}
+                w={["100%", "60%", "60%", "60%", "60%"]}
+                pl={["24px", "24px", "72px", "80px", "80px"]}
+                pr={["24px", "24px", "48px", "64px", "64px"]}
               >
-                <Heading size='lg'>{photo_Post.title}</Heading>
+                
+                <Heading fontSize="18px">{photo_Post.title}</Heading>
                 <Flex
-                  direction="column"
-                  alignItems="center"
-                  py="16px"
-                > 
-                  <Flex
-                    w = "100%"
-                    direction="row"
-                    justifyContent="space-between"
-                  >
-                    <Box>
-                      <Flex direction="row">
-                      <Heading
-                        as="h4"
-                        fontWeight="bold"
-                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                        pr="2.75ch"
-                      >
-                        {router.locale === "en" ? "Date: " : "Ημ/νία"}
-                      </Heading>
+                  direction={["column", "row", "row", "row", "row"]}
+                  justifyContent="space-between"
+                  alignItems={[
+                    "center",
+                    "flex-end",
+                    "flex-end",
+                    "flex-end",
+                    "flex-end"
+                  ]}
+                  py="12px"
+                >
+                  <Box w="100%">
+                    <Flex direction="row">
+                      <Box>
+                        <Heading
+                          as="h4"
+                          fontWeight="bold"
+                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
+                          pr="2.75ch"
+                        >
+                          {router.locale === "en" ? "Date: " : "Ημ/νία"}
+                        </Heading>
+                      </Box>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>
                           {/* @ts-ignore*/}
@@ -330,26 +352,35 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                             .format(new Date(photo_Post.date ? photo_Post.date : photo_Post.published_at))}
                         </Text>
                       </Box>
-                      </Flex>
-                      <Flex direction="row">
-                      <Heading
-                        as="h4"
-                        fontWeight="bold"
-                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                        pr="1ch"
-                      >
-                        Credits:{" "}
-                      </Heading>
+                    </Flex>
+
+                    <Flex direction="row">
+                      <Box>
+                        <Heading
+                          as="h4"
+                          fontWeight="bold"
+                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
+                          pr="1ch"
+                        >
+                          Credits:{" "}
+                        </Heading>
+                      </Box>
                       <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
                         <Text>{photo_Post.writer?.name}</Text>
                         {/* <Text>{article.author.name_GR}</Text> */}
                       </Box>
-                      </Flex>
-                    </Box>
-                    <Box
-                      pt={["12px", "12px", "0", "0", "0"]}
-                      pb={["24px", "24", "0", "0", "0"]}
-                    >
+                    </Flex>
+                    <ShareButtons
+                        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+                        description={photo_Post.description}
+                        pt="4px"
+                      />
+                  </Box>
+
+                  <Box
+                    pt={["12px", "0", "0", "0", "0"]}
+                    pb={["24px", "0", "0", "0", "0"]}
+                  >
                     <Button
                       size={tagSize}
                       rightIcon={<FaEye />}
@@ -369,21 +400,22 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     >
                       {router.locale === "el-GR" ? "Εικόνα" : "Image"}
                     </Button>
-                    </Box>
-                  </Flex>
+                  </Box>
                 </Flex>
               </Flex>
               {dividerComp}
               <Flex
                 direction="column"
                 textAlign="start"
-                w="100%"
-                py="24px"
-                pr="24px"
-                pl="24px"
+                w={["100%", "40%", "40%", "40%", "40%"]}
+                py={["24px", "0", "0", "0", "0"]}
+                pr={["24px", "24px", "72px", "80px", "80px"]}
+                pl={["24px", "24px", "48px", "64px", "64px"]}
+                overflowX = "hidden"
+                overflowY= "auto"
               >
                 <Heading fontWeight="normal">
-                  <Flex direction="row">
+                  <Flex direction="row" fontSize="24px">
                     {router.locale === "el-GR" ? "ΕΤΙΚΕΤΕΣ" : "TAGS"}
                     <Box pl="12px" alignSelf="flex-end">
                       <CgTag />
@@ -411,17 +443,10 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     )
                   })}
                 </Text>
-                <ShareButtons
-                    url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-                    description={photo_Post.description}
-                    pt="36px"
-                    alignSelf="flex-start"
-                  />
               </Flex>
             </Flex>
           </Box>
         </Flex>
-        </ContentGrid>
       </Layout>
     </>
   )

@@ -159,7 +159,8 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   color="whiteAlpha.800"
                   fontFamily="heading"
                   fontWeight='400'
-                  fontSize={['sm', '2xl', 'md', 'md', 'lg']}
+                  // fontSize={['sm', '2xl', 'md', 'md', 'lg']}
+                  fontSize="18px"
                 >
                   {article.title}
                 </Heading>

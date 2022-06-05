@@ -50,6 +50,7 @@ const Layout: React.FC<LayoutProps> = ({
   switch (screenType) {
     case "isDesktop":
     case "isTablet":
+    case "isSmallTablet":
       menu = (
         <Menu
           onSearchModalToggle={searchDisclosure.onToggle}
@@ -75,10 +76,9 @@ const Layout: React.FC<LayoutProps> = ({
           </a>
         </Link>
       )
-      layH = 'auto'
-      layW = "calc(15vw)"
+      // layH = 'auto'
+      // layW = "calc(15vw)"
       break
-    case "isSmallTablet":
     case "isMobile":
       menu = (
         <MenuMobile
@@ -93,8 +93,8 @@ const Layout: React.FC<LayoutProps> = ({
         />
       )
       fixLogo = <></>
-      layH = "calc(15vh)"
-      layW = "calc(100vw - 48px)"
+      // layH = "calc(15vh)"
+      // layW = "calc(100vw - 48px)"
   }
 
   return (
@@ -103,32 +103,34 @@ const Layout: React.FC<LayoutProps> = ({
         isOpen={searchDisclosure.isOpen}
         onClose={searchDisclosure.onClose}
         locale={locale}
-        isMobile={screenType === "isMobile" || screenType === "isSmallTablet"}
+        isMobile={screenType === "isMobile"}
         writers={writers}
       />
       <Flex
         direction={[
           "column-reverse",
-          "column-reverse",
+          "row-reverse",
           "row-reverse",
           "row-reverse",
           "row-reverse"
         ]}
         p="24px"
         backgroundColor="neutral.raisin_black.medium"
+        overflowX="hidden"
+        overflowY="auto"
       >
         <Flex
           h={[
             "calc(85vh - 48px)",
-            "calc(85vh - 48px)",
+            "calc(100vh - 48px)",
             "calc(100vh - 48px)",
             "calc(100vh - 48px)",
             "calc(100vh - 48px)"
           ]}
           w={[
             "calc(100vw - 48px)",
-            "calc(100vw - 48px)",
-            "calc(75vw - 48px)",
+            "calc(85vw - 48px)",
+            "calc(85vw - 48px)",
             "calc(85vw - 48px)",
             "calc(85vw - 48px)"
           ]}
@@ -148,24 +150,24 @@ const Layout: React.FC<LayoutProps> = ({
         </Flex>
         <Flex
           as="section"
-          // h={[
-          //   "calc(15vh)",
-          //   "calc(15vh)",
-          //   "calc(100vh - 48px)",
-          //   "calc(100vh - 48px)",
-          //   "calc(100vh - 48px)"
-          // ]}
-          // w={[
-          //   "calc(100vw - 48px)",
-          //   "calc(100vw - 48px)",
-          //   "calc(25vw)",
-          //   "calc(15vw)",
-          //   "calc(15vw)"
-          // ]}
-          h = {layH}
-          w = {layW}
+          h={[
+            "calc(15vh)",
+            "calc(100vh - 48px)",
+            "calc(100vh - 48px)",
+            "calc(100vh - 48px)",
+            "calc(100vh - 48px)"
+          ]}
+          w={[
+            "calc(100vw - 48px)",
+            "calc(15vw)",
+            "calc(15vw)",
+            "calc(15vw)",
+            "calc(15vw)"
+          ]}
+          // h = {layH}
+          // w = {layW}
           
-          direction={["row", "row", "column", "column", "column"]}
+          direction={["row", "column", "column", "column", "column"]}
           justify={[
             "space-between",
             "space-between",
@@ -173,7 +175,7 @@ const Layout: React.FC<LayoutProps> = ({
             "space-between",
             "space-between"
           ]}
-          px={["0px", "0px", "24px", "24px", "24px"]}
+          px={["0px", "24px", "24px", "24px", "24px"]}
           backgroundColor="neutral.raisin_black.medium"
         >
           {menu}
@@ -184,15 +186,15 @@ const Layout: React.FC<LayoutProps> = ({
         zIndex="docked"
         top={[
           "0vh",
-          "0vh",
+          "calc(50vh - 6vh)",
           "calc(50vh - 6vh)",
           "calc(50vh - 6vh)",
           "calc(50vh - 6vh)"
         ]}
         left={[
           "0vh",
-          "0vh",
-          "calc(25vw + 24px - 6vh)",
+          "calc(15vw + 24px - 6vh)",
+          "calc(15vw + 24px - 6vh)",
           "calc(15vw + 24px - 6vh)",
           "calc(15vw + 24px - 6vh)"
         ]}
