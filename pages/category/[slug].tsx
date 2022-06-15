@@ -116,7 +116,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   const isReachingEnd =
     isEmpty ||
     (data && data[data.length - 1]?.length < 1) ||
-    articles.length < 7
+    articles?.length < 7
 
   if (isMounted) {
     footer = (
