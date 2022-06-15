@@ -9,7 +9,7 @@ import {
   LinkOverlay,
 } from '@chakra-ui/layout';
 import NextLink from 'next/link';
-import { useScreenType } from '../../hooks/useScreenType';
+// import { useScreenType } from '../../hooks/useScreenType';
 import { getStrapiMedia } from '../../lib/media';
 import Image from 'next/image';
 import { Card, CardHeader, CardBody, CardFooter } from './Card';
@@ -30,7 +30,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
   preload = false,
   ...props
 }) => {
-  const screenType = useScreenType();
+  // const screenType = useScreenType();
   let renderDesktop = true;
   // switch (screenType) {
   //   case 'isDesktop':
@@ -45,56 +45,59 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
 
   const { locale } = useRouter();
 
-  const widthsOuter = [
-    'calc(75vw - 48px)',
-    'calc(40vw - 48px)',
-    'calc(22vw - 48px)',
-    'calc(22vw - 48px)',
-    'calc(20vw - 48px)',
-  ];
-  const heightsOuter = [
-    'calc(0.65 * (85vh - 48px))',
-    'calc(0.65 * (85vh - 48px))',
-    'calc(0.45 * (100vh - 48px))',
-    'calc(0.45 * (100vh - 48px))',
-    'calc(0.45 * (100vh - 48px))',
-  ];
-  const widthsLandscape = [
-    'calc(80vw - 48px)',
-    'calc(40vw - 48px)',
-    'calc(33vw - 48px)',
-    'calc(33vw - 48px)',
-    'calc(28vw - 48px)',
-  ];
-  const widthsLandscapeInner = 'calc(100% - 2px)';
+  // const widthsOuter = [
+  //   'calc(75vw - 48px)',
+  //   'calc(40vw - 48px)',
+  //   'calc(22vw - 48px)',
+  //   'calc(22vw - 48px)',
+  //   'calc(20vw - 48px)',
+  // ];
+  // const heightsOuter = [
+  //   'calc(0.65 * (85vh - 48px))',
+  //   'calc(0.65 * (85vh - 48px))',
+  //   'calc(0.45 * (100vh - 48px))',
+  //   'calc(0.45 * (100vh - 48px))',
+  //   'calc(0.45 * (100vh - 48px))',
+  // ];
+  // const widthsLandscape = [
+  //   'calc(80vw - 48px)',
+  //   'calc(40vw - 48px)',
+  //   'calc(33vw - 48px)',
+  //   'calc(33vw - 48px)',
+  //   'calc(28vw - 48px)',
+  // ];
+  // const widthsLandscapeInner = 'calc(100% - 2px)';
 
-  const heightsHeader = [
-    'calc(0.7 * (0.65 * (85vh - 48px)))',
-    'calc(0.7 * (0.65 * (85vh - 48px)))',
-    'calc(0.6 * (0.45 * (100vh - 48px)))',
-    'calc(0.6 * (0.45 * (100vh - 48px)))',
-    'calc(0.6 * (0.45 * (100vh - 48px)))',
-  ];
-  const heightsBody = [
-    'calc(0.1 * (0.65 * (85vh - 48px)))',
-    'calc(0.1 * (0.65 * (85vh - 48px)))',
-    'calc(0.15 * (0.45 * (100vh - 48px)))',
-    'calc(0.15 * (0.45 * (100vh - 48px)))',
-    'calc(0.15 * (0.45 * (100vh - 48px)))',
-  ];
-  const heightsFooter = [
-    'calc(0.2 * (0.65 * (85vh - 48px)))',
-    'calc(0.2 * (0.65 * (85vh - 48px)))',
-    'calc(0.25 * (0.45 * (100vh - 48px)))',
-    'calc(0.25 * (0.45 * (100vh - 48px)))',
-    'calc(0.25 * (0.45 * (100vh - 48px)))',
-  ];
+  // const heightsHeader = [
+  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
+  // ];
+  // const heightsBody = [
+  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
+  // ];
+  // const heightsFooter = [
+  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
+  // ];
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   return (
     <Card
-      w={isPortrait ? widthsOuter : widthsLandscape}
+      // w={isPortrait ? widthsOuter : widthsLandscape}
       // h={heightsOuter}
       pb="16px"
+      // display="block"
+      sx={{breakInside: 'avoid', pageBreakInside: 'avoid'}}
+      // w="100%"
       {...props}
     >
       <LinkBox _hover={{ cursor: 'pointer' }}>
@@ -112,9 +115,10 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
               p="16px"
             >
               <Box
-                h={heightsHeader}
+                // h={heightsHeader}
                 w="100%"
-                overflow="clip"
+                // overflow="clip"
+                textAlign="center"
                 position="relative"
                 borderRadius="4px"
                 className="myContent"
@@ -123,7 +127,9 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                 <Image
                   src={imageUrl}
                   alt={article.description}
-                  layout="fill"
+                  layout="intrinsic"
+                  height={article.cover_image.height}
+                  width={article.cover_image.width}
                   objectFit="contain"
                   objectPosition="center"
                   quality={article.cover_image.width < 200 ? 90 : 40}
@@ -160,7 +166,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   fontFamily="heading"
                   fontWeight='400'
                   // fontSize={['sm', '2xl', 'md', 'md', 'lg']}
-                  fontSize="18px"
+                  fontSize="16px"
                 >
                   {article.title}
                 </Heading>
@@ -168,14 +174,14 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
             </CardBody>
 
             <CardFooter
-              h={heightsFooter}
+              // h={heightsFooter}
               px="28px"
               justifyContent="flex-end"
               alignItems="flex-start"
               direction="column"
               color="whiteAlpha.800"
               fontSize={['sm', 'md', 'sm', 'md', 'md']}
-              pb="16px"
+              py="16px"
             >
               {renderDesktop && (
                 <>

@@ -430,8 +430,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 py={["24px", "0", "0", "0", "0"]}
                 pr={["24px", "24px", "72px", "80px", "80px"]}
                 pl={["24px", "24px", "48px", "64px", "64px"]}
-                overflowX = "hidden"
-                overflowY= "auto"
+                // overflowX = "hidden"
+                // overflowY= "auto"
               >
                 <Heading fontWeight="normal">
                   <Flex direction="row" fontSize="24px">
@@ -444,6 +444,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 <Text
                   py={["24px", "24px", "24px", "24px", "36px"]}
                   fontSize={["sm", "2xl", "md", "md", "lg"]}
+                  overflowX = "hidden"
+                  overflowY= "auto"
                 >
                   {photo_Post.tags.map((tag) => {
                     return (

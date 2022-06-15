@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error';
 import React, { useEffect, useState } from 'react';
 import PhotoPostCard from '../../components/Card/PhotoPostCard';
-import ContentGrid from '../../components/layouts/ContentGrid';
+// import ContentGrid from '../../components/layouts/ContentGrid';
 import Layout from '../../components/layouts/Layout';
 import { fetchAPI } from '../../lib/api';
 import Head from 'next/head';
@@ -17,6 +17,8 @@ import { NextSeo } from 'next-seo';
 import FallbackPage from '../../components/FallbackPage';
 import ShareButtons from '../../components/ShareButtons';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import MasonryGrid from '../../components/layouts/MasonryGrid';
+import { useScreenType } from '../../hooks/useScreenType';
 
 interface ArticlePageProps {
   article: ArticlesResponse;
@@ -127,6 +129,23 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
     },
   };
 
+  let nCols 
+  const screenType = useScreenType()
+  switch (screenType) {
+    case "isDesktop":
+      nCols = (article.photo_posts.length > 3) ? 4 : 3;
+      break;
+    case "isTablet":
+      nCols = 3;
+      break
+    case "isSmallTablet":
+      nCols = 2;
+      break;
+    case "isMobile":
+      nCols = 1;
+      break;
+  }
+
   return (
     <>
       <NextSeo {...SEO} />
@@ -138,13 +157,12 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <ContentGrid
-          useSimpleGrid={false}
+        <MasonryGrid
           heading={article.title}
           footer={shareBtns}
           locale={router.locale}
           asPath={router.asPath}
-          renderBreadCrumbs={false}
+          nCols={nCols}
         >
           {article.photo_posts?.map((photoPost,i) => {
             return (
@@ -154,12 +172,13 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
                 writer_name={article.writer?.name}
                 isPortrait={photoPost.image?.width < photoPost.image?.height}
                 preload={i===0}
-                flex="auto"
+                // flex="auto"
+                w="100%"
                 m="0 18px 18px 0"
               />
             );
           })}
-        </ContentGrid>
+        </MasonryGrid>
       </Layout>
     </>
   );

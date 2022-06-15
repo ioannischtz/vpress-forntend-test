@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/layout';
 import { Tooltip } from '@chakra-ui/tooltip';
 import NextLink from 'next/link';
-import { useScreenType } from '../../hooks/useScreenType';
+// import { useScreenType } from '../../hooks/useScreenType';
 import { getStrapiMedia } from '../../lib/media';
 import Image from 'next/image';
 import { Card, CardHeader, CardBody, CardFooter } from './Card';
@@ -32,7 +32,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   preload = false,
   ...props
 }) => {
-  const screenType = useScreenType();
+  // const screenType = useScreenType();
   const { locale } = useRouter();
   let renderDesktop = true;
   // switch (screenType) {
@@ -46,47 +46,47 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   // }
   const imageUrl = getStrapiMedia(photoPost.image);
 
-  const aspectRatio = photoPost.image.width / photoPost.image.height;
+  // const aspectRatio = photoPost.image.width / photoPost.image.height;
 
-  const widthsOuter = [
-    'calc(75vw - 48px)',
-    'calc(40vw - 48px)',
-    'calc(22vw - 48px)',
-    'calc(22vw - 48px)',
-    'calc(20vw - 48px)',
-  ];
-  const heightsOuter = [
-    'calc(0.65 * (85vh - 48px))',
-    'calc(0.65 * (85vh - 48px))',
-    'calc(0.45 * (100vh - 48px))',
-    'calc(0.45 * (100vh - 48px))',
-    'calc(0.45 * (100vh - 48px))',
-  ];
+  // const widthsOuter = [
+  //   'calc(75vw - 48px)',
+  //   'calc(40vw - 48px)',
+  //   'calc(22vw - 48px)',
+  //   'calc(22vw - 48px)',
+  //   'calc(20vw - 48px)',
+  // ];
+  // const heightsOuter = [
+  //   'calc(0.65 * (85vh - 48px))',
+  //   'calc(0.65 * (85vh - 48px))',
+  //   'calc(0.45 * (100vh - 48px))',
+  //   'calc(0.45 * (100vh - 48px))',
+  //   'calc(0.45 * (100vh - 48px))',
+  // ];
 
-  let w_ar = [
-    `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
-    `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
-    `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
-    `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
-    `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
-  ];
+  // let w_ar = [
+  //   `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
+  //   `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
+  //   `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
+  //   `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
+  //   `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
+  // ];
   
 
-  const widthsInner = [
-    'calc(75vw - 50px)',
-    'calc(40vw - 50px)',
-    'calc(22vw - 50px)',
-    'calc(22vw - 50px)',
-    'calc(20vw - 50px)',
-  ];
-  const widthsLandscape = [
-    'calc(80vw - 48px)',
-    'calc(40vw - 48px)',
-    'calc(33vw - 48px)',
-    'calc(33vw - 48px)',
-    'calc(28vw - 48px)',
-  ];
-  const widthsLandscapeInner = 'calc(100% - 2px)';
+  // const widthsInner = [
+  //   'calc(75vw - 50px)',
+  //   'calc(40vw - 50px)',
+  //   'calc(22vw - 50px)',
+  //   'calc(22vw - 50px)',
+  //   'calc(20vw - 50px)',
+  // ];
+  // const widthsLandscape = [
+  //   'calc(80vw - 48px)',
+  //   'calc(40vw - 48px)',
+  //   'calc(33vw - 48px)',
+  //   'calc(33vw - 48px)',
+  //   'calc(28vw - 48px)',
+  // ];
+  // const widthsLandscapeInner = 'calc(100% - 2px)';
   // const widthsLandscapeInner = [
   //   'calc(80vw - 50px)',
   //   'calc(50vw - 50px)',
@@ -94,34 +94,37 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   //   'calc(35vw - 50px)',
   //   'calc(30vw - 50px)',
   // ];
-  const heightsHeader = [
-    'calc(0.7 * (0.65 * (85vh - 48px)))',
-    'calc(0.7 * (0.65 * (85vh - 48px)))',
-    'calc(0.6 * (0.45 * (100vh - 48px)))',
-    'calc(0.6 * (0.45 * (100vh - 48px)))',
-    'calc(0.6 * (0.45 * (100vh - 48px)))',
-  ];
-  const heightsBody = [
-    'calc(0.1 * (0.65 * (85vh - 48px)))',
-    'calc(0.1 * (0.65 * (85vh - 48px)))',
-    'calc(0.15 * (0.45 * (100vh - 48px)))',
-    'calc(0.15 * (0.45 * (100vh - 48px)))',
-    'calc(0.15 * (0.45 * (100vh - 48px)))',
-  ];
-  const heightsFooter = [
-    'calc(0.2 * (0.65 * (85vh - 48px)))',
-    'calc(0.2 * (0.65 * (85vh - 48px)))',
-    'calc(0.25 * (0.45 * (100vh - 48px)))',
-    'calc(0.25 * (0.45 * (100vh - 48px)))',
-    'calc(0.25 * (0.45 * (100vh - 48px)))',
-  ];
+  // const heightsHeader = [
+  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
+  // ];
+  // const heightsBody = [
+  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
+  // ];
+  // const heightsFooter = [
+  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
+  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
+  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
+  // ];
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   return (
     <Card
-      w={isPortrait ? widthsOuter : widthsLandscape}
+      // w={isPortrait ? widthsOuter : widthsLandscape}
       // w = {w_ar}
       // h={heightsOuter}
+      // h = {isPortrait ? }
       pb="16px"
+      // display="block"
+      sx={{breakInside: 'avoid', pageBreakInside: 'avoid'}}
       {...props}
     >
       <Tooltip
@@ -147,16 +150,19 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             p="16px"
           >
             <Box
-              h={heightsHeader}
+              // h={heightsHeader}
               w="100%"
-              overflow="clip"
+              // overflow="clip"
+              textAlign="center"
               position="relative"
               borderRadius="4px"
             >
               <Image
                 src={imageUrl}
                 alt={photoPost.description}
-                layout="fill"
+                layout="intrinsic"
+                height={photoPost.image.height}
+                width={photoPost.image.width}
                 objectFit="contain"
                 objectPosition="center"
                 quality={photoPost.image.width < 200 ? 90 : 50}
@@ -187,7 +193,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     color="whiteAlpha.800"
                     fontFamily="heading"
                     fontWeight='400'
-                    fontSize="18px"
+                    fontSize="16px"
                   >
                     {photoPost.title}
                   </Heading>
@@ -196,14 +202,14 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             </LinkOverlay>
           </NextLink>
           <CardFooter
-            h={heightsFooter}
+            // h={heightsFooter}
             px="28px"
             justifyContent="flex-end"
             alignItems="flex-start"
             direction="column"
             color="whiteAlpha.800"
             fontSize={['sm', 'md', 'sm', 'md', 'md']}
-            pb="16px"
+            py="16px"
           >
             {renderDesktop && (
               <>

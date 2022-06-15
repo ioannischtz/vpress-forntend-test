@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 
 import PhotoPostCard from '../components/Card/PhotoPostCard';
-import ContentGrid from '../components/layouts/ContentGrid';
+import MasonryGrid from '../components/layouts/MasonryGrid';
 import Layout from '../components/layouts/Layout';
 
 import { fetchAPI } from '../lib/api';
@@ -129,8 +129,8 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
         locale={locale}
         pathname={pathname}
       >
-        <ContentGrid
-          useSimpleGrid={false}
+        <MasonryGrid
+          
           heading={
             locale === 'en'
               ? `Search Results: (${initialData.length} Images)`
@@ -139,7 +139,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
           footer=""
           asPath={asPath}
           locale={locale}
-          renderBreadCrumbs={true}
+          nCols={3}
         >
           {
             <>
@@ -152,7 +152,8 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
                         writer_name={post.writer?.name}
                         isPortrait={post.image.width < post.image.height}
                         preload={i===0}
-                        flex="auto"
+                        // flex="auto"
+                        w="100%"
                         m="0 18px 18px 0"
                       />
                     );
@@ -184,7 +185,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
               ) : null}
             </>
           }
-        </ContentGrid>
+        </MasonryGrid>
       </Layout>
     </>
   );

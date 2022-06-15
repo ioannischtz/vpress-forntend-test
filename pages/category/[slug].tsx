@@ -1,11 +1,11 @@
-import { Box } from "@chakra-ui/layout"
+import { Box, Flex } from "@chakra-ui/layout"
 import { Button } from "@chakra-ui/button"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import DefaultErrorPage from "next/error"
 import React, { useEffect, useState } from "react"
 import ArticleCard from "../../components/Card/ArticleCard"
-import ContentGrid from "../../components/layouts/ContentGrid"
+// import ContentGrid from "../../components/layouts/ContentGrid"
 import Layout from "../../components/layouts/Layout"
 import { fetchAPI, getStrapiURL } from "../../lib/api"
 import {
@@ -21,6 +21,8 @@ import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
 import { GetStaticPaths, GetStaticProps } from "next"
+import MasonryGrid from "../../components/layouts/MasonryGrid"
+import { useScreenType } from "../../hooks/useScreenType"
 
 interface CategoryPageProps {
   category: CategoriesResponse
@@ -91,23 +93,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   const [slug2, setSlug2] = useState(category?.slug_2nd_locale)
   const isMounted = useMounted()
 
-  let shareBtns: React.ReactNode
-  const description_GR = `Δες τις ιστορίες που ανήκουν στην κατηγορία ${category?.name}.`
-  const description_EN = `View the stories that belong to category  ${category?.name}.`
-  if (isMounted) {
-    shareBtns = (
-      <ShareButtons
-        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-        description={router.locale === "en" ? description_EN : description_GR}
-        pt={["16px", "16px", "0", "0", "0"]}
-      />
-    )
-  }
-
-  useEffect(() => {
-    if (router.isReady) setSlug2(category?.slug_2nd_locale)
-  }, [router.query.slug])
-
   const getKey: KeyLoader<string> = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData?.length) return null
     return getStrapiURL(
@@ -121,6 +106,96 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
     initialSize: 0,
     revalidateAll: true
   })
+
+  // let shareBtns: React.ReactNode
+  let footer: React.ReactNode
+  const description_GR = `Δες τις ιστορίες που ανήκουν στην κατηγορία ${category?.name}.`
+  const description_EN = `View the stories that belong to category  ${category?.name}.`
+  // pagination
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd =
+    isEmpty ||
+    (data && data[data.length - 1]?.length < 1) ||
+    articles.length < 7
+
+  if (isMounted) {
+    footer = (
+      <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
+        {!isReachingEnd ? (
+          <Box
+          // w="100%"
+          //  h="150vh"
+          //  justifySelf="start"
+          //  alignContent="center"
+          //  textAlign="center"
+          // m="0 18px 18px 0"
+          // pb="16px"
+          //  display="inline-block"
+          //  sx={{breakInside: 'avoid',
+          //       pageBreakInside: 'avoid'}}
+          >
+            <Button
+              bg="semantic.blue.dark"
+              color="whiteAlpha.900"
+              onClick={() => setSize(size + 4)}
+              _hover={{
+                bg: "semantic.blue.medium",
+                color: "white"
+              }}
+              _focus={{
+                boxShadow: "0 0 0 3px #D5D4D0"
+              }}
+              _active={{
+                bg: "semantic.blue.light"
+              }}
+            >
+              {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+            </Button>
+          </Box>
+        ) : null}
+        <ShareButtons
+          url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+          description={router.locale === "en" ? description_EN : description_GR}
+          pt={["16px", "16px", "0", "0", "0"]}
+        />
+      </Flex>
+    )
+  }
+
+  useEffect(() => {
+    if (router.isReady) setSlug2(category?.slug_2nd_locale)
+  }, [router.query.slug])
+
+  // const getKey: KeyLoader<string> = (pageIndex, previousPageData) => {
+  //   if (previousPageData && !previousPageData?.length) return null
+  //   return getStrapiURL(
+  //     `/articles?_locale=${router.locale}&category.slug=${
+  //       category?.slug
+  //     }&_sort=published_at:DESC&_start=${pageIndex + articles?.length}&_limit=1`
+  //   )
+  // }
+
+  // const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
+  //   initialSize: 0,
+  //   revalidateAll: true
+  // })
+
+  let nCols
+  const screenType = useScreenType()
+  switch (screenType) {
+    case "isDesktop":
+      nCols = articles.length > 3 ? 4 : 3
+      break
+    case "isTablet":
+      nCols = 3
+      break
+    case "isSmallTablet":
+      nCols = 2
+      break
+    case "isMobile":
+      nCols = 1
+      break
+  }
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -139,11 +214,11 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
     )
   }
 
-  const isEmpty = data?.[0]?.length === 0
-  const isReachingEnd =
-    isEmpty ||
-    (data && data[data.length - 1]?.length < 1) ||
-    articles.length < 7
+  // const isEmpty = data?.[0]?.length === 0
+  // const isReachingEnd =
+  //   isEmpty ||
+  //   (data && data[data.length - 1]?.length < 1) ||
+  //   articles.length < 7
 
   const skeletonArr = [1, 2, 3]
   //   title: category.name,
@@ -174,13 +249,12 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <ContentGrid
-          useSimpleGrid={false}
+        <MasonryGrid
           heading={category.name}
-          footer={shareBtns}
-          asPath={router.asPath}
+          footer={footer}
           locale={router.locale}
-          renderBreadCrumbs={false}
+          asPath={router.asPath}
+          nCols={nCols}
         >
           {!articles ? (
             skeletonArr.map((i) => {
@@ -206,7 +280,9 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                       article.cover_image.width < article.cover_image.height
                     }
                     preload={i === 0}
-                    flex="auto"
+                    // flex="auto"
+                    // w="150px"
+                    w="100%"
                     m="0 18px 18px 0"
                   />
                 )
@@ -224,14 +300,15 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                             article.cover_image.height
                           }
                           preload={i === 0}
-                          flex="auto"
+                          // flex="auto"
+                          w="100%"
                           m="0 18px 18px 0"
                         />
                       )
                     })
                   })
                 : null}
-              {!isReachingEnd ? (
+              {/* {!isReachingEnd ? (
                 <Box w="100%" textAlign="center">
                   <Button
                     bg="semantic.blue.dark"
@@ -253,10 +330,10 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                       : "Load More"}
                   </Button>
                 </Box>
-              ) : null}
+              ) : null} */}
             </>
           )}
-        </ContentGrid>
+        </MasonryGrid>
       </Layout>
     </>
   )
