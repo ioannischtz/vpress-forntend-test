@@ -50,7 +50,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
       // h = {isPortrait ? }
       // pb="16px"
       // display="block"
-      sx={{breakInside: 'avoid', pageBreakInside: 'avoid'}}
+      sx={{ breakInside: "avoid", pageBreakInside: "avoid" }}
       {...props}
     >
       <Tooltip
@@ -62,7 +62,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
         openDelay={200}
         bg="semantic.blue.dark"
       >
-        <LinkBox _hover={{ cursor: 'pointer' }}>
+        <LinkBox _hover={{ cursor: "pointer" }}>
           <CardHeader
             // w={widthsLandscapeInner}
             // w = {w_ar}
@@ -97,33 +97,37 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             </Box>
           </CardHeader>
 
-          <NextLink href={'/photo-post/' + photoPost.slug}>
+          <NextLink href={"/photo-post/" + photoPost.slug}>
             <LinkOverlay>
               <CardBody
                 // w={widthsLandscapeInner}
                 // h={heightsBody}
                 direction="column"
                 justifyContent={[
-                  'space-between',
-                  'space-around',
-                  'space-between',
-                  'space-between',
-                  'space-between',
+                  "space-between",
+                  "space-around",
+                  "space-between",
+                  "space-between",
+                  "space-between"
                 ]}
                 px="16px"
-                py={['8px', '8px', '0px', '4px', '4px']}
+                py={["8px", "8px", "0px", "4px", "4px"]}
               >
                 <Box textAlign="start">
                   <Heading
                     as="h3"
                     color="whiteAlpha.800"
                     fontFamily="heading"
-                    fontWeight='400'
+                    fontWeight="400"
                     fontSize="16px"
                   >
-                    {(locale === 'en' ? 
-                      photoPost.title.split("/")[1] 
-                    : photoPost.title.split("/")[0])}
+                    {locale === "en"
+                      ? photoPost.title.includes("/")
+                        ? photoPost.title.split("/")[1]
+                        : photoPost.title
+                      : photoPost.title.includes("/")
+                      ? photoPost.title.split("/")[0]
+                      : photoPost.title}
                   </Heading>
                 </Box>
               </CardBody>
@@ -147,14 +151,18 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                       fontSize={["xs", "sm", "xs", "sm", "sm"]}
                       pr="2.75ch"
                     >
-                      {locale === 'en' ? 'Date: ' : 'Ημ/νία'}
+                      {locale === "en" ? "Date: " : "Ημ/νία"}
                     </Heading>
                   </Box>
                   <Box>
                     <Text>
                       {/* @ts-ignore */}
                       {new Intl.DateTimeFormat(locale, options).format(
-                        new Date(photoPost.date ? photoPost.date : photoPost.published_at)
+                        new Date(
+                          photoPost.date
+                            ? photoPost.date
+                            : photoPost.published_at
+                        )
                       )}
                     </Text>
                   </Box>
@@ -168,7 +176,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                       fontSize={["xs", "sm", "xs", "sm", "sm"]}
                       pr="1ch"
                     >
-                      Credits:{' '}
+                      Credits:{" "}
                     </Heading>
                   </Box>
                   <Box>
@@ -181,7 +189,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
         </LinkBox>
       </Tooltip>
     </Card>
-  );
+  )
 };
 
 export default PhotoPostCard;

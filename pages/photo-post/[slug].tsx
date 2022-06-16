@@ -341,10 +341,14 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pr={["24px", "24px", "48px", "64px", "64px"]}
               >
                 
-                <Heading fontSize="24px">
-                {(router.locale === 'en' ? 
-                      photo_Post.title.split("/")[1] 
-                    : photo_Post.title.split("/")[0])}
+                <Heading fontSize="20px">
+                {router.locale === "en"
+                      ? photo_Post.title.includes("/")
+                        ? photo_Post.title.split("/")[1]
+                        : photo_Post.title
+                      : photo_Post.title.includes("/")
+                      ? photo_Post.title.split("/")[0]
+                      : photo_Post.title}
                 </Heading>
                 <Flex
                   direction={["column", "row", "row", "row", "row"]}
@@ -363,12 +367,12 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                         <Heading
                           as="h4"
                           fontWeight="bold"
-                          fontSize="16px"
+                          fontSize="14px"
                           pr= {router.locale === "en" ? "3.75ch" : "2.5ch"}
                         >
                           {router.locale === "en" ? "Date: " : "Ημ/νία:"}
                         </Heading>
-                      <Box fontSize="14px" >
+                      <Box fontSize="12px" >
                         <Text>
                           {/* @ts-ignore*/}
                           {new Intl.DateTimeFormat(router.locale,options)
@@ -381,12 +385,12 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                         <Heading
                           as="h4"
                           fontWeight="bold"
-                          fontSize="16px"
+                          fontSize="14px"
                           pr="2ch"
                         >
                           Credits:{" "}
                         </Heading>
-                      <Box fontSize="14px">
+                      <Box fontSize="12px">
                         <Text>{photo_Post.writer?.name}</Text>
                         {/* <Text>{article.author.name_GR}</Text> */}
                       </Box>
