@@ -121,38 +121,27 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   if (isMounted) {
     footer = (
       <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
-        {!isReachingEnd ? (
-          <Box
-          // w="100%"
-          //  h="150vh"
-          //  justifySelf="start"
-          //  alignContent="center"
-          //  textAlign="center"
-          // m="0 18px 18px 0"
-          // pb="16px"
-          //  display="inline-block"
-          //  sx={{breakInside: 'avoid',
-          //       pageBreakInside: 'avoid'}}
+        <Box>
+          <Button
+            bg="semantic.blue.dark"
+            color="whiteAlpha.900"
+            onClick={() => setSize(size + 4)}
+            isDisabled={isReachingEnd}
+            _hover={{
+              bg: "semantic.blue.medium",
+              color: "white"
+            }}
+            _focus={{
+              boxShadow: "0 0 0 3px #D5D4D0"
+            }}
+            _active={{
+              bg: "semantic.blue.light"
+            }}
           >
-            <Button
-              bg="semantic.blue.dark"
-              color="whiteAlpha.900"
-              onClick={() => setSize(size + 4)}
-              _hover={{
-                bg: "semantic.blue.medium",
-                color: "white"
-              }}
-              _focus={{
-                boxShadow: "0 0 0 3px #D5D4D0"
-              }}
-              _active={{
-                bg: "semantic.blue.light"
-              }}
-            >
-              {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
-            </Button>
-          </Box>
-        ) : null}
+            {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+          </Button>
+        </Box>
+
         <ShareButtons
           url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
           description={router.locale === "en" ? description_EN : description_GR}
@@ -165,20 +154,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   useEffect(() => {
     if (router.isReady) setSlug2(category?.slug_2nd_locale)
   }, [router.query.slug])
-
-  // const getKey: KeyLoader<string> = (pageIndex, previousPageData) => {
-  //   if (previousPageData && !previousPageData?.length) return null
-  //   return getStrapiURL(
-  //     `/articles?_locale=${router.locale}&category.slug=${
-  //       category?.slug
-  //     }&_sort=published_at:DESC&_start=${pageIndex + articles?.length}&_limit=1`
-  //   )
-  // }
-
-  // const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
-  //   initialSize: 0,
-  //   revalidateAll: true
-  // })
 
   let nCols
   const screenType = useScreenType()
@@ -213,12 +188,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
       </>
     )
   }
-
-  // const isEmpty = data?.[0]?.length === 0
-  // const isReachingEnd =
-  //   isEmpty ||
-  //   (data && data[data.length - 1]?.length < 1) ||
-  //   articles.length < 7
 
   const skeletonArr = [1, 2, 3]
   //   title: category.name,
@@ -280,8 +249,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                       article.cover_image.width < article.cover_image.height
                     }
                     preload={i === 0}
-                    // flex="auto"
-                    // w="150px"
                     w="100%"
                     m="0 18px 18px 0"
                   />
@@ -300,7 +267,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                             article.cover_image.height
                           }
                           preload={i === 0}
-                          // flex="auto"
                           w="100%"
                           m="0 18px 18px 0"
                         />
@@ -308,29 +274,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                     })
                   })
                 : null}
-              {/* {!isReachingEnd ? (
-                <Box w="100%" textAlign="center">
-                  <Button
-                    bg="semantic.blue.dark"
-                    color="whiteAlpha.900"
-                    onClick={() => setSize(size + 4)}
-                    _hover={{
-                      bg: "semantic.blue.medium",
-                      color: "white"
-                    }}
-                    _focus={{
-                      boxShadow: "0 0 0 3px #D5D4D0"
-                    }}
-                    _active={{
-                      bg: "semantic.blue.light"
-                    }}
-                  >
-                    {router.locale === "el-GR"
-                      ? "Φόρτωσε Περισσότερα"
-                      : "Load More"}
-                  </Button>
-                </Box>
-              ) : null} */}
             </>
           )}
         </MasonryGrid>

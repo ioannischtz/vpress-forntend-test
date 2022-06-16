@@ -11,6 +11,7 @@ import Layout from '../components/layouts/Layout';
 import { fetchAPI } from '../lib/api';
 import { GetStaticProps } from 'next';
 import { CategoriesResponse, PhotoPostsResponse, WritersResponse } from '../custom_typings/models';
+import { useScreenType } from '../hooks/useScreenType';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // Run API calls in parallel
@@ -78,6 +79,8 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
       initialData.length < 15
   );
 
+  
+
   useEffect(() => {
     // if (isMounted && query && query.q) {
     if (query && query.q) {
@@ -119,6 +122,24 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
     // }
   }, [endIndex]);
 
+  let nCols
+  const screenType = useScreenType()
+  switch (screenType) {
+    case "isDesktop":
+      nCols = initialData?.length > 3 ? 4 : 3
+      break
+    case "isTablet":
+      nCols = 3
+      break
+    case "isSmallTablet":
+      nCols = 2
+      break
+    case "isMobile":
+      nCols = 1
+      break
+  }
+
+
   return (
     <>
       <NextSeo {...SEO} />
@@ -130,65 +151,63 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
         pathname={pathname}
       >
         <MasonryGrid
-          
           heading={
-            locale === 'en'
+            locale === "en"
               ? `Search Results: (${initialData.length} Images)`
               : `Αποτελέσματα Αναζήτησης: (${initialData.length} Φωτογραφίες)`
           }
-          footer=""
+          footer={
+            <Box w="100%" textAlign="center">
+              <Button
+                bg="semantic.blue.dark"
+                color="whiteAlpha.900"
+                isDisabled={isReachingEnd}
+                onClick={() => {
+                  setStartIndex(endIndex + 1)
+                  setEndIndex(endIndex + 5)
+                }}
+                _hover={{
+                  bg: "semantic.blue.medium",
+                  color: "white"
+                }}
+                _focus={{
+                  boxShadow: "0 0 0 3px #D5D4D0"
+                }}
+                _active={{
+                  bg: "semantic.blue.light"
+                }}
+              >
+                {locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+              </Button>
+            </Box>
+          }
           asPath={asPath}
           locale={locale}
-          nCols={3}
+          nCols={nCols}
         >
           {
             <>
               {initialData.length > 0
-                ? initialData.slice(0, endIndex).map((post,i) => {
+                ? initialData.slice(0, endIndex).map((post, i) => {
                     return (
                       <PhotoPostCard
                         key={post.id}
                         photoPost={post}
                         writer_name={post.writer?.name}
                         isPortrait={post.image.width < post.image.height}
-                        preload={i===0}
-                        // flex="auto"
+                        preload={i === 0}
                         w="100%"
                         m="0 18px 18px 0"
                       />
-                    );
+                    )
                   })
                 : null}
-              {!isReachingEnd ? (
-                <Box w="100%" textAlign="center">
-                  <Button
-                    bg="semantic.blue.dark"
-                    color="whiteAlpha.900"
-                    onClick={() => {
-                      setStartIndex(endIndex + 1);
-                      setEndIndex(endIndex + 5);
-                    }}
-                    _hover={{
-                      bg: 'semantic.blue.medium',
-                      color: 'white',
-                    }}
-                    _focus={{
-                      boxShadow: '0 0 0 3px #D5D4D0',
-                    }}
-                    _active={{
-                      bg: 'semantic.blue.light',
-                    }}
-                  >
-                    {locale === 'el-GR' ? 'Φόρτωσε Περισσότερα' : 'Load More'}
-                  </Button>
-                </Box>
-              ) : null}
             </>
           }
         </MasonryGrid>
       </Layout>
     </>
-  );
+  )
 };
 
 export default SearchPage;

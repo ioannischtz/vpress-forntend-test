@@ -101,28 +101,9 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
     tag?.photo_posts?.length < 5
 
   if (isMounted) {
-    // shareBtns = (
-    //   <ShareButtons
-    //     url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-    //     description={router.locale === "en" ? description_EN : description_GR}
-    //     pt={["16px", "16px", "0", "0", "0"]}
-    //   />
-    // )
     footer = (
     <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
-      {!isReachingEnd ? (
-        <Box
-          // w="100%"
-          //  h="150vh"
-          //  justifySelf="start"
-          //  alignContent="center"
-          //  textAlign="center"
-          // m="0 18px 18px 0"
-          // pb="16px"
-          //  display="inline-block"
-          //  sx={{breakInside: 'avoid',
-          //       pageBreakInside: 'avoid'}}
-        >
+        <Box>
           <Button
             bg="semantic.blue.dark"
             color="whiteAlpha.900"
@@ -130,6 +111,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
               setStartIndex(endIndex + 1)
               setEndIndex(endIndex + 5)
             }}
+            isDisabled={isReachingEnd}
             _hover={{
               bg: "semantic.blue.medium",
               color: "white"
@@ -144,7 +126,6 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
             {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
           </Button>
         </Box>
-      ) : null}
       <ShareButtons
         url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
         description={router.locale === "en" ? description_EN : description_GR}
@@ -156,17 +137,6 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
   useEffect(() => {
     if (router.isReady) setSlug2(tag?.slug_2nd_locale)
   }, [router.query.slug])
-
-  // // pagination
-  // const [startIndex, setStartIndex] = useState(0)
-  // const [endIndex, setEndIndex] = useState(
-  //   tag?.photo_posts?.length < 5 ? tag?.photo_posts?.length : 4
-  // )
-  // const isEmpty = tag?.photo_posts?.length === 0
-  // const isReachingEnd =
-  //   isEmpty ||
-  //   (tag?.photo_posts && endIndex >= tag?.photo_posts?.length - 1) ||
-  //   tag?.photo_posts?.length < 5
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
