@@ -93,6 +93,7 @@ function MyApp({ Component, pageProps }) {
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
+          // content="target-densitydpi=device-dpi,width=device-width, initial-scale=1.0"
           key="viewport"
         />
         {/* <link rel="shortcut icon" href={getStrapiMedia(global.favicon)} /> */}
