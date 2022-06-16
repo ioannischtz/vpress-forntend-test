@@ -50,7 +50,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
       // h = {isPortrait ? }
       // pb="16px"
       // display="block"
-      sx={{ breakInside: "avoid", pageBreakInside: "avoid" }}
+      sx={{ breakInside: "avoid", pageBreakInside: "avoid",overflow:"hidden" }}
       {...props}
     >
       <Tooltip

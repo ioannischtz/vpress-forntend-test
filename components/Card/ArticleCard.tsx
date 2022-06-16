@@ -38,7 +38,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
 
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   return (
-    <Card sx={{ breakInside: "avoid", pageBreakInside: "avoid" }} {...props}>
+    <Card sx={{ breakInside: "avoid", pageBreakInside: "avoid", overflow:"hidden"}} {...props}>
       <LinkBox _hover={{ cursor: "pointer" }}>
         <NextLink href={"/article/" + article.slug}>
           <LinkOverlay>

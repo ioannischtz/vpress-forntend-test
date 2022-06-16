@@ -84,7 +84,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
     shareBtns = (
       <ShareButtons
         url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-        description={article.description}
+        description={article?.description}
         pt={['16px', '16px', '0', '0', '0']}
       />
     );
