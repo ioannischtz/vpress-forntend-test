@@ -195,7 +195,9 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     fontWeight='400'
                     fontSize="16px"
                   >
-                    {photoPost.title}
+                    {(locale === 'en' ? 
+                      photoPost.title.split("/")[1] 
+                    : photoPost.title.split("/")[0])}
                   </Heading>
                 </Box>
               </CardBody>

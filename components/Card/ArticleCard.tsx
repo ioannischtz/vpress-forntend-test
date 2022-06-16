@@ -9,7 +9,6 @@ import {
   LinkOverlay,
 } from '@chakra-ui/layout';
 import NextLink from 'next/link';
-// import { useScreenType } from '../../hooks/useScreenType';
 import { getStrapiMedia } from '../../lib/media';
 import Image from 'next/image';
 import { Card, CardHeader, CardBody, CardFooter } from './Card';
@@ -30,82 +29,23 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
   preload = false,
   ...props
 }) => {
-  // const screenType = useScreenType();
+  
   let renderDesktop = true;
-  // switch (screenType) {
-  //   case 'isDesktop':
-  //   case 'isTablet':
-  //     renderDesktop = true;
-  //     break;
-  //   case 'isSmallTablet':
-  //   case 'isMobile':
-  //     renderDesktop = false;
-  // }
+ 
   const imageUrl = getStrapiMedia(article.cover_image);
 
   const { locale } = useRouter();
 
-  // const widthsOuter = [
-  //   'calc(75vw - 48px)',
-  //   'calc(40vw - 48px)',
-  //   'calc(22vw - 48px)',
-  //   'calc(22vw - 48px)',
-  //   'calc(20vw - 48px)',
-  // ];
-  // const heightsOuter = [
-  //   'calc(0.65 * (85vh - 48px))',
-  //   'calc(0.65 * (85vh - 48px))',
-  //   'calc(0.45 * (100vh - 48px))',
-  //   'calc(0.45 * (100vh - 48px))',
-  //   'calc(0.45 * (100vh - 48px))',
-  // ];
-  // const widthsLandscape = [
-  //   'calc(80vw - 48px)',
-  //   'calc(40vw - 48px)',
-  //   'calc(33vw - 48px)',
-  //   'calc(33vw - 48px)',
-  //   'calc(28vw - 48px)',
-  // ];
-  // const widthsLandscapeInner = 'calc(100% - 2px)';
-
-  // const heightsHeader = [
-  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
-  // ];
-  // const heightsBody = [
-  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
-  // ];
-  // const heightsFooter = [
-  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
-  // ];
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   return (
     <Card
-      // w={isPortrait ? widthsOuter : widthsLandscape}
-      // h={heightsOuter}
-      // pb="16px"
-      // display="block"
       sx={{breakInside: 'avoid', pageBreakInside: 'avoid'}}
-      // w="100%"
       {...props}
     >
       <LinkBox _hover={{ cursor: 'pointer' }}>
         <NextLink href={'/article/' + article.slug}>
           <LinkOverlay>
             <CardHeader
-              // w={widthsLandscapeInner}
-              // h={heightsHeader}
               direction="column"
               alignItems="center"
               justifyContent="center"
@@ -115,9 +55,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
               p="16px"
             >
               <Box
-                // h={heightsHeader}
                 w="100%"
-                // overflow="clip"
                 textAlign="center"
                 position="relative"
                 borderRadius="4px"
@@ -146,8 +84,6 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
             </CardHeader>
 
             <CardBody
-              // w={widthsLandscapeInner}
-              // h={heightsBody}
               direction="column"
               justifyContent={[
                 'space-between',
@@ -165,10 +101,11 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                   color="whiteAlpha.800"
                   fontFamily="heading"
                   fontWeight='400'
-                  // fontSize={['sm', '2xl', 'md', 'md', 'lg']}
                   fontSize="16px"
                 >
-                  {article.title}
+                  {(locale === 'en' ? 
+                      article.title.split("/")[1] 
+                    : article.title.split("/")[0])}
                 </Heading>
               </Box>
             </CardBody>
@@ -217,7 +154,6 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                     </Box>
                     <Box>
                       <Text>{writer_name}</Text>
-                      {/* <Text>{article.author.name_GR}</Text> */}
                     </Box>
                   </Flex>
                 </>

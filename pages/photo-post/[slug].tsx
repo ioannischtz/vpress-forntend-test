@@ -341,7 +341,11 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pr={["24px", "24px", "48px", "64px", "64px"]}
               >
                 
-                <Heading fontSize="18px">{photo_Post.title}</Heading>
+                <Heading fontSize="24px">
+                {(router.locale === 'en' ? 
+                      photo_Post.title.split("/")[1] 
+                    : photo_Post.title.split("/")[0])}
+                </Heading>
                 <Flex
                   direction={["column", "row", "row", "row", "row"]}
                   justifyContent="space-between"
@@ -354,19 +358,17 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                   ]}
                   py="12px"
                 >
-                  <Box w="100%">
+                  <Flex direction="column" justifyContent="space-between" alignItems="start">
                     <Flex direction="row">
-                      <Box>
                         <Heading
                           as="h4"
                           fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="2.75ch"
+                          fontSize="16px"
+                          pr="2.5ch"
                         >
-                          {router.locale === "en" ? "Date: " : "Ημ/νία"}
+                          {router.locale === "en" ? "Date: " : "Ημ/νία:"}
                         </Heading>
-                      </Box>
-                      <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
+                      <Box fontSize="14px" >
                         <Text>
                           {/* @ts-ignore*/}
                           {new Intl.DateTimeFormat(router.locale,options)
@@ -376,17 +378,15 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     </Flex>
 
                     <Flex direction="row">
-                      <Box>
                         <Heading
                           as="h4"
                           fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="1ch"
+                          fontSize="16px"
+                          pr="2ch"
                         >
                           Credits:{" "}
                         </Heading>
-                      </Box>
-                      <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
+                      <Box fontSize="14px">
                         <Text>{photo_Post.writer?.name}</Text>
                         {/* <Text>{article.author.name_GR}</Text> */}
                       </Box>
@@ -395,9 +395,9 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                         url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
                         description={photo_Post.description}
                         pt="4px"
+                        alignSelf="start"
                       />
-                  </Box>
-
+                  </Flex>
                   <Box
                     pt={["12px", "0", "0", "0", "0"]}
                     pb={["24px", "0", "0", "0", "0"]}
