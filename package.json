@@ -19,6 +19,7 @@
     "@fontsource/ibm-plex-sans": "^4.2.2",
     "@fontsource/libre-baskerville": "^4.2.2",
     "framer-motion": "^6",
+    "masonic": "^3.6.5",
     "next": "12.1.6",
     "next-seo": "^5.4.0",
     "next-share": "^0.13.0",

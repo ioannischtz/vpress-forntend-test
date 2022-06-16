@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error';
 import React, { useEffect, useState } from 'react';
+
+import { Masonry } from "masonic";
 import PhotoPostCard from '../../components/Card/PhotoPostCard';
 // import ContentGrid from '../../components/layouts/ContentGrid';
 import Layout from '../../components/layouts/Layout';
@@ -19,6 +21,7 @@ import ShareButtons from '../../components/ShareButtons';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import MasonryGridCSS from '../../components/layouts/MasonryGridCSS';
 import { useScreenType } from '../../hooks/useScreenType';
+import MasonryGridJS from '../../components/layouts/MasonryGridJS';
 
 interface ArticlePageProps {
   article: ArticlesResponse;
@@ -146,6 +149,26 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       break;
   }
 
+  const [items] = React.useState(() =>
+    Array.from(article.photo_posts, (photo_post,i) => ({
+      id: photo_post.id,
+      photoPost: photo_post,
+      writer_name: article.writer?.name,
+      isPortrait: photo_post.image?.width < photo_post.image?.height,
+      preload: i===0
+    }))
+  );
+  
+  const postCard = ({ data: { id, photoPost, writer_name,isPortrait,preload }}) => (
+    <PhotoPostCard
+      key={id}
+      photoPost={photoPost}
+      writer_name={writer_name}
+      isPortrait={isPortrait}
+      preload={preload}
+      />
+  );
+
   return (
     <>
       <NextSeo {...SEO} />
@@ -157,28 +180,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <MasonryGridCSS
+        <MasonryGridJS
           heading={article.title}
           footer={shareBtns}
+          items={items}
+          card={postCard}
           locale={router.locale}
           asPath={router.asPath}
           nCols={nCols}
-        >
-          {article.photo_posts?.map((photoPost,i) => {
-            return (
-              <PhotoPostCard
-                key={photoPost.id}
-                photoPost={photoPost}
-                writer_name={article.writer?.name}
-                isPortrait={photoPost.image?.width < photoPost.image?.height}
-                preload={i===0}
-                // flex="auto"
-                w="100%"
-                m="0 18px 18px 0"
-              />
-            );
-          })}
-        </MasonryGridCSS>
+        />
       </Layout>
     </>
   );
