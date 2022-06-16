@@ -364,7 +364,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                           as="h4"
                           fontWeight="bold"
                           fontSize="16px"
-                          pr="2.5ch"
+                          pr= {router.locale === "en" ? "3.75ch" : "2.5ch"}
                         >
                           {router.locale === "en" ? "Date: " : "Ημ/νία:"}
                         </Heading>

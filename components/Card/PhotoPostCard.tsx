@@ -32,89 +32,15 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   preload = false,
   ...props
 }) => {
-  // const screenType = useScreenType();
+  
   const { locale } = useRouter();
   let renderDesktop = true;
-  // switch (screenType) {
-  //   case 'isDesktop':
-  //   case 'isTablet':
-  //     renderDesktop = true;
-  //     break;
-  //   case 'isSmallTablet':
-  //   case 'isMobile':
-  //     renderDesktop = false;
-  // }
+ 
   const imageUrl = getStrapiMedia(photoPost.image);
 
   // const aspectRatio = photoPost.image.width / photoPost.image.height;
 
-  // const widthsOuter = [
-  //   'calc(75vw - 48px)',
-  //   'calc(40vw - 48px)',
-  //   'calc(22vw - 48px)',
-  //   'calc(22vw - 48px)',
-  //   'calc(20vw - 48px)',
-  // ];
-  // const heightsOuter = [
-  //   'calc(0.65 * (85vh - 48px))',
-  //   'calc(0.65 * (85vh - 48px))',
-  //   'calc(0.45 * (100vh - 48px))',
-  //   'calc(0.45 * (100vh - 48px))',
-  //   'calc(0.45 * (100vh - 48px))',
-  // ];
-
-  // let w_ar = [
-  //   `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
-  //   `calc(${aspectRatio} * 0.65 * (85vh - 48px))`,
-  //   `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
-  //   `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
-  //   `calc(${aspectRatio} * 0.45 * (100vh - 48px))`,
-  // ];
-  
-
-  // const widthsInner = [
-  //   'calc(75vw - 50px)',
-  //   'calc(40vw - 50px)',
-  //   'calc(22vw - 50px)',
-  //   'calc(22vw - 50px)',
-  //   'calc(20vw - 50px)',
-  // ];
-  // const widthsLandscape = [
-  //   'calc(80vw - 48px)',
-  //   'calc(40vw - 48px)',
-  //   'calc(33vw - 48px)',
-  //   'calc(33vw - 48px)',
-  //   'calc(28vw - 48px)',
-  // ];
-  // const widthsLandscapeInner = 'calc(100% - 2px)';
-  // const widthsLandscapeInner = [
-  //   'calc(80vw - 50px)',
-  //   'calc(50vw - 50px)',
-  //   'calc(35vw - 50px)',
-  //   'calc(35vw - 50px)',
-  //   'calc(30vw - 50px)',
-  // ];
-  // const heightsHeader = [
-  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.7 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.6 * (0.45 * (100vh - 48px)))',
-  // ];
-  // const heightsBody = [
-  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.1 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.15 * (0.45 * (100vh - 48px)))',
-  // ];
-  // const heightsFooter = [
-  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.2 * (0.65 * (85vh - 48px)))',
-  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
-  //   'calc(0.25 * (0.45 * (100vh - 48px)))',
-  // ];
+ 
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
   return (
     <Card
