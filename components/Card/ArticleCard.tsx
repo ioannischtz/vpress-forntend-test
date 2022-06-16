@@ -94,7 +94,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
     <Card
       // w={isPortrait ? widthsOuter : widthsLandscape}
       // h={heightsOuter}
-      pb="16px"
+      // pb="16px"
       // display="block"
       sx={{breakInside: 'avoid', pageBreakInside: 'avoid'}}
       // w="100%"
@@ -156,7 +156,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                 'space-between',
                 'space-between',
               ]}
-              px="28px"
+              px="16px"
               py={['8px', '8px', '0px', '4px', '4px']}
             >
               <Box textAlign="start">
@@ -174,14 +174,12 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
             </CardBody>
 
             <CardFooter
-              // h={heightsFooter}
-              px="28px"
               justifyContent="flex-end"
               alignItems="flex-start"
               direction="column"
               color="whiteAlpha.800"
               fontSize={['sm', 'md', 'sm', 'md', 'md']}
-              py="16px"
+              p="16px"
             >
               {renderDesktop && (
                 <>

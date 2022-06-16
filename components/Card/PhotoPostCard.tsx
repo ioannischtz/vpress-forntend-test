@@ -122,7 +122,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
       // w = {w_ar}
       // h={heightsOuter}
       // h = {isPortrait ? }
-      pb="16px"
+      // pb="16px"
       // display="block"
       sx={{breakInside: 'avoid', pageBreakInside: 'avoid'}}
       {...props}
@@ -184,7 +184,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                   'space-between',
                   'space-between',
                 ]}
-                px="28px"
+                px="16px"
                 py={['8px', '8px', '0px', '4px', '4px']}
               >
                 <Box textAlign="start">
@@ -202,14 +202,12 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             </LinkOverlay>
           </NextLink>
           <CardFooter
-            // h={heightsFooter}
-            px="28px"
             justifyContent="flex-end"
             alignItems="flex-start"
             direction="column"
             color="whiteAlpha.800"
             fontSize={['sm', 'md', 'sm', 'md', 'md']}
-            py="16px"
+            p="16px"
           >
             {renderDesktop && (
               <>
