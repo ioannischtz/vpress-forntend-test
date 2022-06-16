@@ -13,10 +13,7 @@ import { Box, Divider, Flex, Heading, Text } from "@chakra-ui/layout"
 
 import {
   Modal,
-  ModalBody,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay
 } from "@chakra-ui/modal"
 import Head from "next/head"
@@ -239,58 +236,43 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             maxW={aspectRatio > 1 ? 
                 ["90vw","65vw","65vw","65vw","65vw"]
               : ["90vw","40vw","40vw","40vw","40vw"]} 
-            maxH={["75vh","95vh","95vh","95vh","95vh"]} 
+            maxH={["75vh","85vh","85vh","85vh","85vh"]} 
+            h={["75vh","85vh","85vh","85vh","85vh"]}
             justifyContent="center"
             alignItems="center"
             overflowX="hidden" 
           >
-            <ModalHeader>{photo_Post.title}</ModalHeader>
-            <ModalBody >
-              <Box
-                w={["88vw","60vw","60vw","60vw","60vw"]} 
-                h={aspectRatio > 1 ?
-                    ["45vh","65vh","65vh","65vh","65vh"]
-                  : ["45vh","60vh","60vh","60vh","60vh"]
-                } 
-                // overflow="clip"
-                position="relative"
-                borderRadius="4px"
-              >
-                <Image
-                  src={imageUrl}
-                  alt={photo_Post.description}
-                  layout="fill"
-                  // layout="responsive"
-                  // width={photo_Post?.image?.width}
-                  // height={photo_Post?.image?.height}
-                  objectFit="contain"
-                  objectPosition="center"
-                  quality={
-                    photo_Post.image.width < 200
-                      ? 80
-                      : photo_Post.image.width < 350
-                      ? 70
-                      : photo_Post.image.width < 500
-                      ? 60
-                      : 50
-                  }
-                  // priority={true}
-                />
-              </Box>
-            </ModalBody>
-            <ModalFooter>
-              {/* @ts-ignore: Unreachable code error */}
-              {new Intl.DateTimeFormat(router.locale,options)
-                            .format(new Date(photo_Post.date ? photo_Post.date : photo_Post.published_at))}
-            </ModalFooter>
+            <Box
+              w={["88vw","60vw","60vw","60vw","60vw"]} 
+              h={aspectRatio > 1 ?
+                  ["45vh","80vh","80vh","80vh","80vh"]
+                : ["65vh","75vh","75vh","75vh","75vh"]
+              } 
+              position="relative"
+              borderRadius="4px"
+              my="24px"
+            >
+              <Image
+                src={imageUrl}
+                alt={photo_Post.description}
+                layout="fill"
+                objectFit="contain"
+                objectPosition="center"
+                quality={
+                  photo_Post.image.width < 200
+                    ? 80
+                    : photo_Post.image.width < 350
+                    ? 70
+                    : photo_Post.image.width < 500
+                    ? 60
+                    : 50
+                }
+              />
+            </Box>
           </ModalContent>
         </Modal>
         <Flex direction="column" color="whiteAlpha.800" alignItems="center" 
           w={widthsOuter} backgroundColor= "whiteAlpha.100"
-          // h=
-          // overflowX="hidden" 
-          // overflowY={["auto","visible","visible","visible","visible"]}
-          // overflow="hidden"
           overflow={["auto","unset","unset","unset","unset"]}
           >
           <Box
@@ -318,7 +300,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                   ? 75
                   : photo_Post.image.width < 700
                   ? 70
-                  : 65
+                  : 80
               }
               priority={true}
             />
@@ -326,23 +308,13 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           <Box
             w="100%"
             h="auto"
-            // h={ aspectRatio > 1 ?
-            //    `calc(100vh - ${imgHlandscape}px -48px)` 
-            //    : `calc(100vh - ${imgHportrait}px) -48px`}
-            // minH={ aspectRatio > 1 ?
-            //    `calc(100vh - ${imgHlandscape}px -48px)` 
-            //    : `calc(100vh - ${imgHportrait}px) -48px`}
             py={["24px", "24px", "24px", "24px", "36px"]}
             px="18px"
-            // backgroundColor="whiteAlpha.50"
-            // overflow="hidden"
           >
             <Flex
               direction={["column", "row", "row", "row", "row"]}
               w="100%"
               h="100%"
-              // overflowY="auto"
-              // overflowX="hidden"
             >
               <Flex
                 direction="column"
@@ -351,7 +323,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pl={["24px", "24px", "72px", "80px", "80px"]}
                 pr={["24px", "24px", "48px", "64px", "64px"]}
               >
-                
                 <Heading fontSize="20px">
                 {router.locale === "en"
                       ? photo_Post.title.includes("/")
@@ -391,7 +362,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                         </Text>
                       </Box>
                     </Flex>
-
                     <Flex direction="row">
                         <Heading
                           as="h4"
@@ -447,8 +417,6 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 py={["24px", "0", "0", "0", "0"]}
                 pr={["24px", "24px", "72px", "80px", "80px"]}
                 pl={["24px", "24px", "48px", "64px", "64px"]}
-                // overflowX = "hidden"
-                // overflowY= "auto"
               >
                 <Heading fontWeight="normal">
                   <Flex direction="row" fontSize="24px">
