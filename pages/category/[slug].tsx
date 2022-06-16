@@ -21,7 +21,7 @@ import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
 import { GetStaticPaths, GetStaticProps } from "next"
-import MasonryGrid from "../../components/layouts/MasonryGrid"
+import MasonryGridCSS from "../../components/layouts/MasonryGridCSS"
 import { useScreenType } from "../../hooks/useScreenType"
 
 interface CategoryPageProps {
@@ -218,7 +218,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <MasonryGrid
+        <MasonryGridCSS
           heading={category.name}
           footer={footer}
           locale={router.locale}
@@ -276,7 +276,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                 : null}
             </>
           )}
-        </MasonryGrid>
+        </MasonryGridCSS>
       </Layout>
     </>
   )

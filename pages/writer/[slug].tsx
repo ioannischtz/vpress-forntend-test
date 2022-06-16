@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import DefaultErrorPage from "next/error"
 import React, { useEffect, useState } from "react"
 import ArticleCard from "../../components/Card/ArticleCard"
-import MasonryGrid from "../../components/layouts/MasonryGrid"
+import MasonryGridCSS from "../../components/layouts/MasonryGridCSS"
 import Layout from "../../components/layouts/Layout"
 import { fetchAPI, getStrapiURL } from "../../lib/api"
 import Head from "next/head"
@@ -234,7 +234,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <MasonryGrid
+        <MasonryGridCSS
           heading={"By " + writer.name}
           footer={footer}
           asPath={router.asPath}
@@ -329,7 +329,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
             />
           );
         })} */}
-        </MasonryGrid>
+        </MasonryGridCSS>
       </Layout>
     </>
   )

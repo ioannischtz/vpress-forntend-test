@@ -17,7 +17,7 @@ import { NextSeo } from 'next-seo';
 import FallbackPage from '../../components/FallbackPage';
 import ShareButtons from '../../components/ShareButtons';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import MasonryGrid from '../../components/layouts/MasonryGrid';
+import MasonryGridCSS from '../../components/layouts/MasonryGridCSS';
 import { useScreenType } from '../../hooks/useScreenType';
 
 interface ArticlePageProps {
@@ -157,7 +157,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <MasonryGrid
+        <MasonryGridCSS
           heading={article.title}
           footer={shareBtns}
           locale={router.locale}
@@ -178,7 +178,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
               />
             );
           })}
-        </MasonryGrid>
+        </MasonryGridCSS>
       </Layout>
     </>
   );

@@ -13,7 +13,7 @@ interface MasonryGridProps {
   props?: FlexboxProps
 }
 
-const MasonryGrid: React.FC<MasonryGridProps> = ({
+const MasonryGridCSS: React.FC<MasonryGridProps> = ({
   heading,
   footer,
   locale,
@@ -112,4 +112,4 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
   )
 }
 
-export default MasonryGrid
+export default MasonryGridCSS

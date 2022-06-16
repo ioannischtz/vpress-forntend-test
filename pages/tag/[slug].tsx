@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import DefaultErrorPage from "next/error"
 import React, { useEffect, useState } from "react"
 import PhotoPostCard from "../../components/Card/PhotoPostCard"
-import MasonryGrid from "../../components/layouts/MasonryGrid"
+import MasonryGridCSS from "../../components/layouts/MasonryGridCSS"
 import Layout from "../../components/layouts/Layout"
 import { fetchAPI } from "../../lib/api"
 import Head from "next/head"
@@ -213,7 +213,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <MasonryGrid
+        <MasonryGridCSS
           heading={
             router.locale === "en"
               ? `${tag.name} (${tag.photo_posts.length} Images)`
@@ -297,7 +297,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
             />
           );
         })} */}
-        </MasonryGrid>
+        </MasonryGridCSS>
       </Layout>
     </>
   )
