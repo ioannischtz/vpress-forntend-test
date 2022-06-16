@@ -226,7 +226,9 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered >
           <ModalOverlay />
           <ModalContent 
-            maxW={["90vw","50vw","50vw","50vw","50vw"]} 
+            maxW={aspectRatio > 1 ? 
+                ["90vw","65vw","65vw","65vw","65vw"]
+              : ["90vw","35vw","35vw","35vw","35vw"]} 
             maxH={["75vh","90vh","90vh","90vh","90vh"]} 
             justifyContent="center"
             alignItems="center"
@@ -235,7 +237,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             <ModalHeader>{photo_Post.title}</ModalHeader>
             <ModalBody >
               <Box
-                w={["88vw","48vw","48vw","48vw","48vw"]} 
+                w={["88vw","55vw","55vw","55vw","55vw"]} 
                 h={aspectRatio > 1 ?
                     ["45vh","60vh","60vh","60vh","60vh"]
                   : ["45vh","60vh","60vh","60vh","60vh"]
@@ -339,7 +341,15 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 pr={["24px", "24px", "48px", "64px", "64px"]}
               >
                 
-                <Heading fontSize="18px">{photo_Post.title}</Heading>
+                <Heading fontSize="20px">
+                {router.locale === "en"
+                      ? photo_Post.title.includes("/")
+                        ? photo_Post.title.split("/")[1]
+                        : photo_Post.title
+                      : photo_Post.title.includes("/")
+                      ? photo_Post.title.split("/")[0]
+                      : photo_Post.title}
+                </Heading>
                 <Flex
                   direction={["column", "row", "row", "row", "row"]}
                   justifyContent="space-between"
@@ -352,19 +362,17 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                   ]}
                   py="12px"
                 >
-                  <Box w="100%">
+                  <Flex direction="column" justifyContent="space-between" alignItems="start">
                     <Flex direction="row">
-                      <Box>
                         <Heading
                           as="h4"
                           fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="2.75ch"
+                          fontSize="14px"
+                          pr= {router.locale === "en" ? "3.75ch" : "2.5ch"}
                         >
-                          {router.locale === "en" ? "Date: " : "Ημ/νία"}
+                          {router.locale === "en" ? "Date: " : "Ημ/νία:"}
                         </Heading>
-                      </Box>
-                      <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
+                      <Box fontSize="12px" >
                         <Text>
                           {/* @ts-ignore*/}
                           {new Intl.DateTimeFormat(router.locale,options)
@@ -374,17 +382,15 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                     </Flex>
 
                     <Flex direction="row">
-                      <Box>
                         <Heading
                           as="h4"
                           fontWeight="bold"
-                          fontSize={["xs", "sm", "xs", "sm", "sm"]}
-                          pr="1ch"
+                          fontSize="14px"
+                          pr="2ch"
                         >
                           Credits:{" "}
                         </Heading>
-                      </Box>
-                      <Box fontSize={["xs", "sm", "xs", "sm", "sm"]}>
+                      <Box fontSize="12px">
                         <Text>{photo_Post.writer?.name}</Text>
                         {/* <Text>{article.author.name_GR}</Text> */}
                       </Box>
@@ -393,9 +399,9 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                         url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
                         description={photo_Post.description}
                         pt="4px"
+                        alignSelf="start"
                       />
-                  </Box>
-
+                  </Flex>
                   <Box
                     pt={["12px", "0", "0", "0", "0"]}
                     pb={["24px", "0", "0", "0", "0"]}
@@ -430,8 +436,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 py={["24px", "0", "0", "0", "0"]}
                 pr={["24px", "24px", "72px", "80px", "80px"]}
                 pl={["24px", "24px", "48px", "64px", "64px"]}
-                overflowX = "hidden"
-                overflowY= "auto"
+                // overflowX = "hidden"
+                // overflowY= "auto"
               >
                 <Heading fontWeight="normal">
                   <Flex direction="row" fontSize="24px">
@@ -444,6 +450,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 <Text
                   py={["24px", "24px", "24px", "24px", "36px"]}
                   fontSize={["sm", "2xl", "md", "md", "lg"]}
+                  overflowX = "hidden"
+                  overflowY= "auto"
                 >
                   {photo_Post.tags.map((tag) => {
                     return (

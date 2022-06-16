@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/layout"
+import { Box, Flex } from "@chakra-ui/layout"
 import { useRouter } from "next/router"
 import DefaultErrorPage from "next/error"
 import React, { useEffect, useState } from "react"
 import ArticleCard from "../../components/Card/ArticleCard"
-import ContentGrid from "../../components/layouts/ContentGrid"
+import MasonryGrid from "../../components/layouts/MasonryGrid"
 import Layout from "../../components/layouts/Layout"
 import { fetchAPI, getStrapiURL } from "../../lib/api"
 import Head from "next/head"
@@ -21,6 +21,7 @@ import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
 import { GetStaticPaths, GetStaticProps } from "next"
+import { useScreenType } from "../../hooks/useScreenType"
 
 interface WriterArticlesPageProps {
   categories: CategoriesResponse[]
@@ -90,23 +91,6 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
   const router = useRouter()
   const [slug2, setSlug2] = useState(writer?.slug_2nd_locale)
   const isMounted = useMounted()
-  let shareBtns: React.ReactNode
-  const description_GR = `Δες τις ιστορίες του συντάκτη ${writer?.name}. ${writer?.ShortBio}`
-  const description_EN = `View ${writer?.name}'s Stories. ${writer?.ShortBio}`
-  if (isMounted) {
-    shareBtns = (
-      <ShareButtons
-        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-        description={router.locale === "en" ? description_EN : description_GR}
-        pt={["16px", "16px", "0", "0", "0"]}
-      />
-    )
-  }
-
-  useEffect(() => {
-    if (router.isReady) setSlug2(writer?.slug_2nd_locale)
-  }, [router.query.slug])
-
   const getKey: KeyLoader<string> = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null
     return getStrapiURL(
@@ -120,6 +104,81 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
     initialSize: 0,
     revalidateAll: true
   })
+  // let shareBtns: React.ReactNode
+  let footer: React.ReactNode
+  const description_GR = `Δες τις ιστορίες του συντάκτη ${writer?.name}. ${writer?.ShortBio}`
+  const description_EN = `View ${writer?.name}'s Stories. ${writer?.ShortBio}`
+  
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd =
+    isEmpty ||
+    (data && data[data.length - 1]?.length < 1) ||
+    articles?.length < 7
+
+  if (isMounted) {
+    footer = (
+      <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
+        {!isReachingEnd ? (
+          <Box
+          // w="100%"
+          //  h="150vh"
+          //  justifySelf="start"
+          //  alignContent="center"
+          //  textAlign="center"
+          // m="0 18px 18px 0"
+          // pb="16px"
+          //  display="inline-block"
+          //  sx={{breakInside: 'avoid',
+          //       pageBreakInside: 'avoid'}}
+          >
+            <Button
+              bg="semantic.blue.dark"
+              color="whiteAlpha.900"
+              onClick={() => setSize(size + 4)}
+              _hover={{
+                bg: "semantic.blue.medium",
+                color: "white"
+              }}
+              _focus={{
+                boxShadow: "0 0 0 3px #D5D4D0"
+              }}
+              _active={{
+                bg: "semantic.blue.light"
+              }}
+            >
+              {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+            </Button>
+          </Box>
+        ) : null}
+        <ShareButtons
+          url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+          description={router.locale === "en" ? description_EN : description_GR}
+          pt={["16px", "16px", "0", "0", "0"]}
+        />
+      </Flex>
+    )
+  }
+
+  useEffect(() => {
+    if (router.isReady) setSlug2(writer?.slug_2nd_locale)
+  }, [router.query.slug])
+
+  let nCols
+  const screenType = useScreenType()
+  switch (screenType) {
+    case "isDesktop":
+      nCols = articles?.length > 4 ? 4 : 3
+      break
+    case "isTablet":
+      nCols = 3
+      break
+    case "isSmallTablet":
+      nCols = 2
+      break
+    case "isMobile":
+      nCols = 1
+      break
+  }
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -138,11 +197,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
     )
   }
 
-  const isEmpty = data?.[0]?.length === 0
-  const isReachingEnd =
-    isEmpty ||
-    (data && data[data.length - 1]?.length < 1) ||
-    articles.length < 7
+  
 
   const skeletonArr = [1, 2, 3]
   // title: writer.name,
@@ -179,13 +234,12 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <ContentGrid
-          useSimpleGrid={false}
+        <MasonryGrid
           heading={"By " + writer.name}
-          footer={shareBtns}
+          footer={footer}
           asPath={router.asPath}
           locale={router.locale}
-          renderBreadCrumbs={true}
+          nCols={nCols}
         >
           {!articles ? (
             skeletonArr.map((i) => {
@@ -211,7 +265,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
                       article.cover_image.width < article.cover_image.height
                     }
                     preload={i === 0}
-                    flex="auto"
+                    w="100%"
                     m="0 18px 18px 0"
                   />
                 )
@@ -229,14 +283,14 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
                             article.cover_image.height
                           }
                           preload={i === 0}
-                          flex="auto"
+                          w="100%"
                           m="0 18px 18px 0"
                         />
                       )
                     })
                   })
                 : null}
-              {!isReachingEnd ? (
+              {/* {!isReachingEnd ? (
                 <Box w="100%" textAlign="center">
                   <Button
                     bg="semantic.blue.dark"
@@ -258,7 +312,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
                       : "Load More"}
                   </Button>
                 </Box>
-              ) : null}
+              ) : null} */}
             </>
           )}
           {/* {articles.map((article) => {
@@ -275,7 +329,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
             />
           );
         })} */}
-        </ContentGrid>
+        </MasonryGrid>
       </Layout>
     </>
   )

@@ -1,10 +1,10 @@
-import { Box } from "@chakra-ui/layout"
+import { Box, Flex } from "@chakra-ui/layout"
 import { Button } from "@chakra-ui/button"
 import { useRouter } from "next/router"
 import DefaultErrorPage from "next/error"
 import React, { useEffect, useState } from "react"
 import PhotoPostCard from "../../components/Card/PhotoPostCard"
-import ContentGrid from "../../components/layouts/ContentGrid"
+import MasonryGrid from "../../components/layouts/MasonryGrid"
 import Layout from "../../components/layouts/Layout"
 import { fetchAPI } from "../../lib/api"
 import Head from "next/head"
@@ -23,6 +23,7 @@ import { NextSeo } from "next-seo"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
 import { GetStaticPaths, GetStaticProps } from "next"
+import { useScreenType } from "../../hooks/useScreenType"
 
 interface TagPageProps {
   tag: TagsResponse
@@ -83,22 +84,10 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
   const [slug2, setSlug2] = useState(tag?.slug_2nd_locale)
   const isMounted = useMounted()
 
-  let shareBtns: React.ReactNode
+  // let shareBtns: React.ReactNode
+  let footer: React.ReactNode
   const description_GR = `Δες τις φωτογραφίες που ανήκουν στην ετικέτα ${tag?.name}.`
   const description_EN = `View the Photo-posts that belong to the tag  ${tag?.name}.`
-  if (isMounted) {
-    shareBtns = (
-      <ShareButtons
-        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-        description={router.locale === "en" ? description_EN : description_GR}
-        pt={["16px", "16px", "0", "0", "0"]}
-      />
-    )
-  }
-
-  useEffect(() => {
-    if (router.isReady) setSlug2(tag?.slug_2nd_locale)
-  }, [router.query.slug])
 
   // pagination
   const [startIndex, setStartIndex] = useState(0)
@@ -110,6 +99,44 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
     isEmpty ||
     (tag?.photo_posts && endIndex >= tag?.photo_posts?.length - 1) ||
     tag?.photo_posts?.length < 5
+
+  if (isMounted) {
+    footer = (
+    <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
+        <Box>
+          <Button
+            bg="semantic.blue.dark"
+            color="whiteAlpha.900"
+            onClick={() => {
+              setStartIndex(endIndex + 1)
+              setEndIndex(endIndex + 5)
+            }}
+            isDisabled={isReachingEnd}
+            _hover={{
+              bg: "semantic.blue.medium",
+              color: "white"
+            }}
+            _focus={{
+              boxShadow: "0 0 0 3px #D5D4D0"
+            }}
+            _active={{
+              bg: "semantic.blue.light"
+            }}
+          >
+            {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+          </Button>
+        </Box>
+      <ShareButtons
+        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+        description={router.locale === "en" ? description_EN : description_GR}
+        pt={["16px", "16px", "0", "0", "0"]}
+      />
+    </Flex>)
+  }
+
+  useEffect(() => {
+    if (router.isReady) setSlug2(tag?.slug_2nd_locale)
+  }, [router.query.slug])
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -158,6 +185,23 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
     }
   }
 
+  let nCols
+  const screenType = useScreenType()
+  switch (screenType) {
+    case "isDesktop":
+      nCols = tag.photo_posts?.length > 4 ? 4 : 3
+      break
+    case "isTablet":
+      nCols = 3
+      break
+    case "isSmallTablet":
+      nCols = 2
+      break
+    case "isMobile":
+      nCols = 1
+      break
+  }
+
   return (
     <>
       <NextSeo {...SEO} />
@@ -169,17 +213,16 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
         pathname={router.pathname}
         isOnSearchPage={false}
       >
-        <ContentGrid
-          useSimpleGrid={false}
+        <MasonryGrid
           heading={
             router.locale === "en"
               ? `${tag.name} (${tag.photo_posts.length} Images)`
               : `${tag.name} (${tag.photo_posts.length} Φωτογραφίες)`
           }
-          footer={shareBtns}
+          footer={footer}
           locale={router.locale}
           asPath={router.asPath}
-          renderBreadCrumbs={true}
+          nCols={nCols}
         >
           {
             <>
@@ -196,14 +239,25 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
                           photoPost.image.width < photoPost.image.height
                         }
                         preload={i === 0}
-                        flex="auto"
+                        // flex="auto"
+                        w="100%"
                         m="0 18px 18px 0"
                       />
                     )
                   })
                 : null}
-              {!isReachingEnd ? (
-                <Box w="100%" textAlign="center">
+              {/* {!isReachingEnd ? (
+                <Box w="100%"
+                    //  h="150vh"
+                    //  justifySelf="center"
+                    //  alignContent="center" 
+                    //  textAlign="center"
+                     m="0 18px 18px 0"
+                     pb="16px"
+                    //  display="inline-block"
+                    //  sx={{breakInside: 'avoid',
+                    //       pageBreakInside: 'avoid'}}
+                  >
                   <Button
                     bg="semantic.blue.dark"
                     color="whiteAlpha.900"
@@ -227,7 +281,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
                       : "Load More"}
                   </Button>
                 </Box>
-              ) : null}
+              ) : null} */}
             </>
           }
 
@@ -243,7 +297,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
             />
           );
         })} */}
-        </ContentGrid>
+        </MasonryGrid>
       </Layout>
     </>
   )
