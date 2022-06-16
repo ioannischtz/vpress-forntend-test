@@ -120,31 +120,12 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     case "isTablet":
     case "isSmallTablet":
       dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
-      // dividerComp = (
-      //   <Divider orientation="horizontal" size="sm" variant="white" />
-      // )
-      // modalImgW = photo_Post.image.height > photo_Post.image.width ? '40%' : '60%'
-      // imgContainerH = getViewportHeightPX() > 600 ? 'calc(50vh - 24px)' : 'calc(80vh - 24px)'
-      // imgContainerW = getViewportHeightPX() > 600 ? `${(vhTOpx(50) - 24) * aspectRatio}px` : `${(vhTOpx(80) - 24) * aspectRatio}px`
-      // let vhPX = getViewportHeightPX()
-      // imgContainerH = vhPX > 600 ? `${50*vhPX - 24}px` : `${80*vhPX - 24}px`
-      // imgContainerW = 'calc(42.25vw - 24px)' 
-      // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
-      // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
-      // imgContainerH = '50%'
-      // imgContainerW = `${50 * aspectRatio}%`
       break
     
     case "isMobile":
       dividerComp = (
         <Divider orientation="horizontal" size="sm" variant="white" />
       )
-      // modalImgW = '80%'
-      // imgContainerH = '80%'
-      // imgContainerW = `${80 * aspectRatio}%`
-      // imgContainerH = aspectRatio > 1 ? '480px' : '640px'
-      // imgContainerW = aspectRatio > 1 ? '640px' : '480px'
-      
   }
 
   useEffect(() => {
@@ -173,10 +154,39 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     modalImgW = vhTOpx(80) * photo_Post.image?.width / photo_Post.image?.height;
     modalImgH = vhTOpx(80)
     aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
-    imgWlandscape = screenType === "isMobile" ? vwTOpx(85) - 48 : 520
-    imgHlandscape = screenType === "isMobile" ? vhTOpx(40) - 48 : imgWlandscape / aspectRatio 
-    imgWportrait = screenType === "isMobile" ? vwTOpx(85) - 48 : 300
-    imgHportrait = screenType === "isMobile" ? vhTOpx(65) - 48 : imgWportrait / aspectRatio 
+
+    switch (screenType) {
+      case "isDesktop":
+        imgWlandscape = 640
+        imgHlandscape = imgWlandscape / aspectRatio 
+        imgWportrait = 400
+        imgHportrait = imgWportrait / aspectRatio 
+        break
+      case "isTablet":
+        imgWlandscape = 560
+        imgHlandscape = imgWlandscape / aspectRatio 
+        imgWportrait = 310
+        imgHportrait = imgWportrait / aspectRatio 
+        break
+      case "isSmallTablet":
+        dividerComp = <Divider orientation="vertical" size="sm" variant="white" />
+        imgWlandscape = 520
+        imgHlandscape = imgWlandscape / aspectRatio 
+        imgWportrait = 300
+        imgHportrait = imgWportrait / aspectRatio 
+        break
+      case "isMobile":
+        dividerComp = (
+          <Divider orientation="horizontal" size="sm" variant="white" />
+        )
+        imgWlandscape =  vwTOpx(85) - 48 
+        imgHlandscape =  vhTOpx(40) - 48 
+        imgWportrait =  vwTOpx(85) - 48 
+        imgHportrait =  vhTOpx(65) - 48 
+        break
+    }
+
+    
   }
 
   // If the page is not yet generated, this will be displayed
@@ -228,8 +238,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           <ModalContent 
             maxW={aspectRatio > 1 ? 
                 ["90vw","65vw","65vw","65vw","65vw"]
-              : ["90vw","35vw","35vw","35vw","35vw"]} 
-            maxH={["75vh","90vh","90vh","90vh","90vh"]} 
+              : ["90vw","40vw","40vw","40vw","40vw"]} 
+            maxH={["75vh","95vh","95vh","95vh","95vh"]} 
             justifyContent="center"
             alignItems="center"
             overflowX="hidden" 
@@ -237,9 +247,9 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             <ModalHeader>{photo_Post.title}</ModalHeader>
             <ModalBody >
               <Box
-                w={["88vw","55vw","55vw","55vw","55vw"]} 
+                w={["88vw","60vw","60vw","60vw","60vw"]} 
                 h={aspectRatio > 1 ?
-                    ["45vh","60vh","60vh","60vh","60vh"]
+                    ["45vh","65vh","65vh","65vh","65vh"]
                   : ["45vh","60vh","60vh","60vh","60vh"]
                 } 
                 // overflow="clip"
@@ -323,6 +333,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             //    `calc(100vh - ${imgHlandscape}px -48px)` 
             //    : `calc(100vh - ${imgHportrait}px) -48px`}
             py={["24px", "24px", "24px", "24px", "36px"]}
+            px="18px"
             // backgroundColor="whiteAlpha.50"
             // overflow="hidden"
           >

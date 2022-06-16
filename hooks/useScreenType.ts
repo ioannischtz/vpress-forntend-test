@@ -1,8 +1,8 @@
 import useMediaQuery from './useMediaQuery';
 
 export const useScreenType = () => {
-  const isDesktop = useMediaQuery(1440);
-  const isTablet = useMediaQuery(1265);
+  const isDesktop = useMediaQuery(1367);
+  const isTablet = useMediaQuery(1025);
   const isSmallTablet = useMediaQuery(600);
 
   if (isDesktop) {
