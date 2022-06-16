@@ -126,7 +126,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ categories, writers }) => {
   const screenType = useScreenType()
   switch (screenType) {
     case "isDesktop":
-      nCols = initialData?.length > 3 ? 4 : 3
+      nCols = initialData?.length > 4 ? 4 : 3
       break
     case "isTablet":
       nCols = 3

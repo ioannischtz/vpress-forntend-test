@@ -226,7 +226,9 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
         <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered >
           <ModalOverlay />
           <ModalContent 
-            maxW={["90vw","50vw","50vw","50vw","50vw"]} 
+            maxW={aspectRatio > 1 ? 
+                ["90vw","65vw","65vw","65vw","65vw"]
+              : ["90vw","35vw","35vw","35vw","35vw"]} 
             maxH={["75vh","90vh","90vh","90vh","90vh"]} 
             justifyContent="center"
             alignItems="center"
@@ -235,7 +237,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             <ModalHeader>{photo_Post.title}</ModalHeader>
             <ModalBody >
               <Box
-                w={["88vw","48vw","48vw","48vw","48vw"]} 
+                w={["88vw","55vw","55vw","55vw","55vw"]} 
                 h={aspectRatio > 1 ?
                     ["45vh","60vh","60vh","60vh","60vh"]
                   : ["45vh","60vh","60vh","60vh","60vh"]

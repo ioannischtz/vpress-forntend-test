@@ -178,7 +178,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
               alignItems="flex-start"
               direction="column"
               color="whiteAlpha.800"
-              fontSize={['sm', 'md', 'sm', 'md', 'md']}
+              fontSize={["xs", "sm", "xs", "sm", "sm"]}
               p="16px"
             >
               {renderDesktop && (
@@ -188,7 +188,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Heading
                         as="h4"
                         fontWeight="bold"
-                        fontSize={['sm', 'md', 'sm', 'md', 'md']}
+                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
                         pr="2.75ch"
                       >
                         {locale === 'en' ? 'Date: ' : 'Ημ/νία'}
@@ -209,7 +209,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       <Heading
                         as="h4"
                         fontWeight="bold"
-                        fontSize={['sm', 'md', 'sm', 'md', 'md']}
+                        fontSize={["xs", "sm", "xs", "sm", "sm"]}
                         pr="1ch"
                       >
                         Credits:{' '}

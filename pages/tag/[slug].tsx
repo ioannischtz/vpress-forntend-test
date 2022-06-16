@@ -189,7 +189,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
   const screenType = useScreenType()
   switch (screenType) {
     case "isDesktop":
-      nCols = tag.photo_posts?.length > 3 ? 4 : 3
+      nCols = tag.photo_posts?.length > 4 ? 4 : 3
       break
     case "isTablet":
       nCols = 3

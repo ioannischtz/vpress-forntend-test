@@ -133,7 +133,7 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
   const screenType = useScreenType()
   switch (screenType) {
     case "isDesktop":
-      nCols = (article.photo_posts.length > 3) ? 4 : 3;
+      nCols = (article.photo_posts.length > 4) ? 4 : 3;
       break;
     case "isTablet":
       nCols = 3;

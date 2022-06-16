@@ -167,7 +167,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
   const screenType = useScreenType()
   switch (screenType) {
     case "isDesktop":
-      nCols = articles?.length > 3 ? 4 : 3
+      nCols = articles?.length > 4 ? 4 : 3
       break
     case "isTablet":
       nCols = 3
