@@ -318,14 +318,15 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           w={widthsOuter} backgroundColor= "whiteAlpha.100"
           overflow={["auto","unset","unset","unset","unset"]}
           >
-          <Flex direction="row" alignItems="center">
-          <CarouselArrowLink 
+          <Flex direction={["column","row","row","row","row"]} alignItems="center">
+          {screenType === "isMobile" ? null : <CarouselArrowLink 
               direction='l'
               to={"/photo-post/" + previous_slug}
               locale = {router.locale}
               isDisabled={previous_slug.length<1} 
               mr="16px"
-              />
+              />}
+          
           <Box
             h={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
             minH={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
@@ -349,21 +350,41 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 photo_Post.image.width < 200
                   ? 90
                   : photo_Post.image.width < 350
-                  ? 75
+                  ? 85
                   : photo_Post.image.width < 700
-                  ? 70
+                  ? 85
                   : 80
               }
               priority={true}
             />
           </Box>
-          <CarouselArrowLink 
+          {screenType === "isMobile" ?   
+          <Flex direction="row">
+            <CarouselArrowLink 
+              direction='l'
+              to={"/photo-post/" + previous_slug}
+              locale = {router.locale}
+              isDisabled={previous_slug.length<1} 
+              mr="16px"
+              /> 
+              <CarouselArrowLink 
               direction='r'
               to={"/photo-post/" + next_slug}
               locale = {router.locale}
               isDisabled={next_slug.length<1} 
               ml="16px"
               />
+          </Flex> : null}
+          
+          
+          {screenType === "isMobile" ? null : 
+          <CarouselArrowLink 
+              direction='r'
+              to={"/photo-post/" + next_slug}
+              locale = {router.locale}
+              isDisabled={next_slug.length<1} 
+              ml="16px"
+              />}
           </Flex>
           <Box
             w="100%"

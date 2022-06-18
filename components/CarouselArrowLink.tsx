@@ -22,7 +22,7 @@ const CarouselArrowLink = ({ direction, to, locale, isDisabled, ...rest }) => {
     <IconButton
       aria-label={direction === 'l' ? 'View previous photo-post' : 'View next photo-post'}
       // size={'lg'}
-      height='58px'
+      height={['34px','48px','58px','58px','68px']}
       icon={direction === 'l' ? <MdKeyboardArrowLeft size={'lg'}/> : <MdKeyboardArrowRight size={'lg'}/>}
       onClick={handleClick}
       isDisabled={isDisabled}

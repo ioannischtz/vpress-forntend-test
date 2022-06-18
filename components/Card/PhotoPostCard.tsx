@@ -38,7 +38,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
  
   const imageUrl = getStrapiMedia(photoPost.image);
 
-  // const aspectRatio = photoPost.image.width / photoPost.image.height;
+  const aspectRatio = photoPost.image.width / photoPost.image.height;
 
  
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
@@ -78,6 +78,8 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
           >
             <Box
               // h={heightsHeader}
+              // h = {aspectRatio > 1 ? 'unset' : '250px'}
+              h = {["25vh","200px","200px","200px","220px"]}
               w="100%"
               // overflow="clip"
               textAlign="center"
@@ -87,12 +89,14 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
               <Image
                 src={imageUrl}
                 alt={photoPost.description}
-                layout="intrinsic"
+                layout="fill"
+                // layout={aspectRatio > 1 ? "intrinsic" :  "fill"}
                 height={photoPost.image.height}
                 width={photoPost.image.width}
-                objectFit="contain"
+                objectFit="cover"
+                // objectFit={aspectRatio > 1 ? "contain" : "cover"}
                 objectPosition="center"
-                quality={photoPost.image.width < 200 ? 90 : 50}
+                quality={photoPost.image.width < 200 ? 90 : 80}
                 priority={preload}
               />
             </Box>
@@ -129,7 +133,9 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                       : photoPost.title.includes("/")
                       ? photoPost.title.split("/")[0]
                       : photoPost.title}
+                      <Text fontSize="12px">{aspectRatio > 1 ? null : "(portrait)"}</Text>
                   </Heading>
+                  
                 </Box>
               </CardBody>
             </LinkOverlay>
