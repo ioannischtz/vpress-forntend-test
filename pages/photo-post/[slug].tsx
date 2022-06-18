@@ -80,17 +80,23 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   // console.log("photoPosts[0].article = ",photoPosts[0].article)
 
-  const article = await fetchAPI(`/articles?_locale=${locale}&id=${photoPosts[0].article.id}`)
+  const article = await fetchAPI(`/articles?_locale=${locale}&id=${photoPosts[0]?.article?.id}`)
 
   // console.log(article[0].photo_posts)
 
+  let p_slug = ''
+  let n_slug = ''
+  if (article) {
   const p_id = article[0].photo_posts.findIndex(post => post.id === photoPosts[0].id)
 
   console.log('pid = ',p_id)
 
-  const p_slug = p_id > 0 ?  article[0].photo_posts[p_id -1].slug : ''
-  const n_slug = p_id < article[0].photo_posts.length -1  ? article[0].photo_posts[p_id +1].slug : ''
-
+  p_slug = p_id > 0 ?  article[0].photo_posts[p_id -1].slug : ''
+  n_slug = p_id < article[0].photo_posts.length -1  ? article[0].photo_posts[p_id +1].slug : ''
+  } else {
+    p_slug = ''
+    n_slug = ''
+  }
   // const p_slug2 = p_id > 0 ?  article[0].photo_posts[p_id -1].slug_2nd_locale : ''
   // const n_slug2 = p_id < article[0].photo_posts.length ? article[0].photo_posts[p_id +1].slug_2nd_locale : ''
 
