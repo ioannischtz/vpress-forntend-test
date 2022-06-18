@@ -6,12 +6,12 @@ import { useBreakpointValue } from '@chakra-ui/media-query';
 
 const CarouselArrowLink = ({ direction, to, locale, isDisabled, ...rest }) => {
   const buttonSize = useBreakpointValue({
-    base: 'sm',
-    sm: 'lg',
-    md: 'md',
-    lg: 'md',
-    xl: 'lg',
-    '2xl': 'lg',
+    base: 34,
+    sm: 48,
+    md: 58,
+    lg: 58,
+    xl: 68,
+    '2xl': 68,
   });
   const router = useRouter();
   const handleClick = (e) => {
@@ -21,9 +21,9 @@ const CarouselArrowLink = ({ direction, to, locale, isDisabled, ...rest }) => {
   return (
     <IconButton
       aria-label={direction === 'l' ? 'View previous photo-post' : 'View next photo-post'}
-      // size={'lg'}
+      size={'lg'}
       height={['34px','48px','58px','58px','68px']}
-      icon={direction === 'l' ? <MdKeyboardArrowLeft size={'lg'}/> : <MdKeyboardArrowRight size={'lg'}/>}
+      icon={direction === 'l' ? <MdKeyboardArrowLeft size={buttonSize}/> : <MdKeyboardArrowRight size={buttonSize}/>}
       onClick={handleClick}
       isDisabled={isDisabled}
       colorScheme="blackAlpha"
