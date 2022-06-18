@@ -133,7 +133,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                       : photoPost.title.includes("/")
                       ? photoPost.title.split("/")[0]
                       : photoPost.title}
-                      <Text fontSize="12px">{aspectRatio > 1 ? null : "(portrait)"}</Text>
+                      <Text fontSize="12px">{aspectRatio > 1 ? "(landscape)" : "(portrait)"}</Text>
                   </Heading>
                   
                 </Box>
