@@ -82,11 +82,11 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   const article = await fetchAPI(`/articles?_locale=${locale}&id=${photoPosts[0]?.article?.id}`)
 
-  // console.log(article[0].photo_posts)
+  console.log(article[0]?.photo_posts)
 
   let p_slug = ''
   let n_slug = ''
-  if (article) {
+  if (article[0]) {
   const p_id = article[0].photo_posts.findIndex(post => post.id === photoPosts[0].id)
 
   console.log('pid = ',p_id)
