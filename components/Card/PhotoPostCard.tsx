@@ -95,7 +95,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                 width={photoPost.image.width}
                 objectFit="cover"
                 // objectFit={aspectRatio > 1 ? "contain" : "cover"}
-                objectPosition="center"
+                objectPosition={aspectRatio > 1 ? "center" : "bottom"}
                 quality={photoPost.image.width < 200 ? 90 : 80}
                 priority={preload}
               />
