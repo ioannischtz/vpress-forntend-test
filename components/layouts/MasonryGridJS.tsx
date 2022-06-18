@@ -1,9 +1,8 @@
 import { Flex, Heading, Box } from "@chakra-ui/layout"
 import { FlexboxProps } from "@chakra-ui/styled-system"
-import { Masonry, RenderComponentProps } from "masonic"
+import { Masonry, List, RenderComponentProps } from "masonic"
 
 import * as React from "react"
-
 
 interface MasonryGridJSProps {
   heading: string
@@ -27,7 +26,6 @@ const MasonryGridJS: React.FC<MasonryGridJSProps> = ({
   nCols,
   ...props
 }) => {
-
   return (
     <Flex
       direction="column"
@@ -74,8 +72,7 @@ const MasonryGridJS: React.FC<MasonryGridJSProps> = ({
         </Heading>
       </Flex>
       <Box
-        id="columns"
-        h="400vh"
+        // h="400vh"
         w={[
           "calc(100vw - 48px)",
           "calc(85vw - 48px)",
@@ -85,21 +82,21 @@ const MasonryGridJS: React.FC<MasonryGridJSProps> = ({
         ]}
         overflowX="hidden"
         bgColor="neutral.raisin_black.dark"
-        
       >
-        <Box ml="24px"
-          py="12px"
-          px="48px">
-
-        <Masonry
-          items={items}
-          columnCount={nCols}
-          columnGutter={18}
-          overscanBy={5}
-          render={card}
-        />
+        <Box ml={["24px","24px","24px","24px","48px"]} py="12px" px="48px">
+          {nCols === 1 ? (
+            <List items={items} rowGutter={18} overscanBy={Infinity} render={card} />
+          ) : (
+            <Masonry
+              items={items}
+              columnCount={nCols}
+              columnGutter={18}
+              overscanBy={Infinity}
+              render={card}
+            />
+          )}
         </Box>
-          {/* {children} */}
+        {/* {children} */}
       </Box>
       <Flex
         w={[

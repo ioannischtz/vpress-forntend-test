@@ -84,6 +84,23 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
   const [slug2, setSlug2] = useState(tag?.slug_2nd_locale)
   const isMounted = useMounted()
 
+  let nCols
+  const screenType = useScreenType()
+  switch (screenType) {
+    case "isDesktop":
+      nCols = tag.photo_posts?.length > 4 ? 4 : 3
+      break
+    case "isTablet":
+      nCols = 3
+      break
+    case "isSmallTablet":
+      nCols = 2
+      break
+    case "isMobile":
+      nCols = 1
+      break
+  }
+
   // let shareBtns: React.ReactNode
   let footer: React.ReactNode
   const description_GR = `Δες τις φωτογραφίες που ανήκουν στην ετικέτα ${tag?.name}.`
@@ -101,37 +118,48 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
     tag?.photo_posts?.length < 5
 
   if (isMounted) {
-    footer = (
-    <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
-        <Box>
-          <Button
-            bg="semantic.blue.dark"
-            color="whiteAlpha.900"
-            onClick={() => {
-              setStartIndex(endIndex + 1)
-              setEndIndex(endIndex + 5)
-            }}
-            isDisabled={isReachingEnd}
-            _hover={{
-              bg: "semantic.blue.medium",
-              color: "white"
-            }}
-            _focus={{
-              boxShadow: "0 0 0 3px #D5D4D0"
-            }}
-            _active={{
-              bg: "semantic.blue.light"
-            }}
-          >
-            {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
-          </Button>
-        </Box>
-      <ShareButtons
-        url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-        description={router.locale === "en" ? description_EN : description_GR}
-        pt={["16px", "16px", "0", "0", "0"]}
-      />
-    </Flex>)
+    footer =
+      screenType === "isMobile" ? (
+        <ShareButtons
+          url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+          description={router.locale === "en" ? description_EN : description_GR}
+          pt={["16px", "16px", "0", "0", "0"]}
+        />
+      ) : (
+        <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
+          <Box>
+            <Button
+              bg="semantic.blue.dark"
+              color="whiteAlpha.900"
+              onClick={() => {
+                setStartIndex(endIndex + 1)
+                setEndIndex(endIndex + 5)
+              }}
+              isDisabled={isReachingEnd}
+              _hover={{
+                bg: "semantic.blue.medium",
+                color: "white"
+              }}
+              _focus={{
+                boxShadow: "0 0 0 3px #D5D4D0"
+              }}
+              _active={{
+                bg: "semantic.blue.light"
+              }}
+            >
+              {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+            </Button>
+          </Box>
+
+          <ShareButtons
+            url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+            description={
+              router.locale === "en" ? description_EN : description_GR
+            }
+            pt={["16px", "16px", "0", "0", "0"]}
+          />
+        </Flex>
+      )
   }
 
   useEffect(() => {
@@ -185,23 +213,6 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
     }
   }
 
-  let nCols
-  const screenType = useScreenType()
-  switch (screenType) {
-    case "isDesktop":
-      nCols = tag.photo_posts?.length > 4 ? 4 : 3
-      break
-    case "isTablet":
-      nCols = 3
-      break
-    case "isSmallTablet":
-      nCols = 2
-      break
-    case "isMobile":
-      nCols = 1
-      break
-  }
-
   return (
     <>
       <NextSeo {...SEO} />
@@ -246,6 +257,33 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
                     )
                   })
                 : null}
+              {screenType === "isMobile" ? (
+                <Box>
+                  <Button
+                    bg="semantic.blue.dark"
+                    color="whiteAlpha.900"
+                    onClick={() => {
+                      setStartIndex(endIndex + 1)
+                      setEndIndex(endIndex + 5)
+                    }}
+                    isDisabled={isReachingEnd}
+                    _hover={{
+                      bg: "semantic.blue.medium",
+                      color: "white"
+                    }}
+                    _focus={{
+                      boxShadow: "0 0 0 3px #D5D4D0"
+                    }}
+                    _active={{
+                      bg: "semantic.blue.light"
+                    }}
+                  >
+                    {router.locale === "el-GR"
+                      ? "Φόρτωσε Περισσότερα"
+                      : "Load More"}
+                  </Button>
+                </Box>
+              ) : null}
               {/* {!isReachingEnd ? (
                 <Box w="100%"
                     //  h="150vh"

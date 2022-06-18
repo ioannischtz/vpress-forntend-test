@@ -107,54 +107,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
     revalidateAll: true
   })
 
-  // let shareBtns: React.ReactNode
-  let footer: React.ReactNode
-  const description_GR = `Δες τις ιστορίες που ανήκουν στην κατηγορία ${category?.name}.`
-  const description_EN = `View the stories that belong to category  ${category?.name}.`
-  // pagination
-  const isEmpty = data?.[0]?.length === 0
-  const isReachingEnd =
-    isEmpty ||
-    (data && data[data.length - 1]?.length < 1) ||
-    articles?.length < 7
-
-  if (isMounted) {
-    footer = (
-      <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
-        <Box>
-          <Button
-            bg="semantic.blue.dark"
-            color="whiteAlpha.900"
-            onClick={() => setSize(size + 4)}
-            isDisabled={isReachingEnd}
-            _hover={{
-              bg: "semantic.blue.medium",
-              color: "white"
-            }}
-            _focus={{
-              boxShadow: "0 0 0 3px #D5D4D0"
-            }}
-            _active={{
-              bg: "semantic.blue.light"
-            }}
-          >
-            {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
-          </Button>
-        </Box>
-
-        <ShareButtons
-          url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-          description={router.locale === "en" ? description_EN : description_GR}
-          pt={["16px", "16px", "0", "0", "0"]}
-        />
-      </Flex>
-    )
-  }
-
-  useEffect(() => {
-    if (router.isReady) setSlug2(category?.slug_2nd_locale)
-  }, [router.query.slug])
-
   let nCols
   const screenType = useScreenType()
   switch (screenType) {
@@ -171,6 +123,63 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
       nCols = 1
       break
   }
+
+  // let shareBtns: React.ReactNode
+  let footer: React.ReactNode
+  const description_GR = `Δες τις ιστορίες που ανήκουν στην κατηγορία ${category?.name}.`
+  const description_EN = `View the stories that belong to category  ${category?.name}.`
+  // pagination
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd =
+    isEmpty ||
+    (data && data[data.length - 1]?.length < 1) ||
+    articles?.length < 7
+
+  if (isMounted) {
+    footer =
+      screenType === "isMobile" ? (
+        <ShareButtons
+          url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+          description={router.locale === "en" ? description_EN : description_GR}
+          pt={["16px", "16px", "0", "0", "0"]}
+        />
+      ) : (
+        <Flex w="100%" direction="row" justifyContent="space-between" px="48px">
+          <Box>
+            <Button
+              bg="semantic.blue.dark"
+              color="whiteAlpha.900"
+              onClick={() => setSize(size + 4)}
+              isDisabled={isReachingEnd}
+              _hover={{
+                bg: "semantic.blue.medium",
+                color: "white"
+              }}
+              _focus={{
+                boxShadow: "0 0 0 3px #D5D4D0"
+              }}
+              _active={{
+                bg: "semantic.blue.light"
+              }}
+            >
+              {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
+            </Button>
+          </Box>
+
+          <ShareButtons
+            url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+            description={
+              router.locale === "en" ? description_EN : description_GR
+            }
+            pt={["16px", "16px", "0", "0", "0"]}
+          />
+        </Flex>
+      )
+  }
+
+  useEffect(() => {
+    if (router.isReady) setSlug2(category?.slug_2nd_locale)
+  }, [router.query.slug])
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -274,6 +283,30 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                     })
                   })
                 : null}
+              {screenType === "isMobile" ? (
+                <Box>
+                  <Button
+                    bg="semantic.blue.dark"
+                    color="whiteAlpha.900"
+                    onClick={() => setSize(size + 4)}
+                    isDisabled={isReachingEnd}
+                    _hover={{
+                      bg: "semantic.blue.medium",
+                      color: "white"
+                    }}
+                    _focus={{
+                      boxShadow: "0 0 0 3px #D5D4D0"
+                    }}
+                    _active={{
+                      bg: "semantic.blue.light"
+                    }}
+                  >
+                    {router.locale === "el-GR"
+                      ? "Φόρτωσε Περισσότερα"
+                      : "Load More"}
+                  </Button>
+                </Box>
+              ) : null}
             </>
           )}
         </MasonryGridCSS>
