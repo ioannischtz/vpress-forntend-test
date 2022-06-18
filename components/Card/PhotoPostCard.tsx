@@ -42,6 +42,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
 
  
   const options = { month: 'long', day: 'numeric', year: 'numeric' };
+
   return (
     <Card
       // w={isPortrait ? widthsOuter : widthsLandscape}

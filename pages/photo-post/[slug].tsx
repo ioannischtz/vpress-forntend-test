@@ -35,11 +35,16 @@ import useMounted from "../../hooks/useMounted"
 import FallbackPage from "../../components/FallbackPage"
 import ShareButtons from "../../components/ShareButtons"
 import { GetStaticPaths, GetStaticProps } from "next"
+import CarouselArrowLink from "../../components/CarouselArrowLink"
 
 interface PhotoPostPageProps {
   photo_Post: PhotoPostsResponse
   categories: CategoriesResponse[]
   writers: WritersResponse[]
+  previous_slug: string
+  next_slug: string
+  previous_slug2: string
+  next_slug2: string
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
@@ -70,15 +75,41 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const [photoPosts, categories, writers] = await Promise.all([
     fetchAPI(`/photo-posts?_locale=${locale}&slug=${params?.slug}`),
     fetchAPI(`/categories?_locale=${locale}&_sort=order`),
-    fetchAPI(`/writers?_locale=${locale}`)
+    fetchAPI(`/writers?_locale=${locale}`),
   ])
+
+  // console.log("photoPosts[0].article = ",photoPosts[0].article)
+
+  const article = await fetchAPI(`/articles?_locale=${locale}&id=${photoPosts[0].article.id}`)
+
+  // console.log(article[0].photo_posts)
+
+  const p_id = article[0].photo_posts.findIndex(post => post.id === photoPosts[0].id)
+
+  console.log('pid = ',p_id)
+
+  const p_slug = p_id > 0 ?  article[0].photo_posts[p_id -1].slug : ''
+  const n_slug = p_id < article[0].photo_posts.length -1  ? article[0].photo_posts[p_id +1].slug : ''
+
+  // const p_slug2 = p_id > 0 ?  article[0].photo_posts[p_id -1].slug_2nd_locale : ''
+  // const n_slug2 = p_id < article[0].photo_posts.length ? article[0].photo_posts[p_id +1].slug_2nd_locale : ''
 
   if (photoPosts[0] === undefined) {
     return { notFound: true }
   }
 
+  // console.log(params)
+
   return {
-    props: { photo_Post: photoPosts[0], categories, writers: writers },
+    props: {
+      photo_Post: photoPosts[0],
+      categories,
+      writers: writers,
+      previous_slug: p_slug,
+      next_slug: n_slug,
+      // previous_slug2: p_slug2,
+      // next_slug2: n_slug2,
+    },
     revalidate: 1 * 5 * 60
   }
 }
@@ -86,12 +117,18 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   photo_Post,
   categories,
-  writers
+  writers,
+  previous_slug,
+  next_slug,
+  previous_slug2,
+  next_slug2
 }) => {
   const router = useRouter()
   const isMounted = useMounted()
 
   const [slug2, setSlug2] = useState(photo_Post?.slug_2nd_locale)
+  // const [p_slug2, setP_slug2] = useState(previous_slug2)
+  // const [n_slug2, setn_slug2] = useState(next_slug2)
   const { isOpen, onToggle, onClose } = useDisclosure()
 
   const tagSize = useBreakpointValue({
@@ -275,6 +312,14 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
           w={widthsOuter} backgroundColor= "whiteAlpha.100"
           overflow={["auto","unset","unset","unset","unset"]}
           >
+          <Flex direction="row" alignItems="center">
+          <CarouselArrowLink 
+              direction='l'
+              to={"/photo-post/" + previous_slug}
+              locale = {router.locale}
+              isDisabled={previous_slug.length<1} 
+              mr="16px"
+              />
           <Box
             h={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
             minH={ aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
@@ -286,7 +331,8 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
             borderRadius="4px"
             // backgroundColor= "whiteAlpha.100" 
             // style={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}
-          >
+          > 
+            
             <Image
               src={imageUrl}
               alt={photo_Post.description}
@@ -305,6 +351,14 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
               priority={true}
             />
           </Box>
+          <CarouselArrowLink 
+              direction='r'
+              to={"/photo-post/" + next_slug}
+              locale = {router.locale}
+              isDisabled={next_slug.length<1} 
+              ml="16px"
+              />
+          </Flex>
           <Box
             w="100%"
             h="auto"

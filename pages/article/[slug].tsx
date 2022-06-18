@@ -155,11 +155,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       photoPost: photo_post,
       writer_name: article.writer?.name,
       isPortrait: photo_post.image?.width < photo_post.image?.height,
-      preload: i===0
+      preload: i===0,
+      previous_slug: i>0? article.photo_posts[i-1]?.slug : '',
+      next_slug: i<article.photo_posts.length? article.photo_posts[i+1]?.slug : ''
     }))
   );
+
+  // console.log(items)
   
-  const postCard = ({ data: { id, photoPost, writer_name,isPortrait,preload }}) => (
+  const postCard = ({ data: { id, photoPost, writer_name,isPortrait,preload,previous_slug,next_slug }}) => (
     <PhotoPostCard
       key={id}
       photoPost={photoPost}
