@@ -46,15 +46,15 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
 // title: theTeam.TeamPageHero.title,
   const SEO = {
     
-    description: theTeam.TeamSEO.metaDescription,
+    description: theTeam?.TeamSEO?.metaDescription,
     openGraph: {
-      title: theTeam.TeamSEO.metaTitle,
-      description: theTeam.TeamSEO.metaDescription,
+      title: theTeam?.TeamSEO?.metaTitle,
+      description: theTeam?.TeamSEO?.metaDescription,
       image: {
-        url: theTeam.TeamSEO?.shareImage,
-        width: theTeam.TeamSEO.shareImage?.width,
-        height: theTeam.TeamSEO.shareImage?.height,
-        alt: theTeam.TeamSEO.shareImage?.alternativeText,
+        url: theTeam?.TeamSEO?.shareImage,
+        width: theTeam?.TeamSEO?.shareImage?.width,
+        height: theTeam?.TeamSEO?.shareImage?.height,
+        alt: theTeam?.TeamSEO?.shareImage?.alternativeText,
       },
     },
   };
@@ -64,7 +64,7 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
     shareBtns = (
       <ShareButtons
         url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-        description={theTeam.TeamSEO.metaDescription}
+        description={theTeam?.TeamSEO?.metaDescription}
         pt={['16px', '16px', '0', '0', '0']}
       />
     );
@@ -101,7 +101,7 @@ const TheTeam: React.FC<TheTeamProps> = ({ categories, theTeam, writers }) => {
           locale={router.locale}
           renderBreadCrumbs={true}
         >
-          {theTeam.writers.map((writer, i) => {
+          {theTeam?.writers?.map((writer, i) => {
             return (
               <AuthorCard key={writer.slug} writer={writer} preload={i === 0} />
             );

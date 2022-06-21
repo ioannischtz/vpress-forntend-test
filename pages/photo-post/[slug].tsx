@@ -87,12 +87,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   let p_slug = ''
   let n_slug = ''
   if (article[0]) {
-  const p_id = article[0].photo_posts.findIndex(post => post.id === photoPosts[0].id)
+  const p_id = article[0]?.photo_posts?.findIndex(post => post.id === photoPosts[0].id)
 
   //console.log('pid = ',p_id)
 
-  p_slug = p_id > 0 ?  article[0].photo_posts[p_id -1].slug : ''
-  n_slug = p_id < article[0].photo_posts.length -1  ? article[0].photo_posts[p_id +1].slug : ''
+  p_slug = p_id > 0 ?  article[0]?.photo_posts[p_id -1].slug : ''
+  n_slug = p_id < article[0]?.photo_posts.length -1  ? article[0]?.photo_posts[p_id +1].slug : ''
   } else {
     p_slug = ''
     n_slug = ''
