@@ -49,8 +49,8 @@ const BottomMenu: React.FC<BottomMenuProps & BoxProps> = ({
         >
           <Text>
             {locale === 'en'
-              ? 'News Agency'
-              : 'Ειδησεογραφικό Πρακτορείο Θεσσαλονίκης'}
+              ? 'Photo-news Agency'
+              : 'Φωτο-ειδησεογραφικό Πρακτορείο Θεσσαλονίκης'}
           </Text>
           <Text>{locale === 'en' ? 'Thessaloniki' : ''}</Text>
         </VStack>

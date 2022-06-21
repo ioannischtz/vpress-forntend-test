@@ -51,8 +51,8 @@ const NavigationMobile = React.forwardRef<Ref, NavigationMobileProps>(
                   textAlign="center"
                 >
                   {locale === 'en'
-                    ? 'News Agency, Thessaloniki'
-                    : 'Ειδησεογραφικό Πρακτορείο Θεσσαλονίκης'}
+                    ? 'Photo-news Agency, Thessaloniki'
+                    : 'Φωτο-ειδησεογραφικό Πρακτορείο Θεσσαλονίκης'}
                 </Text>
               </Box>
             </DrawerHeader>
