@@ -45,7 +45,8 @@ const Home: React.FC<HomePageProps> = ({
 }) => {
   const { pathname } = useRouter();
   const imageUrl = getStrapiMedia(homepage.photo_post?.image);
-
+  
+  console.log('hello from index page');
 
   const SEO = {
     title: homepage.HomepageHero.title,
