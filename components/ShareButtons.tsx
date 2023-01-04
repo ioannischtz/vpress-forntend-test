@@ -43,7 +43,7 @@ const ShareButtons: React.FC<ShareButtonsProps & FlexProps> = ({
         <FacebookShareButton
           url={url}
           quote={description}
-          hashtag={'#nextshare'}
+          hashtag={''}
         >
           <FacebookIcon size={24} round />
         </FacebookShareButton>
