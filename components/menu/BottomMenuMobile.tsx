@@ -36,16 +36,16 @@ const BottomMenuMobile = React.forwardRef(
             }}
           >
             <Link href="/" locale={props.locale} shallow={props.shallow}>
-              <a>
-                <Logo
-                  m="4px"
-                  border="2px"
-                  size={8}
-                  fontFamily="logo"
-                  color="semantic.red.medium"
-                  backgroundColor="neutral.raisin_black.medium"
-                />
-              </a>
+
+              <Logo
+                m="4px"
+                border="2px"
+                size={8}
+                fontFamily="logo"
+                color="semantic.red.medium"
+                backgroundColor="neutral.raisin_black.medium"
+              />
+
             </Link>
 
             <Box

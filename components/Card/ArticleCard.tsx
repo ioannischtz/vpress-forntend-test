@@ -40,7 +40,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
   return (
     <Card sx={{ breakInside: "avoid", pageBreakInside: "avoid", overflow:"hidden"}} {...props}>
       <LinkBox _hover={{ cursor: "pointer" }}>
-        <NextLink href={"/article/" + article.slug}>
+        <NextLink href={"/article/" + article.slug} legacyBehavior>
           <LinkOverlay>
             <CardHeader
               direction="column"
@@ -166,7 +166,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
         </NextLink>
       </LinkBox>
     </Card>
-  )
+  );
 };
 
 export default ArticleCard;

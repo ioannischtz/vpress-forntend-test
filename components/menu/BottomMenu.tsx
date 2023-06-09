@@ -28,9 +28,9 @@ const BottomMenu: React.FC<BottomMenuProps & BoxProps> = ({
         }}
       >
         <Link href="/" locale={locale} shallow={shallow}>
-          <a>
-            <Heading fontSize={size.toString() + 'vh'}>Voreia Press</Heading>
-          </a>
+
+          <Heading fontSize={size.toString() + 'vh'}>Voreia Press</Heading>
+
         </Link>
       </Box>
       <Flex justify="space-between">

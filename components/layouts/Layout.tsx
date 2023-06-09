@@ -62,19 +62,19 @@ const Layout: React.FC<LayoutProps> = ({
         />
       )
       fixLogo = (
-        <Link href="/" locale={locale}>
-          <a>
-            <Logo
-              size={12}
-              fontFamily="logo"
-              color="semantic.red.medium"
-              backgroundColor="neutral.raisin_black.medium"
-              _hover={{
-                cursor: "pointer"
-              }}
-            />
-          </a>
-        </Link>
+        (<Link href="/" locale={locale}>
+
+          <Logo
+            size={12}
+            fontFamily="logo"
+            color="semantic.red.medium"
+            backgroundColor="neutral.raisin_black.medium"
+            _hover={{
+              cursor: "pointer"
+            }}
+          />
+
+        </Link>)
       )
       // layH = 'auto'
       // layW = "calc(15vw)"

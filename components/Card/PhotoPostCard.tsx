@@ -102,7 +102,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             </Box>
           </CardHeader>
 
-          <NextLink href={"/photo-post/" + photoPost.slug}>
+          <NextLink href={"/photo-post/" + photoPost.slug} legacyBehavior>
             <LinkOverlay>
               <CardBody
                 // w={widthsLandscapeInner}
@@ -196,7 +196,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
         </LinkBox>
       </Tooltip>
     </Card>
-  )
+  );
 };
 
 export default PhotoPostCard;
