@@ -1,52 +1,52 @@
-import { Box, Flex } from "@chakra-ui/layout"
-import { Button } from "@chakra-ui/button"
-import { useRouter } from "next/router"
-import DefaultErrorPage from "next/error"
-import React, { useEffect, useState } from "react"
-import PhotoPostCard from "../../components/Card/PhotoPostCard"
-import MasonryGridCSS from "../../components/layouts/MasonryGridCSS"
-import Layout from "../../components/layouts/Layout"
-import { fetchAPI } from "../../lib/api"
-import Head from "next/head"
+import { Box, Flex } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
+import { useRouter } from "next/router";
+import DefaultErrorPage from "next/error";
+import React, { useEffect, useState } from "react";
+import PhotoPostCard from "../../components/Card/PhotoPostCard";
+import MasonryGridCSS from "../../components/layouts/MasonryGridCSS";
+import Layout from "../../components/layouts/Layout";
+import { fetchAPI } from "../../lib/api";
+import Head from "next/head";
 import {
   CategoriesResponse,
   TagsResponse,
-  WritersResponse
-} from "../../custom_typings/models"
+  WritersResponse,
+} from "../../custom_typings/models";
 // import { I18nContext } from '../../contexts/I18nContext';
-import filterWriter from "../../lib/filterWriter"
+import filterWriter from "../../lib/filterWriter";
 
 // import useSWR from 'swr';
-import useMounted from "../../hooks/useMounted"
+import useMounted from "../../hooks/useMounted";
 
-import { NextSeo } from "next-seo"
-import FallbackPage from "../../components/FallbackPage"
-import ShareButtons from "../../components/ShareButtons"
-import { GetStaticPaths, GetStaticProps } from "next"
-import { useScreenType } from "../../hooks/useScreenType"
+import { NextSeo } from "next-seo";
+import FallbackPage from "../../components/FallbackPage";
+import ShareButtons from "../../components/ShareButtons";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { useScreenType } from "../../hooks/useScreenType";
 
 interface TagPageProps {
-  tag: TagsResponse
-  writers: WritersResponse[]
-  categories: CategoriesResponse[]
+  tag: TagsResponse;
+  writers: WritersResponse[];
+  categories: CategoriesResponse[];
 }
 // const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const paths = []
-  let tags
+  const paths = [];
+  let tags;
 
   if (locales) {
     for (const locale of locales) {
-      tags = await fetchAPI(`/tags?_locale=${locale}`)
+      tags = await fetchAPI(`/tags?_locale=${locale}`);
       for (let i = 0; i < tags.length; i++) {
         if (tags[i].slug) {
           paths.push({
             params: {
-              slug: tags[i].slug
+              slug: tags[i].slug,
             },
-            locale
-          })
+            locale,
+          });
         }
       }
     }
@@ -54,68 +54,68 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
   return {
     paths,
-    fallback: true
-  }
-}
+    fallback: true,
+  };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const [tags, writers, categories] = await Promise.all([
     fetchAPI(`/tags?_locale=${locale}&slug=${params?.slug}`),
     fetchAPI(`/writers?_locale=${locale}`),
-    fetchAPI(`/categories?_locale=${locale}&_sort=order`)
-  ])
+    fetchAPI(`/categories?_locale=${locale}&_sort=order`),
+  ]);
 
   if (tags[0] === undefined) {
-    return { notFound: true }
+    return { notFound: true };
   }
 
   return {
     props: {
       tag: tags[0],
       writers,
-      categories
+      categories,
     },
-    revalidate: 1 * 5 * 60
-  }
-}
+    revalidate: 1 * 5 * 60,
+  };
+};
 
 const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
-  const router = useRouter()
-  const [slug2, setSlug2] = useState(tag?.slug_2nd_locale)
-  const isMounted = useMounted()
+  const router = useRouter();
+  const [slug2, setSlug2] = useState(tag?.slug_2nd_locale);
+  const isMounted = useMounted();
 
-  let nCols
-  const screenType = useScreenType()
+  let nCols;
+  const screenType = useScreenType();
   switch (screenType) {
     case "isDesktop":
-      nCols = tag.photo_posts?.length > 4 ? 4 : 3
-      break
+      nCols = tag.photo_posts?.length > 4 ? 4 : 3;
+      break;
     case "isTablet":
-      nCols = 3
-      break
+      nCols = 3;
+      break;
     case "isSmallTablet":
-      nCols = 2
-      break
+      nCols = 2;
+      break;
     case "isMobile":
-      nCols = 1
-      break
+      nCols = 1;
+      break;
   }
 
   // let shareBtns: React.ReactNode
-  let footer: React.ReactNode
-  const description_GR = `Δες τις φωτογραφίες που ανήκουν στην ετικέτα ${tag?.name}.`
-  const description_EN = `View the Photo-posts that belong to the tag  ${tag?.name}.`
+  let footer: React.ReactNode;
+  const description_GR = `Δες τις φωτογραφίες που ανήκουν στην ετικέτα ${tag?.name}.`;
+  const description_EN = `View the Photo-posts that belong to the tag  ${tag?.name}.`;
 
   // pagination
-  const [startIndex, setStartIndex] = useState(0)
+  const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(
     tag?.photo_posts?.length < 5 ? tag?.photo_posts?.length : 4
-  )
-  const isEmpty = tag?.photo_posts?.length === 0
+  );
+  const isEmpty = tag?.photo_posts?.length === 0;
   const isReachingEnd =
     isEmpty ||
     (tag?.photo_posts && endIndex >= tag?.photo_posts?.length - 1) ||
-    tag?.photo_posts?.length < 5
+    tag?.photo_posts?.length < 5;
 
   if (isMounted) {
     footer =
@@ -132,19 +132,19 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
               bg="semantic.blue.dark"
               color="whiteAlpha.900"
               onClick={() => {
-                setStartIndex(endIndex + 1)
-                setEndIndex(endIndex + 5)
+                setStartIndex(endIndex + 1);
+                setEndIndex(endIndex + 5);
               }}
               isDisabled={isReachingEnd}
               _hover={{
                 bg: "semantic.blue.medium",
-                color: "white"
+                color: "white",
               }}
-              _focus={{
-                boxShadow: "0 0 0 3px #D5D4D0"
+              _focusVisible={{
+                boxShadow: "0 0 0 3px #D5D4D0",
               }}
               _active={{
-                bg: "semantic.blue.light"
+                bg: "semantic.blue.light",
               }}
             >
               {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
@@ -159,17 +159,17 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
             pt={["16px", "16px", "0", "0", "0"]}
           />
         </Flex>
-      )
+      );
   }
 
   useEffect(() => {
-    if (router.isReady) setSlug2(tag?.slug_2nd_locale)
-  }, [router.query.slug])
+    if (router.isReady) setSlug2(tag?.slug_2nd_locale);
+  }, [router.query.slug]);
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
-    return <FallbackPage />
+    return <FallbackPage />;
   }
 
   if (!tag) {
@@ -180,7 +180,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
         </Head>
         <DefaultErrorPage statusCode={404} />
       </>
-    )
+    );
   }
 
   // const skeletonArr = [1, 2, 3];
@@ -195,23 +195,23 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
           url: tag.photo_posts && tag.photo_posts[0]?.image.url,
           width: tag.photo_posts && tag.photo_posts[0]?.image.width,
           height: tag.photo_posts && tag.photo_posts[0]?.image.height,
-          alt: tag.photo_posts && tag.photo_posts[0]?.image.alternativeText
+          alt: tag.photo_posts && tag.photo_posts[0]?.image.alternativeText,
         },
         {
           url: tag.photo_posts && tag.photo_posts[1]?.image.url,
           width: tag.photo_posts && tag.photo_posts[1]?.image.width,
           height: tag.photo_posts && tag.photo_posts[1]?.image.height,
-          alt: tag.photo_posts && tag.photo_posts[1]?.image.alternativeText
+          alt: tag.photo_posts && tag.photo_posts[1]?.image.alternativeText,
         },
         {
           url: tag.photo_posts && tag.photo_posts[2]?.image.url,
           width: tag.photo_posts && tag.photo_posts[2]?.image.width,
           height: tag.photo_posts && tag.photo_posts[2]?.image.height,
-          alt: tag.photo_posts && tag.photo_posts[2]?.image.alternativeText
-        }
-      ]
-    }
-  }
+          alt: tag.photo_posts && tag.photo_posts[2]?.image.alternativeText,
+        },
+      ],
+    },
+  };
 
   return (
     <>
@@ -254,7 +254,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
                         w="100%"
                         m="0 18px 18px 0"
                       />
-                    )
+                    );
                   })
                 : null}
               {screenType === "isMobile" ? (
@@ -263,19 +263,19 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
                     bg="semantic.blue.dark"
                     color="whiteAlpha.900"
                     onClick={() => {
-                      setStartIndex(endIndex + 1)
-                      setEndIndex(endIndex + 5)
+                      setStartIndex(endIndex + 1);
+                      setEndIndex(endIndex + 5);
                     }}
                     isDisabled={isReachingEnd}
                     _hover={{
                       bg: "semantic.blue.medium",
-                      color: "white"
+                      color: "white",
                     }}
-                    _focus={{
-                      boxShadow: "0 0 0 3px #D5D4D0"
+                    _focusVisible={{
+                      boxShadow: "0 0 0 3px #D5D4D0",
                     }}
                     _active={{
-                      bg: "semantic.blue.light"
+                      bg: "semantic.blue.light",
                     }}
                   >
                     {router.locale === "el-GR"
@@ -338,7 +338,7 @@ const TagPage: React.FC<TagPageProps> = ({ tag, writers, categories }) => {
         </MasonryGridCSS>
       </Layout>
     </>
-  )
-}
+  );
+};
 
-export default TagPage
+export default TagPage;

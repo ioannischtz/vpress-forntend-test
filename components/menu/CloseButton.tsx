@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, BoxProps } from '@chakra-ui/layout';
-import { IconButton, IconButtonProps } from '@chakra-ui/button';
-import { BiX } from 'react-icons/bi';
+import React from "react";
+import { Box, BoxProps } from "@chakra-ui/layout";
+import { IconButton, IconButtonProps } from "@chakra-ui/button";
+import { BiX } from "react-icons/bi";
 
 interface MenuToggleProps extends IconButtonProps {
   mysize: number;
@@ -18,10 +18,10 @@ const CloseButton = React.forwardRef<Ref, MenuToggleProps & BoxProps>(
           ref={ref}
           aria-label="Open menu"
           variant="unstyled"
-          size={(2 * mysize).toString() + 'vh'}
-          _hover={{ color: 'gray.300' }}
-          _focus={{ outline: 'none', color: 'gray.300' }}
-          icon={<BiX size={(2 * mysize).toString() + 'vh'} />}
+          size={(2 * mysize).toString() + "vh"}
+          _hover={{ color: "gray.300" }}
+          _focusVisible={{ outline: "none", color: "gray.300" }}
+          icon={<BiX size={(2 * mysize).toString() + "vh"} />}
           onClick={props.onClick}
         />
       </Box>

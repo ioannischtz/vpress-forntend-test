@@ -1,23 +1,23 @@
-import { Box, Text, Flex, Heading, Circle } from "@chakra-ui/layout"
-import { IconButton } from "@chakra-ui/button"
+import { Box, Text, Flex, Heading, Circle } from "@chakra-ui/layout";
+import { IconButton } from "@chakra-ui/button";
 import {
   Drawer,
   DrawerBody,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay
-} from "@chakra-ui/modal"
-import React from "react"
-import Image from "next/image"
+  DrawerOverlay,
+} from "@chakra-ui/modal";
+import React from "react";
+import Image from "next/image";
 
-import { BiX } from "react-icons/bi"
-import { Writer } from "../../custom_typings/models"
-import { useRouter } from "next/router"
+import { BiX } from "react-icons/bi";
+import { Writer } from "../../custom_typings/models";
+import { useRouter } from "next/router";
 
 interface BioDrawerProps {
-  writer: Writer
-  imageUrl: string
-  isOpen: boolean
+  writer: Writer;
+  imageUrl: string;
+  isOpen: boolean;
   size:
     | "xs"
     | "sm"
@@ -29,15 +29,15 @@ interface BioDrawerProps {
     | "4xl"
     | "5xl"
     | "6xl"
-    | "full"
-  onClose: () => void
-  onToggle: () => void
+    | "full";
+  onClose: () => void;
+  onToggle: () => void;
 }
-export type Ref = HTMLButtonElement
+export type Ref = HTMLButtonElement;
 
 const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
   ({ writer, imageUrl, isOpen, size, onClose, onToggle }, ref) => {
-    const { locale } = useRouter()
+    const { locale } = useRouter();
     return (
       <Drawer
         onClose={onClose}
@@ -110,7 +110,7 @@ const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
                       variant="unstyled"
                       size={(2 * 3).toString() + "vh"}
                       _hover={{ color: "gray.300" }}
-                      _focus={{ outline: "none", color: "gray.300" }}
+                      _focusVisible={{ outline: "none", color: "gray.300" }}
                       icon={<BiX size={(2 * 3).toString() + "vh"} />}
                       onClick={onToggle}
                     />
@@ -121,8 +121,8 @@ const BioDrawer = React.forwardRef<Ref, BioDrawerProps>(
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
-    )
+    );
   }
-)
+);
 
-export default BioDrawer
+export default BioDrawer;

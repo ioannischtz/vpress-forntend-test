@@ -1,75 +1,75 @@
-import { Box, Flex } from "@chakra-ui/layout"
-import { Button } from "@chakra-ui/button"
-import Head from "next/head"
-import { useRouter } from "next/router"
-import DefaultErrorPage from "next/error"
-import React, { useEffect, useState } from "react"
-import ArticleCard from "../../components/Card/ArticleCard"
+import { Box, Flex } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import DefaultErrorPage from "next/error";
+import React, { useEffect, useState } from "react";
+import ArticleCard from "../../components/Card/ArticleCard";
 // import ContentGrid from "../../components/layouts/ContentGrid"
-import Layout from "../../components/layouts/Layout"
-import { fetchAPI, getStrapiURL } from "../../lib/api"
+import Layout from "../../components/layouts/Layout";
+import { fetchAPI, getStrapiURL } from "../../lib/api";
 import {
   ArticlesResponse,
   CategoriesResponse,
-  WritersResponse
-} from "../../custom_typings/models"
-import useMounted from "../../hooks/useMounted"
-import { KeyLoader } from "swr"
-import useSWRInfinite from "swr/infinite"
+  WritersResponse,
+} from "../../custom_typings/models";
+import useMounted from "../../hooks/useMounted";
+import { KeyLoader } from "swr";
+import useSWRInfinite from "swr/infinite";
 
-import { NextSeo } from "next-seo"
-import FallbackPage from "../../components/FallbackPage"
-import ShareButtons from "../../components/ShareButtons"
-import { GetStaticPaths, GetStaticProps } from "next"
-import MasonryGridCSS from "../../components/layouts/MasonryGridCSS"
-import { useScreenType } from "../../hooks/useScreenType"
+import { NextSeo } from "next-seo";
+import FallbackPage from "../../components/FallbackPage";
+import ShareButtons from "../../components/ShareButtons";
+import { GetStaticPaths, GetStaticProps } from "next";
+import MasonryGridCSS from "../../components/layouts/MasonryGridCSS";
+import { useScreenType } from "../../hooks/useScreenType";
 
 interface CategoryPageProps {
-  category: CategoriesResponse
-  categories: CategoriesResponse[]
-  articles: ArticlesResponse[]
-  writers: WritersResponse[]
+  category: CategoriesResponse;
+  categories: CategoriesResponse[];
+  articles: ArticlesResponse[];
+  writers: WritersResponse[];
 }
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const paths = []
-  let categories
+  const paths = [];
+  let categories;
   if (locales) {
     for (const locale of locales) {
-      categories = await fetchAPI(`/categories?_locale=${locale}`)
+      categories = await fetchAPI(`/categories?_locale=${locale}`);
       for (let i = 0; i < categories.length; i++) {
         paths.push({
           params: {
-            slug: categories[i].slug
+            slug: categories[i].slug,
           },
-          locale
-        })
+          locale,
+        });
       }
     }
   }
 
   return {
     paths,
-    fallback: true
-  }
-}
+    fallback: true,
+  };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const category = await fetchAPI(
     `/categories?_locale=${locale}&slug=${params?.slug}`
-  )
-  const writers = await fetchAPI(`/writers?_locale=${locale}`)
+  );
+  const writers = await fetchAPI(`/writers?_locale=${locale}`);
   const [categories, articles] = await Promise.all([
     fetchAPI(`/categories?_locale=${locale}&_sort=order`),
     fetchAPI(
       `/articles?_locale=${locale}&category.slug=${params?.slug}&_sort=published_at:DESC&_start=0&_limit=7`
-    )
-  ])
+    ),
+  ]);
 
   if (category[0] === undefined) {
-    return { notFound: true }
+    return { notFound: true };
   }
 
   return {
@@ -77,63 +77,63 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       category: category[0],
       categories,
       articles,
-      writers
+      writers,
     },
-    revalidate: 1 * 5 * 60
-  }
-}
+    revalidate: 1 * 5 * 60,
+  };
+};
 
 const CategoryPage: React.FC<CategoryPageProps> = ({
   category,
   categories,
   articles,
-  writers
+  writers,
 }) => {
-  const router = useRouter()
-  const [slug2, setSlug2] = useState(category?.slug_2nd_locale)
-  const isMounted = useMounted()
+  const router = useRouter();
+  const [slug2, setSlug2] = useState(category?.slug_2nd_locale);
+  const isMounted = useMounted();
 
   const getKey: KeyLoader<string> = (pageIndex, previousPageData) => {
-    if (previousPageData && !previousPageData?.length) return null
+    if (previousPageData && !previousPageData?.length) return null;
     return getStrapiURL(
       `/articles?_locale=${router.locale}&category.slug=${
         category?.slug
       }&_sort=published_at:DESC&_start=${pageIndex + articles?.length}&_limit=1`
-    )
-  }
+    );
+  };
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
     initialSize: 0,
-    revalidateAll: true
-  })
+    revalidateAll: true,
+  });
 
-  let nCols
-  const screenType = useScreenType()
+  let nCols;
+  const screenType = useScreenType();
   switch (screenType) {
     case "isDesktop":
-      nCols = articles.length > 4 ? 4 : 3
-      break
+      nCols = articles.length > 4 ? 4 : 3;
+      break;
     case "isTablet":
-      nCols = 3
-      break
+      nCols = 3;
+      break;
     case "isSmallTablet":
-      nCols = 2
-      break
+      nCols = 2;
+      break;
     case "isMobile":
-      nCols = 1
-      break
+      nCols = 1;
+      break;
   }
 
   // let shareBtns: React.ReactNode
-  let footer: React.ReactNode
-  const description_GR = `Δες τις ιστορίες που ανήκουν στην κατηγορία ${category?.name}.`
-  const description_EN = `View the stories that belong to category  ${category?.name}.`
+  let footer: React.ReactNode;
+  const description_GR = `Δες τις ιστορίες που ανήκουν στην κατηγορία ${category?.name}.`;
+  const description_EN = `View the stories that belong to category  ${category?.name}.`;
   // pagination
-  const isEmpty = data?.[0]?.length === 0
+  const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd =
     isEmpty ||
     (data && data[data.length - 1]?.length < 1) ||
-    articles?.length < 7
+    articles?.length < 7;
 
   if (isMounted) {
     footer =
@@ -153,13 +153,13 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
               isDisabled={isReachingEnd}
               _hover={{
                 bg: "semantic.blue.medium",
-                color: "white"
+                color: "white",
               }}
-              _focus={{
-                boxShadow: "0 0 0 3px #D5D4D0"
+              _focusVisible={{
+                boxShadow: "0 0 0 3px #D5D4D0",
               }}
               _active={{
-                bg: "semantic.blue.light"
+                bg: "semantic.blue.light",
               }}
             >
               {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
@@ -174,17 +174,17 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
             pt={["16px", "16px", "0", "0", "0"]}
           />
         </Flex>
-      )
+      );
   }
 
   useEffect(() => {
-    if (router.isReady) setSlug2(category?.slug_2nd_locale)
-  }, [router.query.slug])
+    if (router.isReady) setSlug2(category?.slug_2nd_locale);
+  }, [router.query.slug]);
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
-    return <FallbackPage />
+    return <FallbackPage />;
   }
 
   if (!category) {
@@ -195,10 +195,10 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         </Head>
         <DefaultErrorPage statusCode={404} />
       </>
-    )
+    );
   }
 
-  const skeletonArr = [1, 2, 3]
+  const skeletonArr = [1, 2, 3];
   //   title: category.name,
   const SEO = {
     description: router.locale === "en" ? description_EN : description_GR,
@@ -210,11 +210,11 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
           url: articles[0]?.cover_image.url,
           width: articles[0]?.cover_image.width,
           height: articles[0]?.cover_image.height,
-          alt: articles[0]?.cover_image.alternativeText
-        }
-      ]
-    }
-  }
+          alt: articles[0]?.cover_image.alternativeText,
+        },
+      ],
+    },
+  };
 
   return (
     <>
@@ -242,7 +242,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                   <Box h="100px" w="60px"></Box>
                 </Skeleton> */}
                 </div>
-              )
+              );
             })
           ) : error ? (
             <div>Error.</div>
@@ -261,7 +261,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                     w="100%"
                     m="0 18px 18px 0"
                   />
-                )
+                );
               })}
               {data !== undefined
                 ? data.map((articles) => {
@@ -279,8 +279,8 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                           w="100%"
                           m="0 18px 18px 0"
                         />
-                      )
-                    })
+                      );
+                    });
                   })
                 : null}
               {screenType === "isMobile" ? (
@@ -292,13 +292,13 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
                     isDisabled={isReachingEnd}
                     _hover={{
                       bg: "semantic.blue.medium",
-                      color: "white"
+                      color: "white",
                     }}
-                    _focus={{
-                      boxShadow: "0 0 0 3px #D5D4D0"
+                    _focusVisible={{
+                      boxShadow: "0 0 0 3px #D5D4D0",
                     }}
                     _active={{
-                      bg: "semantic.blue.light"
+                      bg: "semantic.blue.light",
                     }}
                   >
                     {router.locale === "el-GR"
@@ -312,7 +312,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
         </MasonryGridCSS>
       </Layout>
     </>
-  )
-}
+  );
+};
 
-export default CategoryPage
+export default CategoryPage;

@@ -1,60 +1,60 @@
-import { Box, Flex } from "@chakra-ui/layout"
-import { useRouter } from "next/router"
-import DefaultErrorPage from "next/error"
-import React, { useEffect, useState } from "react"
-import ArticleCard from "../../components/Card/ArticleCard"
-import MasonryGridCSS from "../../components/layouts/MasonryGridCSS"
-import Layout from "../../components/layouts/Layout"
-import { fetchAPI, getStrapiURL } from "../../lib/api"
-import Head from "next/head"
+import { Box, Flex } from "@chakra-ui/layout";
+import { useRouter } from "next/router";
+import DefaultErrorPage from "next/error";
+import React, { useEffect, useState } from "react";
+import ArticleCard from "../../components/Card/ArticleCard";
+import MasonryGridCSS from "../../components/layouts/MasonryGridCSS";
+import Layout from "../../components/layouts/Layout";
+import { fetchAPI, getStrapiURL } from "../../lib/api";
+import Head from "next/head";
 import {
   Article,
   WritersResponse,
   CategoriesResponse,
-} from "../../custom_typings/models"
-import useMounted from "../../hooks/useMounted"
-import { Skeleton } from "@chakra-ui/skeleton"
-import { Button } from "@chakra-ui/button"
-import { KeyLoader } from "swr"
-import useSWRInfinite from "swr/infinite"
-import { NextSeo } from "next-seo"
-import FallbackPage from "../../components/FallbackPage"
-import ShareButtons from "../../components/ShareButtons"
-import { GetStaticPaths, GetStaticProps } from "next"
-import { useScreenType } from "../../hooks/useScreenType"
+} from "../../custom_typings/models";
+import useMounted from "../../hooks/useMounted";
+import { Skeleton } from "@chakra-ui/skeleton";
+import { Button } from "@chakra-ui/button";
+import { KeyLoader } from "swr";
+import useSWRInfinite from "swr/infinite";
+import { NextSeo } from "next-seo";
+import FallbackPage from "../../components/FallbackPage";
+import ShareButtons from "../../components/ShareButtons";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { useScreenType } from "../../hooks/useScreenType";
 
 interface WriterArticlesPageProps {
-  categories: CategoriesResponse[]
-  articles: Article[]
-  writer: WritersResponse
-  writers: WritersResponse[]
+  categories: CategoriesResponse[];
+  articles: Article[];
+  writer: WritersResponse;
+  writers: WritersResponse[];
 }
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  const paths = []
-  let writers
+  const paths = [];
+  let writers;
 
   if (locales) {
     for (const locale of locales) {
-      writers = await fetchAPI(`/writers?_locale=${locale}`)
+      writers = await fetchAPI(`/writers?_locale=${locale}`);
       for (let i = 0; i < writers.length; i++) {
         paths.push({
           params: {
-            slug: writers[i].slug
+            slug: writers[i].slug,
           },
-          locale
-        })
+          locale,
+        });
       }
     }
   }
 
   return {
     paths,
-    fallback: true
-  }
-}
+    fallback: true,
+  };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   // const writers = await fetchAPI(`/writers?_locale=${locale}`);
@@ -64,11 +64,11 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     fetchAPI(`/categories?_locale=${locale}&_sort=order`),
     fetchAPI(
       `/articles?_locale=${locale}&writer.slug=${params?.slug}&_sort=published_at:DESC&_start=0&_limit=7`
-    )
-  ])
+    ),
+  ]);
 
   if (writer[0] === undefined) {
-    return { notFound: true }
+    return { notFound: true };
   }
 
   return {
@@ -76,44 +76,44 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       writer: writer[0],
       writers: writers,
       categories: categories,
-      articles: articles
+      articles: articles,
     },
-    revalidate: 1 * 5 * 60
-  }
-}
+    revalidate: 1 * 5 * 60,
+  };
+};
 
 const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
   writer,
   writers,
   articles,
-  categories
+  categories,
 }) => {
-  const router = useRouter()
-  const [slug2, setSlug2] = useState(writer?.slug_2nd_locale)
-  const isMounted = useMounted()
+  const router = useRouter();
+  const [slug2, setSlug2] = useState(writer?.slug_2nd_locale);
+  const isMounted = useMounted();
   const getKey: KeyLoader<string> = (pageIndex, previousPageData) => {
-    if (previousPageData && !previousPageData.length) return null
+    if (previousPageData && !previousPageData.length) return null;
     return getStrapiURL(
       `/articles?_locale=${router.locale}&writer.slug=${
         writer?.slug
       }&_sort=published_at:DESC&_start=${pageIndex + articles?.length}&_limit=1`
-    )
-  }
+    );
+  };
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
     initialSize: 0,
-    revalidateAll: true
-  })
+    revalidateAll: true,
+  });
   // let shareBtns: React.ReactNode
-  let footer: React.ReactNode
-  const description_GR = `Δες τις ιστορίες του συντάκτη ${writer?.name}. ${writer?.ShortBio}`
-  const description_EN = `View ${writer?.name}'s Stories. ${writer?.ShortBio}`
-  
-  const isEmpty = data?.[0]?.length === 0
+  let footer: React.ReactNode;
+  const description_GR = `Δες τις ιστορίες του συντάκτη ${writer?.name}. ${writer?.ShortBio}`;
+  const description_EN = `View ${writer?.name}'s Stories. ${writer?.ShortBio}`;
+
+  const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd =
     isEmpty ||
     (data && data[data.length - 1]?.length < 1) ||
-    articles?.length < 7
+    articles?.length < 7;
 
   if (isMounted) {
     footer = (
@@ -137,13 +137,13 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
               onClick={() => setSize(size + 4)}
               _hover={{
                 bg: "semantic.blue.medium",
-                color: "white"
+                color: "white",
               }}
-              _focus={{
-                boxShadow: "0 0 0 3px #D5D4D0"
+              _focusVisible={{
+                boxShadow: "0 0 0 3px #D5D4D0",
               }}
               _active={{
-                bg: "semantic.blue.light"
+                bg: "semantic.blue.light",
               }}
             >
               {router.locale === "el-GR" ? "Φόρτωσε Περισσότερα" : "Load More"}
@@ -156,34 +156,34 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
           pt={["16px", "16px", "0", "0", "0"]}
         />
       </Flex>
-    )
+    );
   }
 
   useEffect(() => {
-    if (router.isReady) setSlug2(writer?.slug_2nd_locale)
-  }, [router.query.slug])
+    if (router.isReady) setSlug2(writer?.slug_2nd_locale);
+  }, [router.query.slug]);
 
-  let nCols
-  const screenType = useScreenType()
+  let nCols;
+  const screenType = useScreenType();
   switch (screenType) {
     case "isDesktop":
-      nCols = articles?.length > 4 ? 4 : 3
-      break
+      nCols = articles?.length > 4 ? 4 : 3;
+      break;
     case "isTablet":
-      nCols = 3
-      break
+      nCols = 3;
+      break;
     case "isSmallTablet":
-      nCols = 2
-      break
+      nCols = 2;
+      break;
     case "isMobile":
-      nCols = 1
-      break
+      nCols = 1;
+      break;
   }
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
-    return <FallbackPage />
+    return <FallbackPage />;
   }
 
   if (!writer) {
@@ -194,12 +194,10 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
         </Head>
         <DefaultErrorPage statusCode={404} />
       </>
-    )
+    );
   }
 
-  
-
-  const skeletonArr = [1, 2, 3]
+  const skeletonArr = [1, 2, 3];
   // title: writer.name,
   const SEO = {
     description: router.locale === "en" ? description_EN : description_GR,
@@ -211,17 +209,17 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
           url: writer.picture.url,
           width: writer.picture.width,
           height: writer.picture.height,
-          alt: writer.picture.alternativeText
+          alt: writer.picture.alternativeText,
         },
         {
           url: articles && articles[0]?.cover_image.url,
           width: articles && articles[0]?.cover_image.width,
           height: articles && articles[0]?.cover_image.height,
-          alt: articles && articles[0]?.cover_image.alternativeText
-        }
-      ]
-    }
-  }
+          alt: articles && articles[0]?.cover_image.alternativeText,
+        },
+      ],
+    },
+  };
 
   return (
     <>
@@ -245,11 +243,11 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
             skeletonArr.map((i) => {
               return (
                 <div key={i}>
-                  <Skeleton>
+                  <Skeleton fitContent>
                     <Box h="100px" w="60px"></Box>
                   </Skeleton>
                 </div>
-              )
+              );
             })
           ) : error ? (
             <div>Error.</div>
@@ -268,7 +266,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
                     w="100%"
                     m="0 18px 18px 0"
                   />
-                )
+                );
               })}
               {data !== undefined
                 ? data.map((articles, i) => {
@@ -286,8 +284,8 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
                           w="100%"
                           m="0 18px 18px 0"
                         />
-                      )
-                    })
+                      );
+                    });
                   })
                 : null}
               {/* {!isReachingEnd ? (
@@ -332,7 +330,7 @@ const WriterArticlesPage: React.FC<WriterArticlesPageProps> = ({
         </MasonryGridCSS>
       </Layout>
     </>
-  )
-}
+  );
+};
 
-export default WriterArticlesPage
+export default WriterArticlesPage;
