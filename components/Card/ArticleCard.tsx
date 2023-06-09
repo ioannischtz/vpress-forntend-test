@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/layout';
 import NextLink from 'next/link';
 import { getStrapiMedia } from '../../lib/media';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { Card, CardHeader, CardBody, CardFooter } from './Card';
 import { Article, ArticlesResponse } from '../../custom_typings/models';
 import { useRouter } from 'next/router';

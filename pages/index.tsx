@@ -1,6 +1,6 @@
 import { fetchAPI } from '../lib/api';
 import { getStrapiMedia } from '../lib/media';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Layout from '../components/layouts/Layout';
 import ImageHeading from '../components/homePageImage/ImageHeading';
 import React from 'react';

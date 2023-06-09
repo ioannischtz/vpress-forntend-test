@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "./Card";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { BiChevronRight } from "react-icons/bi";
 import { useDisclosure, useUpdateEffect } from "@chakra-ui/hooks";
 import { useBreakpointValue } from "@chakra-ui/media-query";

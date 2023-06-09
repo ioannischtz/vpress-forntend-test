@@ -12,7 +12,7 @@ import { Tooltip } from '@chakra-ui/tooltip';
 import NextLink from 'next/link';
 // import { useScreenType } from '../../hooks/useScreenType';
 import { getStrapiMedia } from '../../lib/media';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { Card, CardHeader, CardBody, CardFooter } from './Card';
 import { PhotoPost, PhotoPostsResponse } from '../../custom_typings/models';
 import { useRouter } from 'next/router';

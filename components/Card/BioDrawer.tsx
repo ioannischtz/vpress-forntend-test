@@ -8,7 +8,7 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/modal";
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import { BiX } from "react-icons/bi";
 import { Writer } from "../../custom_typings/models";

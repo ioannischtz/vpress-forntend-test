@@ -20,7 +20,7 @@ import {
 } from "../../custom_typings/models";
 import Layout from "../../components/layouts/Layout";
 // import ContentGrid from "../../components/layouts/ContentGrid"
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { getStrapiMedia } from "../../lib/media";
 import { vhTOpx, vwTOpx } from "../../lib/vhTOpx";
 import { useScreenType } from "../../hooks/useScreenType";
