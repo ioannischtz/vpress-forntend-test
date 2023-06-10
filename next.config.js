@@ -8,7 +8,7 @@ module.exports = {
     defaultLocale: "el-GR",
   },
   images: {
-    domains: ["res.cloudinary.com", "localhost"],
+    domains: ["res.cloudinary.com"],
   },
   poweredByHeader: false,
 };

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Heading, Text, BoxProps, Flex, Link } from '@chakra-ui/layout';
-import NextLink from 'next/link';
+import React from "react";
+import { Heading, Text, BoxProps, Flex, Link } from "@chakra-ui/layout";
+import NextLink from "next/link";
 
 interface ImageHeadingProps {
   title: string;
@@ -18,7 +18,7 @@ const ImageHeading: React.FC<ImageHeadingProps & BoxProps> = ({
   locale,
   ...props
 }) => {
-  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  const options = { month: "long", day: "numeric", year: "numeric" };
   return (
     // <Flex
     //   direction={['column', 'column', 'row', 'row', 'row']}
@@ -101,56 +101,64 @@ const ImageHeading: React.FC<ImageHeadingProps & BoxProps> = ({
     //     </Link>
     //   </Box>
     // </Flex>
-    <Flex justifyContent="space-between" justifySelf="flex-start" alignItems="flex-start" {...props} w='100%' m='8px'>
+    <Flex
+      justifyContent="space-between"
+      justifySelf="flex-start"
+      alignItems="flex-start"
+      {...props}
+      w="100%"
+      m="8px"
+    >
       <Link as={NextLink} href={to}>
-        <a>
-          <Flex
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between" 
-            flexWrap="wrap"
-            textAlign="center"
-            as="header"
-            background="blackAlpha.600"
-            color="whiteAlpha.800"
-            p="12px"
-            overflow="hidden"
-            borderBottomRadius="8px"
-            transition="all 0.2s cubic-bezier(.41,0,.07,1.16)"
-            _hover={{
-              cursor: 'pointer',
-              boxShadow:
-                '0 2px 2px -1px rgba(0,0,0,0.35),0 1px 20px 1px rgba(0,0,0,0.35)',
-              backgroundColor: 'blackAlpha.900',
-              color: 'whiteAlpha.900',
-              borderTopRadius: '8px',
-              transform: 'translateY(4px) translateX(4px)',
-              textDecoration: 'underline',
-            }}
-            boxShadow="0 2px 2px -1px rgba(0,0,0,0.25),0 1px 10px -2px rgba(0,0,0,0.25)"
+        <Flex
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          textAlign="center"
+          as="header"
+          background="blackAlpha.600"
+          color="whiteAlpha.800"
+          p="12px"
+          overflow="hidden"
+          borderBottomRadius="8px"
+          transition="all 0.2s cubic-bezier(.41,0,.07,1.16)"
+          _hover={{
+            cursor: "pointer",
+            boxShadow:
+              "0 2px 2px -1px rgba(0,0,0,0.35),0 1px 20px 1px rgba(0,0,0,0.35)",
+            backgroundColor: "blackAlpha.900",
+            color: "whiteAlpha.900",
+            borderTopRadius: "8px",
+            transform: "translateY(4px) translateX(4px)",
+            textDecoration: "underline",
+          }}
+          boxShadow="0 2px 2px -1px rgba(0,0,0,0.25),0 1px 10px -2px rgba(0,0,0,0.25)"
+        >
+          <Heading
+            fontWeight={700}
+            fontSize={["1.25vh", "1.25vh", "1.5vh", "1.5vh", "1.5vh"]}
+            pr={["0ch", "0ch", "1ch", "1ch", "1ch"]}
+            textAlign="end"
+            alignSelf="flex-end"
           >
-            <Heading
-              fontWeight={700}
-              fontSize={['1.25vh', '1.25vh', '1.5vh', '1.5vh', '1.5vh']}
-              pr={['0ch', '0ch', '1ch', '1ch', '1ch']}
-              textAlign="end"
-              alignSelf="flex-end"
-            >
-              {title}
-            </Heading>
+            {title}
+          </Heading>
 
-            <Text fontSize={['1.25vh', '1.25vh', '1.5vh', '1.5vh', '1.5vh']} px="1ch">
-              {/* @ts-ignore: Unreachable code error */}
-              {new Intl.DateTimeFormat(locale, options).format(new Date(date))}
-            </Text>
-            <Text
-              fontSize={['1.25vh', '1.25vh', '1.5vh', '1.5vh', '1.5vh']}
-              pl={['0ch', '0ch', '1ch', '1ch', '1ch']}
-            >
-              {credits}
-            </Text>
-          </Flex>
-        </a>
+          <Text
+            fontSize={["1.25vh", "1.25vh", "1.5vh", "1.5vh", "1.5vh"]}
+            px="1ch"
+          >
+            {/* @ts-ignore: Unreachable code error */}
+            {new Intl.DateTimeFormat(locale, options).format(new Date(date))}
+          </Text>
+          <Text
+            fontSize={["1.25vh", "1.25vh", "1.5vh", "1.5vh", "1.5vh"]}
+            pl={["0ch", "0ch", "1ch", "1ch", "1ch"]}
+          >
+            {credits}
+          </Text>
+        </Flex>
       </Link>
     </Flex>
   );

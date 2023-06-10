@@ -62,7 +62,7 @@ const Layout: React.FC<LayoutProps> = ({
         />
       )
       fixLogo = (
-        (<Link href="/" locale={locale}>
+        (<Link href="/" locale={locale} legacyBehavior>
 
           <Logo
             size={12}

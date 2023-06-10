@@ -27,7 +27,7 @@ const BottomMenu: React.FC<BottomMenuProps & BoxProps> = ({
           cursor: 'pointer',
         }}
       >
-        <Link href="/" locale={locale} shallow={shallow}>
+        <Link href="/" locale={locale} shallow={shallow} legacyBehavior>
 
           <Heading fontSize={size.toString() + 'vh'}>Voreia Press</Heading>
 

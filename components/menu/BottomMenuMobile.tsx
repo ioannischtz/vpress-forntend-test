@@ -35,7 +35,7 @@ const BottomMenuMobile = React.forwardRef(
               cursor: 'pointer',
             }}
           >
-            <Link href="/" locale={props.locale} shallow={props.shallow}>
+            <Link href="/" locale={props.locale} shallow={props.shallow} legacyBehavior>
 
               <Logo
                 m="4px"
