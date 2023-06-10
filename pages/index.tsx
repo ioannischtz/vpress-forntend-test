@@ -30,7 +30,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     fetchAPI(`/home-page?_locale=${locale}`),
     fetchAPI(`/writers?_locale=${locale}`),
   ]);
-  console.log("homepage", homepage);
 
   return {
     props: { categories, homepage, writers, locale },
@@ -85,10 +84,10 @@ const Home: React.FC<HomePageProps> = ({
               homepage.photo_post.image?.width < 200
                 ? 90
                 : homepage.photo_post.image?.width < 350
-                  ? 75
-                  : homepage.photo_post.image?.width < 500
-                    ? 65
-                    : 55
+                ? 75
+                : homepage.photo_post.image?.width < 500
+                ? 65
+                : 55
             }
             priority={true}
           />
