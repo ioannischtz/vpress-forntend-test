@@ -1,20 +1,20 @@
-import { fetchAPI } from '../lib/api';
-import { getStrapiMedia } from '../lib/media';
+import { fetchAPI } from "../lib/api";
+import { getStrapiMedia } from "../lib/media";
 import Image from "next/legacy/image";
-import Layout from '../components/layouts/Layout';
-import ImageHeading from '../components/homePageImage/ImageHeading';
-import React from 'react';
-import { Box } from '@chakra-ui/layout';
+import Layout from "../components/layouts/Layout";
+import ImageHeading from "../components/homePageImage/ImageHeading";
+import React from "react";
+import { Box } from "@chakra-ui/layout";
 import {
   CategoriesResponse,
   HomepageResponse,
   WritersResponse,
-} from '../custom_typings/models';
-import filterWriter from '../lib/filterWriter';
+} from "../custom_typings/models";
+import filterWriter from "../lib/filterWriter";
 
-import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
-import { GetStaticProps } from 'next';
+import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
+import { GetStaticProps } from "next";
 
 interface HomePageProps {
   categories: CategoriesResponse[];
@@ -30,12 +30,13 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     fetchAPI(`/home-page?_locale=${locale}`),
     fetchAPI(`/writers?_locale=${locale}`),
   ]);
+  console.log("homepage", homepage);
 
   return {
     props: { categories, homepage, writers, locale },
-    revalidate: 1*5*60,
+    revalidate: 1 * 5 * 60,
   };
-}
+};
 
 const Home: React.FC<HomePageProps> = ({
   categories,
@@ -45,8 +46,8 @@ const Home: React.FC<HomePageProps> = ({
 }) => {
   const { pathname } = useRouter();
   const imageUrl = getStrapiMedia(homepage.photo_post?.image);
-  
-  console.log('hello from index page');
+
+  console.log("hello from index page");
 
   const SEO = {
     title: homepage.HomepageHero.title,
@@ -84,18 +85,22 @@ const Home: React.FC<HomePageProps> = ({
               homepage.photo_post.image?.width < 200
                 ? 90
                 : homepage.photo_post.image?.width < 350
-                ? 75
-                : homepage.photo_post.image?.width < 500
-                ? 65
-                : 55
+                  ? 75
+                  : homepage.photo_post.image?.width < 500
+                    ? 65
+                    : 55
             }
             priority={true}
           />
         </Box>
         <ImageHeading
-          to={'/photo-post/' + homepage.photo_post?.slug}
+          to={"/photo-post/" + homepage.photo_post?.slug}
           title={homepage.photo_post?.title}
-          date={homepage.photo_post?.date ? homepage.photo_post.date.toString() : homepage.photo_post.updated_at.toString()}
+          date={
+            homepage.photo_post?.date
+              ? homepage.photo_post.date.toString()
+              : homepage.photo_post.updated_at.toString()
+          }
           credits={filterWriter(writers, homepage.photo_post.writer)?.name}
           locale={locale}
           position="relative"
