@@ -549,7 +549,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                       borderRadius="full"
                       m="4px"
                     >
-                      <NextLink href={`/tag/${tag.slug}`}>
+                      <NextLink href={`/tag/${tag.slug}`} legacyBehavior>
                         {tag.name}
                       </NextLink>
                     </Tag>
