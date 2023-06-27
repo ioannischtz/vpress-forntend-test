@@ -180,11 +180,13 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       })
       .map((item) => {
         if (!isNaN(item.photoPost.title.charAt(0) as any)) {
-          item.photoPost.title = item.photoPost.title
-            .split(".")
-            .slice(1)
-            .join(".")
-            .trimStart();
+          if (item.photoPost.title.includes(".")) {
+            item.photoPost.title = item.photoPost.title
+              .split(".")
+              .slice(1)
+              .join(".")
+              .trimStart();
+          }
         }
         return item;
       })
