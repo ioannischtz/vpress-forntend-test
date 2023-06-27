@@ -159,8 +159,36 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       next_slug:
         i < article.photo_posts.length ? article.photo_posts[i + 1]?.slug : "",
     }))
+      .sort((a, b) => {
+        let numA = 0;
+        let numB = 0;
+        if (a.photoPost.title.charCodeAt(1) === 46) {
+          numA = a.photoPost.title.charCodeAt(0);
+        } else {
+          numA =
+            a.photoPost.title.charCodeAt(0) * 10 +
+            a.photoPost.title.charCodeAt(1);
+        }
+        if (b.photoPost.title.charCodeAt(1) === 46) {
+          numB = b.photoPost.title.charCodeAt(0);
+        } else {
+          numB =
+            b.photoPost.title.charCodeAt(0) * 10 +
+            b.photoPost.title.charCodeAt(1);
+        }
+        return numA - numB;
+      })
+      .map((item) => {
+        if (!isNaN(item.photoPost.title.charAt(0) as any)) {
+          item.photoPost.title = item.photoPost.title
+            .split(".")
+            .slice(1)
+            .join(".")
+            .trimStart();
+        }
+        return item;
+      })
   );
-
   // console.log(items)
 
   const postCard = ({
