@@ -1,27 +1,27 @@
-import { useRouter } from 'next/router';
-import DefaultErrorPage from 'next/error';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from "next/router";
+import DefaultErrorPage from "next/error";
+import React, { useEffect, useState } from "react";
 
 import { Masonry } from "masonic";
-import PhotoPostCard from '../../components/Card/PhotoPostCard';
+import PhotoPostCard from "../../components/Card/PhotoPostCard";
 // import ContentGrid from '../../components/layouts/ContentGrid';
-import Layout from '../../components/layouts/Layout';
-import { fetchAPI } from '../../lib/api';
-import Head from 'next/head';
+import Layout from "../../components/layouts/Layout";
+import { fetchAPI } from "../../lib/api";
+import Head from "next/head";
 import {
   ArticlesResponse,
   CategoriesResponse,
   WritersResponse,
-} from '../../custom_typings/models';
-import useMounted from '../../hooks/useMounted';
+} from "../../custom_typings/models";
+import useMounted from "../../hooks/useMounted";
 
-import { NextSeo } from 'next-seo';
-import FallbackPage from '../../components/FallbackPage';
-import ShareButtons from '../../components/ShareButtons';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { NextSeo } from "next-seo";
+import FallbackPage from "../../components/FallbackPage";
+import ShareButtons from "../../components/ShareButtons";
+import { GetStaticPaths, GetStaticProps } from "next";
 // import MasonryGridCSS from '../../components/layouts/MasonryGridCSS';
-import { useScreenType } from '../../hooks/useScreenType';
-import MasonryGridJS from '../../components/layouts/MasonryGridJS';
+import { useScreenType } from "../../hooks/useScreenType";
+import MasonryGridJS from "../../components/layouts/MasonryGridJS";
 
 interface ArticlePageProps {
   article: ArticlesResponse;
@@ -32,24 +32,25 @@ interface ArticlePageProps {
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const paths = [];
   let articles;
-  if(locales){
-  for (const locale of locales) {
-    articles = await fetchAPI(`/articles?_locale=${locale}`);
-    for (let i = 0; i < articles.length; i++) {
-      paths.push({
-        params: {
-          slug: articles[i].slug,
-        },
-        locale,
-      });
+  if (locales) {
+    for (const locale of locales) {
+      articles = await fetchAPI(`/articles?_locale=${locale}`);
+      for (let i = 0; i < articles.length; i++) {
+        paths.push({
+          params: {
+            slug: articles[i].slug,
+          },
+          locale,
+        });
+      }
     }
-  }}
+  }
 
   return {
     paths,
     fallback: true,
   };
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const [articles, categories, writers] = await Promise.all([
@@ -68,9 +69,9 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       categories,
       writers,
     },
-    revalidate: 1*5*60,
+    revalidate: 1 * 5 * 60,
   };
-}
+};
 
 const ArticlePage: React.FC<ArticlePageProps> = ({
   article,
@@ -88,11 +89,10 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       <ShareButtons
         url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
         description={article?.description}
-        pt={['16px', '16px', '0', '0', '0']}
+        pt={["16px", "16px", "0", "0", "0"]}
       />
     );
   }
-
 
   useEffect(() => {
     if (router.isReady) setSlug2(article?.slug_2nd_locale);
@@ -114,9 +114,8 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
       </>
     );
   }
-// title: article.title,
+  // title: article.title,
   const SEO = {
-    
     description: article.description,
     openGraph: {
       title: article.title,
@@ -132,15 +131,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
     },
   };
 
-  let nCols 
-  const screenType = useScreenType()
+  let nCols;
+  const screenType = useScreenType();
   switch (screenType) {
     case "isDesktop":
-      nCols = (article.photo_posts.length > 4) ? 4 : 3;
+      nCols = article.photo_posts.length > 4 ? 4 : 3;
       break;
     case "isTablet":
       nCols = 3;
-      break
+      break;
     case "isSmallTablet":
       nCols = 2;
       break;
@@ -150,27 +149,38 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
   }
 
   const [items] = React.useState(() =>
-    Array.from(article.photo_posts, (photo_post,i) => ({
+    Array.from(article.photo_posts, (photo_post, i) => ({
       id: photo_post.id,
       photoPost: photo_post,
-      writer_name: article.writer?.name,
+      writer_name: article.writer ? article.writer.name : "",
       isPortrait: photo_post.image?.width < photo_post.image?.height,
-      preload: i===0,
-      previous_slug: i>0? article.photo_posts[i-1]?.slug : '',
-      next_slug: i<article.photo_posts.length? article.photo_posts[i+1]?.slug : ''
+      preload: i === 0,
+      previous_slug: i > 0 ? article.photo_posts[i - 1]?.slug : "",
+      next_slug:
+        i < article.photo_posts.length ? article.photo_posts[i + 1]?.slug : "",
     }))
   );
 
   // console.log(items)
-  
-  const postCard = ({ data: { id, photoPost, writer_name,isPortrait,preload,previous_slug,next_slug }}) => (
+
+  const postCard = ({
+    data: {
+      id,
+      photoPost,
+      writer_name,
+      isPortrait,
+      preload,
+      previous_slug,
+      next_slug,
+    },
+  }) => (
     <PhotoPostCard
       key={id}
       photoPost={photoPost}
       writer_name={writer_name}
       isPortrait={isPortrait}
       preload={preload}
-      />
+    />
   );
 
   return (
@@ -185,13 +195,15 @@ const ArticlePage: React.FC<ArticlePageProps> = ({
         isOnSearchPage={false}
       >
         <MasonryGridJS
-          heading={router.locale === "en"
-          ? article.title.includes("/")
-            ? article.title.split("/")[1]
-            : article.title
-          : article.title.includes("/")
-          ? article.title.split("/")[0]
-          : article.title}
+          heading={
+            router.locale === "en"
+              ? article.title.includes("/")
+                ? article.title.split("/")[1]
+                : article.title
+              : article.title.includes("/")
+              ? article.title.split("/")[0]
+              : article.title
+          }
           footer={shareBtns}
           items={items}
           card={postCard}

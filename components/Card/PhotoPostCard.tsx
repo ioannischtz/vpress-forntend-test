@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   Heading,
@@ -7,15 +7,15 @@ import {
   LinkBox,
   LinkOverlay,
   BoxProps,
-} from '@chakra-ui/layout';
-import { Tooltip } from '@chakra-ui/tooltip';
-import NextLink from 'next/link';
+} from "@chakra-ui/layout";
+import { Tooltip } from "@chakra-ui/tooltip";
+import NextLink from "next/link";
 // import { useScreenType } from '../../hooks/useScreenType';
-import { getStrapiMedia } from '../../lib/media';
+import { getStrapiMedia } from "../../lib/media";
 import Image from "next/legacy/image";
-import { Card, CardHeader, CardBody, CardFooter } from './Card';
-import { PhotoPost, PhotoPostsResponse } from '../../custom_typings/models';
-import { useRouter } from 'next/router';
+import { Card, CardHeader, CardBody, CardFooter } from "./Card";
+import { PhotoPost, PhotoPostsResponse } from "../../custom_typings/models";
+import { useRouter } from "next/router";
 
 interface PhotoPostCardProps {
   photoPost: PhotoPost | PhotoPostsResponse;
@@ -27,21 +27,19 @@ interface PhotoPostCardProps {
 
 const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
   photoPost,
-  writer_name = '',
+  writer_name = "",
   isPortrait = true,
   preload = false,
   ...props
 }) => {
-  
   const { locale } = useRouter();
   let renderDesktop = true;
- 
+
   const imageUrl = getStrapiMedia(photoPost.image);
 
   const aspectRatio = photoPost.image.width / photoPost.image.height;
 
- 
-  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  const options = { month: "long", day: "numeric", year: "numeric" };
 
   return (
     <Card
@@ -51,7 +49,11 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
       // h = {isPortrait ? }
       // pb="16px"
       // display="block"
-      sx={{ breakInside: "avoid", pageBreakInside: "avoid",overflow:"hidden" }}
+      sx={{
+        breakInside: "avoid",
+        pageBreakInside: "avoid",
+        overflow: "hidden",
+      }}
       {...props}
     >
       <Tooltip
@@ -79,7 +81,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
             <Box
               // h={heightsHeader}
               // h = {aspectRatio > 1 ? 'unset' : '250px'}
-              h = {["25vh","200px","200px","200px","220px"]}
+              h={["25vh", "200px", "200px", "200px", "220px"]}
               w="100%"
               // overflow="clip"
               textAlign="center"
@@ -113,7 +115,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                   "space-around",
                   "space-between",
                   "space-between",
-                  "space-between"
+                  "space-between",
                 ]}
                 px="16px"
                 py={["8px", "8px", "0px", "4px", "4px"]}
@@ -133,9 +135,10 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                       : photoPost.title.includes("/")
                       ? photoPost.title.split("/")[0]
                       : photoPost.title}
-                      <Text fontSize="12px">{aspectRatio > 1 ? "(landscape)" : "(portrait)"}</Text>
+                    <Text fontSize="12px">
+                      {aspectRatio > 1 ? "(landscape)" : "(portrait)"}
+                    </Text>
                   </Heading>
-                  
                 </Box>
               </CardBody>
             </LinkOverlay>
@@ -187,7 +190,7 @@ const PhotoPostCard: React.FC<PhotoPostCardProps & BoxProps> = ({
                     </Heading>
                   </Box>
                   <Box>
-                    <Text>{writer_name}</Text>
+                    <Text>{writer_name ? writer_name : ""}</Text>
                   </Box>
                 </Flex>
               </>

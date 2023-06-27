@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   BoxProps,
@@ -7,17 +7,17 @@ import {
   Flex,
   LinkBox,
   LinkOverlay,
-} from '@chakra-ui/layout';
-import NextLink from 'next/link';
-import { getStrapiMedia } from '../../lib/media';
+} from "@chakra-ui/layout";
+import NextLink from "next/link";
+import { getStrapiMedia } from "../../lib/media";
 import Image from "next/legacy/image";
-import { Card, CardHeader, CardBody, CardFooter } from './Card';
-import { Article, ArticlesResponse } from '../../custom_typings/models';
-import { useRouter } from 'next/router';
+import { Card, CardHeader, CardBody, CardFooter } from "./Card";
+import { Article, ArticlesResponse } from "../../custom_typings/models";
+import { useRouter } from "next/router";
 
 interface ArticleCardProps {
   article: Article | ArticlesResponse;
-  writer_name: string;
+  writer_name: string | null | undefined;
   isPortrait?: boolean;
   preload?: boolean;
 }
@@ -25,20 +25,26 @@ interface ArticleCardProps {
 const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
   article,
   writer_name,
-  isPortrait = 'true',
+  isPortrait = "true",
   preload = false,
   ...props
 }) => {
-  
   let renderDesktop = true;
- 
+
   const imageUrl = getStrapiMedia(article.cover_image);
 
   const { locale } = useRouter();
 
-  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  const options = { month: "long", day: "numeric", year: "numeric" };
   return (
-    <Card sx={{ breakInside: "avoid", pageBreakInside: "avoid", overflow:"hidden"}} {...props}>
+    <Card
+      sx={{
+        breakInside: "avoid",
+        pageBreakInside: "avoid",
+        overflow: "hidden",
+      }}
+      {...props}
+    >
       <LinkBox _hover={{ cursor: "pointer" }}>
         <NextLink href={"/article/" + article.slug} legacyBehavior>
           <LinkOverlay>
@@ -87,7 +93,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                 "space-around",
                 "space-between",
                 "space-between",
-                "space-between"
+                "space-between",
               ]}
               px="16px"
               py={["8px", "8px", "0px", "4px", "4px"]}
@@ -156,7 +162,7 @@ const ArticleCard: React.FC<ArticleCardProps & BoxProps> = ({
                       </Heading>
                     </Box>
                     <Box>
-                      <Text>{writer_name}</Text>
+                      <Text>{writer_name ? writer_name : ""}</Text>
                     </Box>
                   </Flex>
                 </>

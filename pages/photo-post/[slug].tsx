@@ -257,7 +257,7 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
     "calc(85vw - 48px)",
     "calc(85vw - 48px)",
   ];
-  const options = { month: "long", day: "numeric", year: "numeric" };
+  const options = { month: "long", day: "numeric", year: "numeric" } as const;
 
   // const aspectRatio = photo_Post.image?.width / photo_Post.image?.height;
   // // let imgWlandscape = 520
@@ -265,117 +265,74 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
   // // let imgWportrait = 300
   // imgHportrait = imgWportrait / aspectRatio
 
-  return <>
-    <NextSeo {...SEO} />
-    <Layout
-      categories={categories}
-      writers={writers}
-      slug={slug2}
-      locale={router.locale}
-      pathname={router.pathname}
-      isOnSearchPage={false}
-    >
-      <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent
-          maxW={
-            aspectRatio > 1
-              ? ["90vw", "65vw", "65vw", "65vw", "65vw"]
-              : ["90vw", "40vw", "40vw", "40vw", "40vw"]
-          }
-          maxH={["75vh", "85vh", "85vh", "85vh", "85vh"]}
-          h={["75vh", "85vh", "85vh", "85vh", "85vh"]}
-          justifyContent="center"
-          alignItems="center"
-          overflowX="hidden"
-        >
-          <Box
-            w={["88vw", "60vw", "60vw", "60vw", "60vw"]}
-            h={
-              aspectRatio > 1
-                ? ["45vh", "80vh", "80vh", "80vh", "80vh"]
-                : ["65vh", "75vh", "75vh", "75vh", "75vh"]
-            }
-            position="relative"
-            borderRadius="4px"
-            my="24px"
-          >
-            <Image
-              src={imageUrl}
-              alt={photo_Post.description}
-              layout="fill"
-              objectFit="contain"
-              objectPosition="center"
-              quality={
-                photo_Post.image.width < 200
-                  ? 80
-                  : photo_Post.image.width < 350
-                  ? 70
-                  : photo_Post.image.width < 500
-                  ? 60
-                  : 50
-              }
-            />
-          </Box>
-        </ModalContent>
-      </Modal>
-      <Flex
-        direction="column"
-        color="whiteAlpha.800"
-        alignItems="center"
-        w={widthsOuter}
-        backgroundColor="whiteAlpha.100"
-        overflow={["auto", "unset", "unset", "unset", "unset"]}
+  return (
+    <>
+      <NextSeo {...SEO} />
+      <Layout
+        categories={categories}
+        writers={writers}
+        slug={slug2}
+        locale={router.locale}
+        pathname={router.pathname}
+        isOnSearchPage={false}
       >
-        <Flex
-          direction={["column", "row", "row", "row", "row"]}
-          alignItems="center"
-        >
-          {screenType === "isMobile" ? null : (
-            <CarouselArrowLink
-              direction="l"
-              to={"/photo-post/" + previous_slug}
-              locale={router.locale}
-              isDisabled={previous_slug.length < 1}
-              mr="16px"
-            />
-          )}
-
-          <Box
-            h={aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
-            minH={
-              aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`
+        <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent
+            maxW={
+              aspectRatio > 1
+                ? ["90vw", "65vw", "65vw", "65vw", "65vw"]
+                : ["90vw", "40vw", "40vw", "40vw", "40vw"]
             }
-            w={aspectRatio > 1 ? `${imgWlandscape}px` : `${imgWportrait}px`}
-            minW={
-              aspectRatio > 1 ? `${imgWlandscape}px` : `${imgWportrait}px`
-            }
-            overflow="clip"
-            position="relative"
-            borderRadius="4px"
-            // backgroundColor= "whiteAlpha.100"
-            // style={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}
+            maxH={["75vh", "85vh", "85vh", "85vh", "85vh"]}
+            h={["75vh", "85vh", "85vh", "85vh", "85vh"]}
+            justifyContent="center"
+            alignItems="center"
+            overflowX="hidden"
           >
-            <Image
-              src={imageUrl}
-              alt={photo_Post.description}
-              layout="fill"
-              objectFit="contain"
-              objectPosition="center"
-              quality={
-                photo_Post.image.width < 200
-                  ? 90
-                  : photo_Post.image.width < 350
-                  ? 85
-                  : photo_Post.image.width < 700
-                  ? 85
-                  : 80
+            <Box
+              w={["88vw", "60vw", "60vw", "60vw", "60vw"]}
+              h={
+                aspectRatio > 1
+                  ? ["45vh", "80vh", "80vh", "80vh", "80vh"]
+                  : ["65vh", "75vh", "75vh", "75vh", "75vh"]
               }
-              priority={true}
-            />
-          </Box>
-          {screenType === "isMobile" ? (
-            <Flex direction="row">
+              position="relative"
+              borderRadius="4px"
+              my="24px"
+            >
+              <Image
+                src={imageUrl}
+                alt={photo_Post.description}
+                layout="fill"
+                objectFit="contain"
+                objectPosition="center"
+                quality={
+                  photo_Post.image.width < 200
+                    ? 80
+                    : photo_Post.image.width < 350
+                    ? 70
+                    : photo_Post.image.width < 500
+                    ? 60
+                    : 50
+                }
+              />
+            </Box>
+          </ModalContent>
+        </Modal>
+        <Flex
+          direction="column"
+          color="whiteAlpha.800"
+          alignItems="center"
+          w={widthsOuter}
+          backgroundColor="whiteAlpha.100"
+          overflow={["auto", "unset", "unset", "unset", "unset"]}
+        >
+          <Flex
+            direction={["column", "row", "row", "row", "row"]}
+            alignItems="center"
+          >
+            {screenType === "isMobile" ? null : (
               <CarouselArrowLink
                 direction="l"
                 to={"/photo-post/" + previous_slug}
@@ -383,6 +340,61 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 isDisabled={previous_slug.length < 1}
                 mr="16px"
               />
+            )}
+
+            <Box
+              h={aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`}
+              minH={
+                aspectRatio > 1 ? `${imgHlandscape}px` : `${imgHportrait}px`
+              }
+              w={aspectRatio > 1 ? `${imgWlandscape}px` : `${imgWportrait}px`}
+              minW={
+                aspectRatio > 1 ? `${imgWlandscape}px` : `${imgWportrait}px`
+              }
+              overflow="clip"
+              position="relative"
+              borderRadius="4px"
+              // backgroundColor= "whiteAlpha.100"
+              // style={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}
+            >
+              <Image
+                src={imageUrl}
+                alt={photo_Post.description}
+                layout="fill"
+                objectFit="contain"
+                objectPosition="center"
+                quality={
+                  photo_Post.image.width < 200
+                    ? 90
+                    : photo_Post.image.width < 350
+                    ? 85
+                    : photo_Post.image.width < 700
+                    ? 85
+                    : 80
+                }
+                priority={true}
+              />
+            </Box>
+            {screenType === "isMobile" ? (
+              <Flex direction="row">
+                <CarouselArrowLink
+                  direction="l"
+                  to={"/photo-post/" + previous_slug}
+                  locale={router.locale}
+                  isDisabled={previous_slug.length < 1}
+                  mr="16px"
+                />
+                <CarouselArrowLink
+                  direction="r"
+                  to={"/photo-post/" + next_slug}
+                  locale={router.locale}
+                  isDisabled={next_slug.length < 1}
+                  ml="16px"
+                />
+              </Flex>
+            ) : null}
+
+            {screenType === "isMobile" ? null : (
               <CarouselArrowLink
                 direction="r"
                 to={"/photo-post/" + next_slug}
@@ -390,178 +402,173 @@ const PhotoPostPage: React.FC<PhotoPostPageProps> = ({
                 isDisabled={next_slug.length < 1}
                 ml="16px"
               />
-            </Flex>
-          ) : null}
-
-          {screenType === "isMobile" ? null : (
-            <CarouselArrowLink
-              direction="r"
-              to={"/photo-post/" + next_slug}
-              locale={router.locale}
-              isDisabled={next_slug.length < 1}
-              ml="16px"
-            />
-          )}
-        </Flex>
-        <Box
-          w="100%"
-          h="auto"
-          py={["24px", "24px", "24px", "24px", "36px"]}
-          px="18px"
-        >
-          <Flex
-            direction={["column", "row", "row", "row", "row"]}
+            )}
+          </Flex>
+          <Box
             w="100%"
-            h="100%"
+            h="auto"
+            py={["24px", "24px", "24px", "24px", "36px"]}
+            px="18px"
           >
             <Flex
-              direction="column"
-              textAlign={["start", "end", "end", "end", "end"]}
-              w={["100%", "60%", "60%", "60%", "60%"]}
-              pl={["24px", "24px", "72px", "80px", "80px"]}
-              pr={["24px", "24px", "48px", "64px", "64px"]}
+              direction={["column", "row", "row", "row", "row"]}
+              w="100%"
+              h="100%"
             >
-              <Heading fontSize="20px">
-                {router.locale === "en"
-                  ? photo_Post.title.includes("/")
-                    ? photo_Post.title.split("/")[1]
-                    : photo_Post.title
-                  : photo_Post.title.includes("/")
-                  ? photo_Post.title.split("/")[0]
-                  : photo_Post.title}
-              </Heading>
               <Flex
-                direction={["column", "row", "row", "row", "row"]}
-                justifyContent="space-between"
-                alignItems={[
-                  "center",
-                  "flex-end",
-                  "flex-end",
-                  "flex-end",
-                  "flex-end",
-                ]}
-                py="12px"
+                direction="column"
+                textAlign={["start", "end", "end", "end", "end"]}
+                w={["100%", "60%", "60%", "60%", "60%"]}
+                pl={["24px", "24px", "72px", "80px", "80px"]}
+                pr={["24px", "24px", "48px", "64px", "64px"]}
               >
+                <Heading fontSize="20px">
+                  {router.locale === "en"
+                    ? photo_Post.title.includes("/")
+                      ? photo_Post.title.split("/")[1]
+                      : photo_Post.title
+                    : photo_Post.title.includes("/")
+                    ? photo_Post.title.split("/")[0]
+                    : photo_Post.title}
+                </Heading>
                 <Flex
-                  direction="column"
+                  direction={["column", "row", "row", "row", "row"]}
                   justifyContent="space-between"
-                  alignItems="start"
+                  alignItems={[
+                    "center",
+                    "flex-end",
+                    "flex-end",
+                    "flex-end",
+                    "flex-end",
+                  ]}
+                  py="12px"
                 >
-                  <Flex direction="row">
-                    <Heading
-                      as="h4"
-                      fontWeight="bold"
-                      fontSize="14px"
-                      pr={router.locale === "en" ? "3.75ch" : "2.5ch"}
-                    >
-                      {router.locale === "en" ? "Date: " : "Ημ/νία:"}
-                    </Heading>
-                    <Box fontSize="12px">
-                      <Text>
-                        {/* @ts-ignore*/}
-                        {new Intl.DateTimeFormat(router.locale,options).format(
-                          new Date(
-                            photo_Post.date
-                              ? photo_Post.date
-                              : photo_Post.published_at
-                          )
-                        )}
-                      </Text>
-                    </Box>
-                  </Flex>
-                  <Flex direction="row">
-                    <Heading
-                      as="h4"
-                      fontWeight="bold"
-                      fontSize="14px"
-                      pr="2ch"
-                    >
-                      Credits:{" "}
-                    </Heading>
-                    <Box fontSize="12px">
-                      <Text>{photo_Post.writer?.name}</Text>
-                      {/* <Text>{article.author.name_GR}</Text> */}
-                    </Box>
-                  </Flex>
-                  <ShareButtons
-                    url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
-                    description={photo_Post.description}
-                    pt="4px"
-                    alignSelf="start"
-                  />
-                </Flex>
-                <Box
-                  pt={["12px", "0", "0", "0", "0"]}
-                  pb={["24px", "0", "0", "0", "0"]}
-                >
-                  <Button
-                    size={tagSize}
-                    rightIcon={<FaEye />}
-                    bg="semantic.blue.dark"
-                    color="whiteAlpha.900"
-                    onClick={onToggle}
-                    _hover={{
-                      bg: "semantic.blue.medium",
-                      color: "white",
-                    }}
-                    _focusVisible={{
-                      boxShadow: "0 0 0 3px #D5D4D0",
-                    }}
-                    _active={{
-                      bg: "semantic.blue.light",
-                    }}
+                  <Flex
+                    direction="column"
+                    justifyContent="space-between"
+                    alignItems="start"
                   >
-                    {router.locale === "el-GR" ? "Εικόνα" : "Image"}
-                  </Button>
-                </Box>
-              </Flex>
-            </Flex>
-            {dividerComp}
-            <Flex
-              direction="column"
-              textAlign="start"
-              w={["100%", "40%", "40%", "40%", "40%"]}
-              py={["24px", "0", "0", "0", "0"]}
-              pr={["24px", "24px", "72px", "80px", "80px"]}
-              pl={["24px", "24px", "48px", "64px", "64px"]}
-            >
-              <Heading fontWeight="normal">
-                <Flex direction="row" fontSize="24px">
-                  {router.locale === "el-GR" ? "ΕΤΙΚΕΤΕΣ" : "TAGS"}
-                  <Box pl="12px" alignSelf="flex-end">
-                    <CgTag />
+                    <Flex direction="row">
+                      <Heading
+                        as="h4"
+                        fontWeight="bold"
+                        fontSize="14px"
+                        pr={router.locale === "en" ? "3.75ch" : "2.5ch"}
+                      >
+                        {router.locale === "en" ? "Date: " : "Ημ/νία:"}
+                      </Heading>
+                      <Box fontSize="12px">
+                        <Text>
+                          {/* @ts-ignore*/}
+                          {new Intl.DateTimeFormat(
+                            router.locale,
+                            options
+                          ).format(
+                            new Date(
+                              photo_Post.date
+                                ? photo_Post.date
+                                : photo_Post.published_at
+                            )
+                          )}
+                        </Text>
+                      </Box>
+                    </Flex>
+                    <Flex direction="row">
+                      <Heading
+                        as="h4"
+                        fontWeight="bold"
+                        fontSize="14px"
+                        pr="2ch"
+                      >
+                        Credits:{" "}
+                      </Heading>
+                      <Box fontSize="12px">
+                        <Text>
+                          {photo_Post.writer ? photo_Post.writer.name : ""}
+                        </Text>
+                        {/* <Text>{article.author.name_GR}</Text> */}
+                      </Box>
+                    </Flex>
+                    <ShareButtons
+                      url={`${process.env.NEXT_PUBLIC_HOST_URL}/${router.locale}${router.asPath}`}
+                      description={photo_Post.description}
+                      pt="4px"
+                      alignSelf="start"
+                    />
+                  </Flex>
+                  <Box
+                    pt={["12px", "0", "0", "0", "0"]}
+                    pb={["24px", "0", "0", "0", "0"]}
+                  >
+                    <Button
+                      size={tagSize}
+                      rightIcon={<FaEye />}
+                      bg="semantic.blue.dark"
+                      color="whiteAlpha.900"
+                      onClick={onToggle}
+                      _hover={{
+                        bg: "semantic.blue.medium",
+                        color: "white",
+                      }}
+                      _focusVisible={{
+                        boxShadow: "0 0 0 3px #D5D4D0",
+                      }}
+                      _active={{
+                        bg: "semantic.blue.light",
+                      }}
+                    >
+                      {router.locale === "el-GR" ? "Εικόνα" : "Image"}
+                    </Button>
                   </Box>
                 </Flex>
-              </Heading>
-              <Text
-                py={["24px", "24px", "24px", "24px", "36px"]}
-                fontSize={["sm", "2xl", "md", "md", "lg"]}
-                overflowX="hidden"
-                overflowY="auto"
+              </Flex>
+              {dividerComp}
+              <Flex
+                direction="column"
+                textAlign="start"
+                w={["100%", "40%", "40%", "40%", "40%"]}
+                py={["24px", "0", "0", "0", "0"]}
+                pr={["24px", "24px", "72px", "80px", "80px"]}
+                pl={["24px", "24px", "48px", "64px", "64px"]}
               >
-                {photo_Post.tags.map((tag) => {
-                  return (
-                    <Tag
-                      size={tagSize}
-                      key={tag.name}
-                      variant="subtle"
-                      colorScheme="blue"
-                      borderRadius="full"
-                      m="4px"
-                    >
-                      <NextLink href={`/tag/${tag.slug}`} legacyBehavior>
-                        {tag.name}
-                      </NextLink>
-                    </Tag>
-                  );
-                })}
-              </Text>
+                <Heading fontWeight="normal">
+                  <Flex direction="row" fontSize="24px">
+                    {router.locale === "el-GR" ? "ΕΤΙΚΕΤΕΣ" : "TAGS"}
+                    <Box pl="12px" alignSelf="flex-end">
+                      <CgTag />
+                    </Box>
+                  </Flex>
+                </Heading>
+                <Text
+                  py={["24px", "24px", "24px", "24px", "36px"]}
+                  fontSize={["sm", "2xl", "md", "md", "lg"]}
+                  overflowX="hidden"
+                  overflowY="auto"
+                >
+                  {photo_Post.tags.map((tag) => {
+                    return (
+                      <Tag
+                        size={tagSize}
+                        key={tag.name}
+                        variant="subtle"
+                        colorScheme="blue"
+                        borderRadius="full"
+                        m="4px"
+                      >
+                        <NextLink href={`/tag/${tag.slug}`} legacyBehavior>
+                          {tag.name}
+                        </NextLink>
+                      </Tag>
+                    );
+                  })}
+                </Text>
+              </Flex>
             </Flex>
-          </Flex>
-        </Box>
-      </Flex>
-    </Layout>
-  </>;
+          </Box>
+        </Flex>
+      </Layout>
+    </>
+  );
 };
 
 export default PhotoPostPage;
